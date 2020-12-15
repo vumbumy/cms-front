@@ -4,8 +4,13 @@
             <v-col>
                 <router-view style="background: darkseagreen"/>
             </v-col>
-            <v-col :class="{'v-overlay': this.$vuetify.breakpoint.mdAndDown}">
-                <router-view v-if="false" name="detail" style="background: moccasin"/>
+            <v-overlay absolute v-if="this.$vuetify.breakpoint.mdAndDown" v-model="detail">
+                <v-slide-x-reverse-transition>
+                    <router-view name="detail" style="background: moccasin"/>
+                </v-slide-x-reverse-transition>
+            </v-overlay>
+            <v-col v-else>
+                <router-view v-if="detail" name="detail" style="background: moccasin"/>
             </v-col>
         </v-row>
     </v-main>
@@ -13,7 +18,19 @@
 
 <script>
   export default {
-      components: {},
+      mounted() {
+          console.log(this.$route.params.id)
+      },
+      data() {
+          return {
+              detail: this.$route.params.id !== undefined
+          }
+      },
+      watch: {
+          $route(){
+              this.detail = this.$route.params.id !== undefined
+          }
+      }
   }
 </script>
 

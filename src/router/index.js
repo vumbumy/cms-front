@@ -17,10 +17,14 @@ export default new Router({
         },
         {
             path: '/tabs',
+            component: Tabs
+        },
+        {
+            path: '/tabs/:id',
             components: {
                 default: Tabs,
                 detail: Detail
-            },
+            }
         },
     ]
 });

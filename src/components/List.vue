@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-card class="mx-auto" outlined>
-                <v-list-item three-line>
+                <v-list-item link to="/tabs/0">
                     <v-list-item-avatar
                             tile
                             size="80"
