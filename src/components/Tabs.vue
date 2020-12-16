@@ -2,15 +2,20 @@
     <v-container fluid>
         <v-row no-gutters>
             <v-col class="text-left">
-                <div class="headline font-weight-bold">Tabs</div>
-                <div class="subtitle-1 mb-4">SubTitle</div>
+                <div class="headline font-weight-bold">{{title}}</div>
+                <div class="subtitle-1 mb-4">{{title}} -> {{tabs[active_tab]}}</div>
 
-                <v-tabs v-model="tab" height="40">
-                    <v-tab>
-                        <h4>A</h4>
-                    </v-tab>
-                    <v-tab>
-                        <h4>B</h4>
+                <v-alert
+                        dense
+                        outlined
+                        type="error"
+                >
+                    <strong>Main Warning</strong> (reminder)
+                </v-alert>
+                <kpi-box/>
+                <v-tabs v-model="active_tab" height="40">
+                    <v-tab v-for="(value, id) in tabs" :key="id">
+                        {{value}}
                     </v-tab>
                 </v-tabs>
                 <list/>
@@ -21,11 +26,22 @@
 
 <script>
   import List from "./List";
+  import KpiBox from "./KpiBox";
   export default {
-      components: {List},
+      components: {KpiBox, List},
+      props: {
+          tabs: {
+              type: Array,
+              default: function () {
+                  return []
+              }
+          }
+      },
       data() {
           return {
-              tab: null,
+              title: this.$route.name,
+
+              active_tab: 0,
           };
       }
   }

@@ -16,14 +16,22 @@ export default new Router({
             component: Home,
         },
         {
+            name: 'Title',
             path: '/tabs',
-            component: Tabs
+            component: Tabs,
+            props: {
+                tabs: ['Sub 1', 'Sub 2' ,'Sub 3']
+            }
         },
         {
+            name: 'Title',
             path: '/tabs/:id',
             components: {
                 default: Tabs,
                 detail: Detail
+            },
+            props: {
+                default: {tabs: ['Sub 1', 'Sub 2' ,'Sub 3']}
             }
         },
     ]

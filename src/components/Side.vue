@@ -6,7 +6,7 @@
             clipped
             :right="this.$vuetify.breakpoint.xs"
             mobile-breakpoint="xs"
-            :mini-variant="this.$vuetify.breakpoint.smAndDown"
+            :mini-variant="this.$vuetify.breakpoint.mdAndDown"
             hide-overlay
     >
       <v-list dense>

@@ -1,9 +1,39 @@
 <template>
   <v-container>
-    <div class="text-right">
-      <v-btn @click="$router.push('/tabs')">취소</v-btn>
-      <v-btn>저장</v-btn>
-    </div>
+    <v-row>
+      <v-col cols="12" class="text-right">
+        <v-btn text @click="$router.push('/tabs')">닫기</v-btn>
+        <v-btn text>저장</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col
+              v-for="n in 9"
+              :key="n"
+              class="d-flex child-flex"
+              cols="4"
+      >
+        <v-img
+                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                aspect-ratio="1"
+                class="grey lighten-2"
+        >
+          <template v-slot:placeholder>
+            <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+            >
+              <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
