@@ -2,21 +2,23 @@
     <v-container fluid>
         <v-row no-gutters :justify="justify">
             <v-col class="text-left" :cols="defaultCols">
-                <div class="headline font-weight-bold">Title</div>
-                <div class="subtitle-1 mb-4">
-                    <span>{{subTitle}}</span>
-                </div>
+                <v-sheet max-width="500">
+                    <div class="headline font-weight-bold">Title</div>
+                    <div class="subtitle-1 mb-4">
+                        <span>{{subTitle}}</span>
+                    </div>
 
-                <v-alert class="mb-0" dense outlined type="error" dismissible>
-                    <strong>Main Warning</strong> (Reminder)
-                </v-alert>
-                <kpi-box/>
-                <v-tabs height="40">
-                    <v-tab v-for="(value, id) in tabs" :key="id" link :to="'/tabs/'+value">
-                        {{value}}
-                    </v-tab>
-                </v-tabs>
-                <tab-item/>
+                    <v-alert class="mb-0" dense outlined type="error" dismissible>
+                        <strong>Main Warning</strong> (Reminder)
+                    </v-alert>
+                    <kpi-box/>
+                    <v-tabs height="40">
+                        <v-tab v-for="(value, id) in tabs" :key="id" link :to="'/tabs/'+value">
+                            {{value}}
+                        </v-tab>
+                    </v-tabs>
+                    <tab-item/>
+                </v-sheet>
             </v-col>
             <v-col :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
                 <router-view/>

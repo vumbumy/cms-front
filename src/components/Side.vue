@@ -47,6 +47,37 @@
         </v-col>
       </v-row>
     </v-system-bar>
+
+    <v-snackbar app timeout="-1" v-model="snackbar" right bottom color="primary" vertical>
+<!--      <v-row no-gutters>-->
+<!--        <v-col class="text-right">-->
+<!--          <v-icon @click="snackbar = false">-->
+<!--            mdi-close-->
+<!--          </v-icon>-->
+<!--        </v-col>-->
+<!--      </v-row>-->
+      <v-row>
+        <v-col>
+          Guide Message
+        </v-col>
+      </v-row>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+                text
+                v-bind="attrs"
+                @click="snackbar = false"
+        >
+          OK
+        </v-btn>
+        <v-btn
+                text
+                v-bind="attrs"
+                @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -62,6 +93,7 @@
     },
     data: () => ({
       drawer: null,
+      snackbar: true,
       systemMsg: "<strong>System Error Message</strong><br>System Error Message",
     }),
   }
