@@ -1,48 +1,78 @@
 <template>
     <v-container fluid>
-        <v-row no-gutters>
-            <v-col class="text-left">
-                <div class="headline font-weight-bold">{{title}}</div>
-                <div class="subtitle-1 mb-4">{{title}} -> {{tabs[active_tab]}}</div>
+        <v-row no-gutters :justify="justify">
+            <v-col class="text-left" :cols="defaultCols">
+                <div class="headline font-weight-bold">Title</div>
+                <div class="subtitle-1 mb-4">
+                    <span>{{subTitle}}</span>
+                </div>
 
-                <v-alert
-                        dense
-                        outlined
-                        type="error"
-                >
-                    <strong>Main Warning</strong> (reminder)
+                <v-alert class="mb-0" dense outlined type="error">
+                    <strong>Main Warning</strong> (Reminder)
                 </v-alert>
                 <kpi-box/>
-                <v-tabs v-model="active_tab" height="40">
-                    <v-tab v-for="(value, id) in tabs" :key="id">
+                <v-tabs height="40">
+                    <v-tab v-for="(value, id) in tabs" :key="id" link :to="'/tabs/'+value">
                         {{value}}
                     </v-tab>
                 </v-tabs>
-                <list/>
+                <tab-item/>
+            </v-col>
+            <v-col :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
+                <router-view/>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-  import List from "./List";
+  import TabItem from "./TabItem";
   import KpiBox from "./KpiBox";
   export default {
-      components: {KpiBox, List},
-      props: {
-          tabs: {
-              type: Array,
-              default: function () {
-                  return []
-              }
-          }
-      },
+      components: {TabItem, KpiBox},
       data() {
           return {
-              title: this.$route.name,
-
-              active_tab: 0,
+              // active_tab: 0,
+              tabs: ['sub1', 'sub2' ,'sub3']
           };
-      }
+      },
+      mounted() {
+          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
+      },
+      updated() {
+          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
+      },
+      computed: {
+          subTitle(){
+              if(this.$route.params.sub)
+                  return this.$route.params.sub.toUpperCase()
+
+              return this.tabs[0].toUpperCase()
+          },
+          defaultCols() {
+              if(this.$vuetify.breakpoint.mdAndUp)
+                  return 6
+
+              return 12
+          },
+          detailCols(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 6
+
+              return 12
+          },
+          justify(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 'end'
+
+              return undefined
+          }
+      },
   }
 </script>
+
+<style lang="scss" scoped>
+    .detail{
+        position: absolute;
+    }
+</style>

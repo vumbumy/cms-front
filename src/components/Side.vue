@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <v-app-bar app clipped-left height="40" flat>
+      <v-toolbar-title>LOGO</v-toolbar-title>
+      <v-spacer/>
+      <v-app-bar-nav-icon
+              v-if="this.$vuetify.breakpoint.xs"
+              @click.stop="drawer = !drawer"/>
+    </v-app-bar>
+
     <v-navigation-drawer
             v-model="drawer"
             app
@@ -29,21 +37,34 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left height="40">
-      <v-toolbar-title>LOGO</v-toolbar-title>
-      <v-spacer/>
-      <v-app-bar-nav-icon
-              v-if="this.$vuetify.breakpoint.xs"
-              @click.stop="drawer = !drawer"/>
-    </v-app-bar>
+    <v-system-bar window app color="red" v-if="systemMsg" :height="barHeight">
+      <v-row justify="center">
+        <v-col class="white--text">
+          <strong v-for="(msg, index) in msgArray" :key="index">
+            <div v-html="msg"/>
+          </strong>
+        </v-col>
+        <v-col class="text-right" style="position: absolute">
+          <v-icon @click="systemMsg=null">mdi-close</v-icon>
+        </v-col>
+      </v-row>
+    </v-system-bar>
   </v-container>
-
 </template>
 
 <script>
   export default {
+    computed:{
+      msgArray(){
+        return this.systemMsg.split('<br>')
+      },
+      barHeight(){
+        return this.msgArray.length * 25
+      }
+    },
     data: () => ({
       drawer: null,
+      systemMsg: "<strong>System Error Message</strong><br>System Error Message",
     }),
   }
 </script>

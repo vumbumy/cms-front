@@ -1,44 +1,59 @@
 <template>
-    <v-main style="background: skyblue" class="my-0 py-5">
-        <v-container fluid>
-            <v-alert
-                    dense
-                    border="right"
-                    colored-border
-                    type="error"
-                    elevation="2"
-            >
-                <strong>System Error Message</strong>
-            </v-alert>
-            <v-row style="background: lightgreen" justify="end">
-                <v-col md="6" sm="12" xs="12">
-                    <router-view style="background: lightgray"/>
-                </v-col>
-    <!--            <v-overlay absolute v-if="this.$vuetify.breakpoint.smAndDown" v-model="detail">-->
-    <!--            <v-dialog v-if="this.$vuetify.breakpoint.smAndDown" v-model="detail" fullscreen>-->
-                <v-col md="6" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
-                    <v-slide-x-reverse-transition>
-                        <router-view name="detail" style="background: moccasin"/>
-                    </v-slide-x-reverse-transition>
-                </v-col>
-    <!--            </v-dialog>-->
-    <!--            </v-overlay>-->
-    <!--            <v-col v-else>-->
-    <!--                <router-view v-if="detail" name="detail" style="background: moccasin"/>-->
-    <!--            </v-col>-->
-            </v-row>
-        </v-container>
-    </v-main>
+    <v-container fluid class="ma-0 pa-0">
+<!--        <v-row :justify="justify">-->
+<!--            <v-col :cols="defaultCols">-->
+<!--                <v-sheet max-width="500">-->
+                    <router-view/>
+<!--                </v-sheet>-->
+<!--            </v-col>-->
+<!--            <v-col :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">-->
+<!--                <v-sheet :max-width="detailMaxWidth">-->
+<!--                    <router-view name="detail"/>-->
+<!--                </v-sheet>-->
+<!--            </v-col>-->
+<!--        </v-row>-->
+    </v-container>
 </template>
 
 <script>
   export default {
+      mounted() {
+          console.log(this.$options.components)
+          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
+      },
       updated() {
-          console.log(this.$vuetify.breakpoint.name)
+          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
       },
       data() {
           return {
+              dialog: true,
               detail: this.$route.params.id !== undefined
+          }
+      },
+      computed: {
+          defaultCols() {
+              if(this.$vuetify.breakpoint.mdAndUp)
+                  return 6
+
+              return 12
+          },
+          detailCols(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 6
+
+              return 12
+          },
+          detailMaxWidth(){
+              if(this.$vuetify.breakpoint.sm)
+                  return 500
+
+              return 1000
+          },
+          justify(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 'end'
+
+              return undefined
           }
       },
       watch: {

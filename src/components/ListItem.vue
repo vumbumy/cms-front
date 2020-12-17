@@ -1,5 +1,5 @@
 <template>
-    <v-list-item link to="/tabs/1">
+    <v-list-item link to="/tabs/sub1/1">
         <v-list-item-avatar
                 tile
                 size="80"
@@ -33,6 +33,8 @@
 
 <script>
     export default {
-
+        // mounted() {
+        //     console.log(this.$route.query.id)
+        // }
     }
 </script>

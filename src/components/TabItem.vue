@@ -1,8 +1,8 @@
 <template>
     <v-row>
         <v-col>
-            <v-alert dense outlined type="warning" border="left">
-                <strong>Section Warning</strong> (Notice)
+            <v-alert dense outlined type="warning" border="left" class="mb-2" v-for="(msg, index) in alertMsg" :key="index">
+                <div v-html="msg"/>
             </v-alert>
             <bar-chart style="background: dimgray"/>
             <v-row dense>
@@ -50,7 +50,10 @@
           active_chip: 0,
           chips: ['전체', '의정부', '최근 1주'],
           check: false,
-          dots: true
+          dots: true,
+          alertMsg: [
+              '<strong>Section Warning</strong> (Notice)'
+          ]
       }),
       methods: {
           color: function (index) {
