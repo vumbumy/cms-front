@@ -7,7 +7,7 @@
                     <span>{{subTitle}}</span>
                 </div>
 
-                <v-alert class="mb-0" dense outlined type="error">
+                <v-alert class="mb-0" dense outlined type="error" dismissible>
                     <strong>Main Warning</strong> (Reminder)
                 </v-alert>
                 <kpi-box/>

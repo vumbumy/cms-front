@@ -40,9 +40,7 @@
     <v-system-bar window app color="red" v-if="systemMsg" :height="barHeight">
       <v-row justify="center">
         <v-col class="white--text">
-          <strong v-for="(msg, index) in msgArray" :key="index">
-            <div v-html="msg"/>
-          </strong>
+          <div v-for="(msg, index) in msgArray" :key="index" v-html="msg"/>
         </v-col>
         <v-col class="text-right" style="position: absolute">
           <v-icon @click="systemMsg=null">mdi-close</v-icon>
