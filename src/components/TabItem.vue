@@ -10,21 +10,20 @@
                     <v-text-field prepend-icon="mdi-filter" placeholder="검색어" v-model="keyword"/>
                 </v-col>
             </v-row>
-            <v-row dense>
-                <v-col class="py-0">
-                    <v-chip v-for="(chip, index) in chips" :key="index" :color="color(index)" @click="onClickChip(index)" class="mr-1">
-                        {{chip}}
-                    </v-chip>
-                </v-col>
-            </v-row>
+            <v-chip-group multiple active-class="primary" v-model="active_tags">
+                <v-chip class="mr-1" @click="onClickAll">전체</v-chip>
+                <v-chip v-for="(tag, index) in tags" :key="index" class="mr-1" @click="onClickTag">
+                    {{tag}}
+                </v-chip>
+            </v-chip-group>
             <v-row justify="space-between">
                 <v-col class="text-left">
-                    <v-icon @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
-                    <v-icon @click="check=!check" v-else>mdi-check-box-outline</v-icon>
-                    <v-icon @click="$router.push('/tabs/0')">mdi-plus</v-icon>
-                    <v-icon @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>
-                    <v-icon v-if="!dots">mdi-refresh</v-icon>
-                    <v-icon v-if="!dots">mdi-download</v-icon>
+                    <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
+                    <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>
+                    <v-icon class="mr-2" @click="$router.push('/tabs/0')">mdi-plus</v-icon>
+                    <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>
+                    <v-icon class="mr-2" v-if="!dots">mdi-refresh</v-icon>
+                    <v-icon class="mr-2" v-if="!dots">mdi-download</v-icon>
                     <v-icon v-if="!dots">mdi-trash-can-outline</v-icon>
                 </v-col>
                 <v-col class="text-right">
@@ -47,22 +46,27 @@
       components: {BarChart, ListItem},
       data: () => ({
           keyword: "",
-          active_chip: 0,
-          chips: ['전체', '의정부', '최근 1주'],
+          active_tags: [],
+          tags: ['의정부', '최근 1주'],
           check: false,
           dots: true,
           alertMsg: [
               '<strong>Section Warning</strong> (Notice)'
-          ]
+          ],
+          refreshId: 0
       }),
       methods: {
-          color: function (index) {
-              if(index === this.active_chip)
-                  return 'primary'
+          onClickAll(){
+              let index = Object.values(this.active_tags).indexOf(0)
+              if (index === -1) {
+                  this.active_tags.splice(0, this.active_tags.length)
+              }
           },
-          onClickChip(index){
-              this.active_chip = index
-              // this.keyword = this.chips[index]
+          onClickTag(){
+              let index = Object.values(this.active_tags).indexOf(0)
+              if (index > -1) {
+                  this.active_tags.splice(index, 1)
+              }
           }
       }
   }

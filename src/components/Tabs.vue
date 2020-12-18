@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid>
-        <v-row no-gutters :justify="justify">
+    <v-container fluid class="ma-0 py-0">
+        <v-row dense :justify="justify">
             <v-col class="text-left" :cols="defaultCols">
                 <v-sheet max-width="500">
                     <div class="headline font-weight-bold">Title</div>
@@ -20,8 +20,10 @@
                     <tab-item/>
                 </v-sheet>
             </v-col>
-            <v-col :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
-                <router-view/>
+            <v-col v-if="$route.params.id" class="fill-height" :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
+                <v-sheet elevation="2" class="fill-height">
+                    <router-view/>
+                </v-sheet>
             </v-col>
         </v-row>
     </v-container>
@@ -64,7 +66,7 @@
               return 12
           },
           justify(){
-              if(this.$vuetify.breakpoint.smAndUp)
+              if(this.$vuetify.breakpoint.smAndDown)
                   return 'end'
 
               return undefined

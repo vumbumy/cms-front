@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <side/>
-    <v-main>
-      <router-view/>
+    <v-main style="background: skyblue">
+      <router-view style="background: lightgray"/>
     </v-main>
   </v-app>
 </template>

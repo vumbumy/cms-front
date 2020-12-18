@@ -1,10 +1,11 @@
 <template>
   <v-container fluid class="ma-0 py-0">
 <!--  <v-dialog v-model="dialog" overlay-opacity="0">-->
-    <v-sheet>
       <v-row no-gutters>
-        <v-col cols="12" class="text-right">
-          <v-btn text @click="$router.push('/tabs/sub1')">닫기</v-btn>
+        <v-col class="text-left">
+          <v-icon @click="$router.push('/tabs/sub1')">mdi-arrow-left</v-icon>
+        </v-col>
+        <v-col class="text-right">
           <v-btn text>저장</v-btn>
         </v-col>
       </v-row>
@@ -38,7 +39,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-    </v-sheet>
 <!--  </v-dialog>-->
   </v-container>
 </template>
