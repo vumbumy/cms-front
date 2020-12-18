@@ -13,16 +13,16 @@
                     </v-alert>
                     <kpi-box/>
                     <v-tabs height="40">
-                        <v-tab v-for="(value, id) in tabs" :key="id" link :to="'/tabs/'+value">
-                            {{value}}
+                        <v-tab v-for="(tab, index) in tabs" :key="index" link :to="`/tabs/${tab}`">
+                            {{tab}}
                         </v-tab>
                     </v-tabs>
-                    <tab-item/>
+                    <router-view/>
                 </v-sheet>
             </v-col>
             <v-col v-if="$route.params.id" class="fill-height" :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
                 <v-sheet elevation="2" class="fill-height">
-                    <router-view/>
+                    <router-view name="detail"/>
                 </v-sheet>
             </v-col>
         </v-row>
@@ -30,13 +30,11 @@
 </template>
 
 <script>
-  import TabItem from "./TabItem";
-  import KpiBox from "./KpiBox";
+  import KpiBox from "../../components/KpiBox";
   export default {
-      components: {TabItem, KpiBox},
+      components: {KpiBox},
       data() {
           return {
-              // active_tab: 0,
               tabs: ['sub1', 'sub2' ,'sub3']
           };
       },

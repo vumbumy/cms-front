@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import Side from "./components/Side";
+  import Side from "./views/Side";
 
   export default {
     name: 'App',

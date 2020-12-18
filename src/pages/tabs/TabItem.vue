@@ -32,18 +32,15 @@
                     <v-icon>mdi-chevron-right</v-icon>
                 </v-col>
             </v-row>
-            <v-card class="mx-auto" outlined>
-                <list-item/>
-            </v-card>
+            <router-view/>
         </v-col>
     </v-row>
 </template>
 
 <script>
-  import ListItem from "./ListItem";
-  import BarChart from "./BarChart";
+  import BarChart from "../../components/BarChart";
   export default {
-      components: {BarChart, ListItem},
+      components: {BarChart},
       data: () => ({
           keyword: "",
           active_tags: [],
