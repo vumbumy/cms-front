@@ -5,14 +5,20 @@
                 <div v-html="msg"/>
             </v-alert>
             <bar-chart style="background: dimgray"/>
-            <v-row dense>
-                <v-col class="py-0">
-                    <v-text-field prepend-icon="mdi-filter" placeholder="검색어" v-model="keyword"/>
+            <v-row no-gutters align="center">
+                <v-col class="pt-2" cols="2">
+                    <v-select dense flat solo prepend-inner-icon="mdi-clock"/>
+                </v-col>
+                <v-col class="pb-2" cols="8">
+                    <v-text-field dense prepend-icon="mdi-filter" placeholder="검색어" v-model="keyword"/>
+                </v-col>
+                <v-col class="pt-2" cols="2">
+                    <v-select dense flat solo prepend-inner-icon="mdi-table"/>
                 </v-col>
             </v-row>
             <v-chip-group multiple active-class="primary" v-model="active_tags">
-                <v-chip class="mr-1" @click="onClickAll">전체</v-chip>
-                <v-chip v-for="(tag, index) in tags" :key="index" class="mr-1" @click="onClickTag">
+                <v-chip class="py-0 my-0 mr-1" @click="onClickAll">전체</v-chip>
+                <v-chip class="mr-1 py-0 my-0" v-for="(tag, index) in tags" :key="index" @click="onClickTag">
                     {{tag}}
                 </v-chip>
             </v-chip-group>

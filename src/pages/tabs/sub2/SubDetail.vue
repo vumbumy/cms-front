@@ -39,7 +39,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-<!--  </v-dialog>-->
   </v-container>
 </template>
 

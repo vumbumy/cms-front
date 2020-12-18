@@ -20,8 +20,8 @@
                     <router-view/>
                 </v-sheet>
             </v-col>
-            <v-col v-if="$route.params.id" class="fill-height" :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.smAndDown}">
-                <v-sheet elevation="2" class="fill-height">
+            <v-col v-if="$route.params.id" class="fill-height" :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.mdAndDown}">
+                <v-sheet elevation="5" class="fill-height" max-width="600">
                     <router-view name="detail"/>
                 </v-sheet>
             </v-col>
@@ -35,7 +35,7 @@
       components: {KpiBox},
       data() {
           return {
-              tabs: ['sub1', 'sub2' ,'sub3']
+              tabs: ['sub1', 'sub2']
           };
       },
       mounted() {
@@ -52,19 +52,23 @@
               return this.tabs[0].toUpperCase()
           },
           defaultCols() {
-              if(this.$vuetify.breakpoint.mdAndUp)
+              if(this.$vuetify.breakpoint.lgAndUp)
                   return 6
 
               return 12
           },
           detailCols(){
-              if(this.$vuetify.breakpoint.smAndUp)
+              if(this.$vuetify.breakpoint.lgAndUp)
                   return 6
+              else if(this.$vuetify.breakpoint.md)
+                  return 7
+              else if(this.$vuetify.breakpoint.sm)
+                  return 10
 
               return 12
           },
           justify(){
-              if(this.$vuetify.breakpoint.smAndDown)
+              if(this.$vuetify.breakpoint.mdAndDown)
                   return 'end'
 
               return undefined
