@@ -1,9 +1,8 @@
 <template>
   <v-container fluid class="ma-0 py-0">
-<!--  <v-dialog v-model="dialog" overlay-opacity="0">-->
       <v-row no-gutters>
         <v-col class="text-left">
-          <v-icon @click="$router.push('/tabs/sub1')">mdi-arrow-left</v-icon>
+          <v-icon @click="$router.push('/tabs/sub2')">mdi-arrow-left</v-icon>
         </v-col>
         <v-col class="text-right">
           <v-btn text>저장</v-btn>
