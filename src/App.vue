@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <side/>
+    <app-side/>
 <!--    <v-main style="background: skyblue">-->
 <!--      <router-view style="background: lightgray"/>-->
 <!--    </v-main>-->
@@ -11,17 +11,13 @@
 </template>
 
 <script>
-  import Side from "./views/Side";
+  import AppSide from "./AppSide";
 
   export default {
     name: 'App',
     components: {
-      Side,
+      AppSide,
     },
-    // mounted() {
-    //   console.log(this.$vuetify.application)
-    //   console.log(this.$vuetify.application.top)
-    // }
   }
 </script>
 

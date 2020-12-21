@@ -3,7 +3,7 @@
         <v-row v-for="item in itemList" :key="item.id" dense>
             <v-col>
                 <v-card class="mx-auto" outlined>
-                    <v-list-item link :to="`/tabs/sub2/` + item.id">
+                    <v-list-item :to="`/tabs/sub2?id=` + item.id">
                         <v-list-item-avatar
                                 tile
                                 size="80"
