@@ -2,7 +2,7 @@
     <v-container fluid class="ma-0 py-0">
         <v-row dense :justify="justify">
             <v-col class="text-left" :cols="defaultCols">
-                <v-sheet max-width="500">
+                <v-sheet max-width="550" class="fill-height">
                     <div class="headline font-weight-bold">Title</div>
                     <div class="subtitle-1 mb-4">
                         <span>{{subTitle}}</span>
@@ -13,14 +13,19 @@
                     </v-alert>
                     <kpi-box/>
                     <v-tabs height="40">
-                        <v-tab v-for="(tab, index) in tabs" :key="index" link :to="`/tabs/${tab}`">
+                        <v-tab v-for="(tab, index) in tabs" :key="index" :to="`/tabs/${tab}`" @click="active_tab=index">
                             {{tab}}
                         </v-tab>
                     </v-tabs>
                     <router-view/>
                 </v-sheet>
             </v-col>
-            <v-col v-if="$route.params.id" class="fill-height" :cols="detailCols" :class="{detail: this.$vuetify.breakpoint.mdAndDown}">
+            <v-col
+                    v-if="$route.query.id"
+                    class="fill-height"
+                    :cols="detailCols"
+                    :class="{detail: this.$vuetify.breakpoint.mdAndDown}"
+            >
                 <v-sheet elevation="5" class="fill-height" max-width="600">
                     <router-view name="detail"/>
                 </v-sheet>
@@ -35,6 +40,7 @@
       components: {KpiBox},
       data() {
           return {
+              active_tab: 0,
               tabs: ['sub1', 'sub2']
           };
       },
@@ -46,10 +52,7 @@
       },
       computed: {
           subTitle(){
-              if(this.$route.params.sub)
-                  return this.$route.params.sub.toUpperCase()
-
-              return this.tabs[0].toUpperCase()
+              return this.tabs[this.active_tab].toUpperCase()
           },
           defaultCols() {
               if(this.$vuetify.breakpoint.lgAndUp)

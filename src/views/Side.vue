@@ -4,7 +4,7 @@
       <v-toolbar-title>LOGO</v-toolbar-title>
       <v-spacer/>
       <v-app-bar-nav-icon
-              v-if="this.$vuetify.breakpoint.xs"
+
               @click.stop="drawer = !drawer"/>
     </v-app-bar>
 
