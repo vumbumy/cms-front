@@ -68,54 +68,24 @@
 </template>
 
 <script>
-  export default {
-    computed:{
-      msgArray(){
-        return this.systemMsg.split('<br>')
-      },
-      barHeight(){
-        return this.msgArray.length * 25
-      }
-    },
-    data: () => ({
-      drawer: null,
-      snackbar: "Guide Message",
-      systemMsg: "<strong>System Error Message</strong><br>System Error Message",
+  import {defaultMenus} from "./menu";
 
-      menus: [
-          {
-              icon: 'mdi-view-quilt',
-              title: "홈(대시보드)",
-              path: "/"
+  export default {
+      computed:{
+          msgArray(){
+              return this.systemMsg.split('<br>')
           },
-          {
-              title: null,
-          },
-          {
-              icon: 'mdi-folder-multiple-image',
-              title: '광고 관리',
-              path: '/tabs'
-          },
-          {
-              icon: 'mdi-bulletin-board',
-              title: '상품 관리',
-              path: null
-          },
-          {
-              icon: 'mdi-tag',
-              title: "해시태그",
-              path: null
-          },
-          {
-              title: null,
-          },
-          {
-              icon: 'mdi-cog',
-              title: "설정",
-              path: "/setting"
-          },
-      ]
-    }),
+          barHeight(){
+              return this.msgArray.length * 25
+          }
+      },
+      data: () => ({
+          drawer: null,
+          snackbar: "Guide Message",
+          systemMsg: "<strong>System Error Message</strong><br>System Error Message",
+
+          menus: defaultMenus,
+      }),
   }
 </script>
 
