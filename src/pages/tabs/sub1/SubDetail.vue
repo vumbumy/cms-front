@@ -1,8 +1,9 @@
 <template>
-  <v-container fluid class="ma-0 py-0">
+  <v-container fluid class="ma-0">
       <v-row no-gutters>
         <v-col class="text-left">
-          <v-icon @click="$router.push('/tabs/sub1')">mdi-arrow-left</v-icon>
+            <v-icon v-if="$vuetify.breakpoint.xs" @click="onClickClose">mdi-arrow-left</v-icon>
+            <v-btn v-else @click="onClickClose" text>닫기</v-btn>
         </v-col>
         <v-col class="text-right">
           <v-btn text>저장</v-btn>
@@ -13,7 +14,8 @@
         <v-btn height="30">PERMISSION</v-btn>
       </v-col>
       <v-col class="text-right">
-        {{new Date().toISOString().split('T')[0]}}
+<!--        {{new Date().toISOString().split('T')[0]}}-->
+        {{dateToDateTime(new Date())}}
       </v-col>
     </v-row>
     <v-alert class="mb-1" dense outlined type="error" dismissible>
@@ -55,12 +57,19 @@
 
 <script>
   import Photo from "../../../components/Photo";
+  import {dateToDateTime} from "../../../scripts/util";
   export default {
     components: {Photo},
     data: () => ({
       dialog: true,
       tabs: ['ses x', 'ses y' ,'ses z']
-    })
+    }),
+    methods: {
+        onClickClose: function(){
+            this.$router.push('/tabs/sub1')
+        },
+      dateToDateTime: dateToDateTime
+    }
   }
 </script>
 
