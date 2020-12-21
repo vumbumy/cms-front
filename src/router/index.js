@@ -2,11 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from "../pages/Home";
 import Tabs from "../pages/tabs/Tabs";
-import TabItem from "../pages/tabs/TabItem";
+// import TabItem from "../pages/tabs/TabItem";
 import Sub1Detail from "../pages/tabs/sub1/SubDetail";
 import Sub2Detail from "../pages/tabs/sub2/SubDetail";
-import Sub1ListItem from "../pages/tabs/sub1/SubListItem";
-import Sub2ListItem from "../pages/tabs/sub2/SubListItem";
+// import Sub1ListItem from "../pages/tabs/sub1/Sub1ListItem";
+// import Sub2ListItem from "../pages/tabs/sub2/SubListItem";
+import Sub1Tab from "../pages/tabs/sub1/Sub1Tab";
+import Sub2Tab from "../pages/tabs/sub2/Sub2Tab";
+
 
 
 Vue.use(Router);
@@ -26,70 +29,23 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    component: TabItem,
-                    children: [
-                        {
-                            path: '',
-                            component: Sub1ListItem
-                        }
-                    ]
+                    component: Sub1Tab,
                 },
                 {
                     path: 'sub1',
                     components: {
-                        default: TabItem,
+                        default: Sub1Tab,
                         detail: Sub1Detail
                     },
-                    children: [
-                        {
-                            path: '',
-                            component: Sub1ListItem
-                        },
-                        {
-                            path: ':id',
-                            component: Sub1ListItem
-                        }
-                    ]
                 },
                 {
                     path: 'sub2',
                     components: {
-                        default: TabItem,
+                        default: Sub2Tab,
                         detail: Sub2Detail
                     },
-                    children: [
-                        {
-                            path: '',
-                            component: Sub2ListItem
-                        },
-                        {
-                            path: ':id',
-                            component: Sub2ListItem
-                        }
-                    ]
                 }
             ]
         },
-        // {
-        //     path: '/tabs/sub1',
-        //     components: {
-        //         default: Tabs,
-        //
-        //         tab: TabItem,
-        //         detail: SubDetail
-        //     },
-            // children: [
-            //     {
-            //         name: 'Sub 1',
-            //         path: ':id',
-            //         component: Detail
-            //     },
-                // {
-                //     name: 'None',
-                //     path: '',
-                //     component: Detail
-                // }
-            // ]
-        // }
     ]
 });

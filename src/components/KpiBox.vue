@@ -58,21 +58,5 @@
 </template>
 
 <script>
-  export default {
-      props: {
-          tabs: {
-              type: Array,
-              default: function () {
-                  return []
-              }
-          }
-      },
-      data() {
-          return {
-              title: this.$route.name,
-
-              active_tab: 0,
-          };
-      }
-  }
+  export default {}
 </script>
