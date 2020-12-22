@@ -25,14 +25,12 @@
     >
         <v-list dense>
             <v-list-item-group color="#00f">
-                <div v-for="menu in menus" :key="menu.title" :to="menu.path">
-                    <v-list-item v-if="menu.title" :to="menu.path" class="py-1">
+                <div v-for="menu in menus" :key="menu.name" :to="menu.path">
+                    <v-list-item v-if="menu.name" :to="menu.path" class="py-1">
                         <v-list-item-icon class="mr-2">
                             <v-icon size="20" v-text="menu.icon"/>
                         </v-list-item-icon>
-                        <v-list-item-subtitle class="text-left" v-text="menu.title"/>
-                        <!--              <v-icon size="20" class="mr-2">{{menu.icon}}</v-icon>{{menu.title}}-->
-                        <!--            </v-list-item-subtitle>-->
+                        <v-list-item-subtitle class="text-left" v-text="$t(menu.name)"/>
                     </v-list-item>
                     <v-divider v-else class="py-0 my-0"/>
                 </div>
@@ -71,6 +69,14 @@
   import {defaultMenus} from "./menu";
 
   export default {
+      data: () => ({
+          drawer: null,
+          snackbar: "Guide Message",
+          systemMsg: "<strong>System Error Message</strong><br>System Error Message",
+
+          menus: defaultMenus,
+      }),
+
       computed:{
           msgArray(){
               return this.systemMsg.split('<br>')
@@ -79,13 +85,9 @@
               return this.msgArray.length * 25
           }
       },
-      data: () => ({
-          drawer: null,
-          snackbar: "Guide Message",
-          systemMsg: "<strong>System Error Message</strong><br>System Error Message",
-
-          menus: defaultMenus,
-      }),
+      mounted() {
+          console.log(this.menus)
+      }
   }
 </script>
 
