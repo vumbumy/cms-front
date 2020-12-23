@@ -1,6 +1,6 @@
 <template>
     <v-card class="mx-auto" outlined>
-        <v-list-item link :to="`/tabs/sub1?id=` + item.id">
+        <v-list-item link :to="{ query: {id: item.id} }">
             <v-list-item-avatar
                     tile
                     size="80"

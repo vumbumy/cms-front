@@ -4,17 +4,11 @@
             <div v-html="msg"/>
         </v-alert>
         <bar-chart style="background: dimgray"/>
-        <v-row no-gutters align="center">
-            <v-col class="pt-2" cols="2">
-                <v-select dense flat solo prepend-inner-icon="mdi-clock"/>
-            </v-col>
-            <v-col class="pb-2" cols="10" sm="8">
-                <v-text-field dense prepend-icon="mdi-filter" placeholder="검색어" v-model="keyword"/>
-            </v-col>
-            <v-col class="pt-2" cols="2" v-if="$vuetify.breakpoint.smAndUp">
-                <v-select dense flat solo prepend-inner-icon="mdi-table"/>
-            </v-col>
-        </v-row>
+        <sort-search-view
+            @search="onSearch"
+            @update_order="onUpdateOrder"
+            @update_view="onUpdateView"
+        />
         <v-chip-group multiple active-class="primary" v-model="active_tags">
             <v-chip class="py-0 my-0 mr-1" @click="onClickAll">전체</v-chip>
             <v-chip class="mr-1 py-0 my-0" v-for="(tag, index) in tags" :key="index" @click="onClickTag">
@@ -37,7 +31,14 @@
                 <v-icon>mdi-chevron-right</v-icon>
             </v-col>
         </v-row>
-        <sub2-list-item/>
+        <v-row v-for="item in items" :key="item.id" dense>
+            <v-col v-if="isCardView">
+                <sub2-list-item :item="item"/>
+            </v-col>
+            <v-col v-else>
+                <item-table/>
+            </v-col>
+        </v-row>
     </v-sheet>
 </template>
 
@@ -45,14 +46,19 @@
 
     import BarChart from "../../../components/BarChart";
     import Sub2ListItem from "./Sub2ListItem";
+    import SortSearchView from "../../../components/SortSearchView";
+    import ItemTable from "../../../components/ItemTable";
 
     export default {
         components: {
+            ItemTable,
+            SortSearchView,
             Sub2ListItem,
             BarChart
         },
         data: () => ({
-            keyword: "",
+            // keyword: "",
+            isCardView: true,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
             check: false,
@@ -60,7 +66,23 @@
             alertMsg: [
                 '<strong>Section Warning</strong> (Notice)'
             ],
-            refreshId: 0
+            // refreshId: 0,
+            items: [
+                {
+                    id: 1,
+                    label: "LABEL1",
+                    title: "TITLE1",
+                    info: "INFO1",
+                    value: "10"
+                },
+                {
+                    id: 2,
+                    label: "LABEL2",
+                    title: "TITLE2",
+                    info: "INFO2",
+                    value: "20"
+                }
+            ]
         }),
         methods: {
             onClickAll(){
@@ -74,6 +96,15 @@
                 if (index > -1) {
                     this.active_tags.splice(index, 1)
                 }
+            },
+            onSearch: function(param){
+                console.log(param)
+            },
+            onUpdateView: function (param) {
+                this.isCardView = param
+            },
+            onUpdateOrder: function (param) {
+                console.log(param)
             }
         }
     }

@@ -1,20 +1,11 @@
 <template>
-  <v-container fluid class="ma-0">
-      <v-row no-gutters>
-        <v-col class="text-left">
-            <v-icon v-if="$vuetify.breakpoint.xs" @click="onClickClose">mdi-arrow-left</v-icon>
-            <v-btn v-else @click="onClickClose" text>닫기</v-btn>
-        </v-col>
-        <v-col class="text-right">
-          <v-btn text>저장</v-btn>
-        </v-col>
-      </v-row>
+    <v-container fluid class="ma-0">
+        <close-edit-save/>
     <v-row align="center">
       <v-col class="text-left">
         <v-btn height="30">PERMISSION</v-btn>
       </v-col>
       <v-col class="text-right">
-<!--        {{new Date().toISOString().split('T')[0]}}-->
         {{dateToDateTime(new Date())}}
       </v-col>
     </v-row>
@@ -56,21 +47,23 @@
 </template>
 
 <script>
-  import Photo from "../../../components/Photo";
-  import {dateToDateTime} from "../../../scripts/util";
-  export default {
-    components: {Photo},
-    data: () => ({
-      dialog: true,
-      tabs: ['ses x', 'ses y' ,'ses z']
-    }),
-    methods: {
-        onClickClose: function(){
-            this.$router.push('/tabs/sub1')
+    import Photo from "../../../components/Photo";
+    import {dateToDateTime} from "../../../scripts/util";
+    import CloseEditSave from "../../../components/CloseEditSave";
+
+    export default {
+        components: {CloseEditSave, Photo},
+        data: () => ({
+            dialog: true,
+            tabs: ['ses x', 'ses y' ,'ses z']
+        }),
+        mounted() {
+            console.log(this.$route)
         },
-      dateToDateTime: dateToDateTime
+        methods: {
+            dateToDateTime: dateToDateTime
+        }
     }
-  }
 </script>
 
 <!--<style lang="scss" scoped>-->
