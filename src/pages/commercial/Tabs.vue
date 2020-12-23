@@ -14,7 +14,7 @@
                         <v-tab
                                 v-for="(tab, index) in tabs"
                                 :key="index"
-                                :to="`/commercial/${tab.path}`"
+                                :to="`/${parent}/${tab.path}`"
                                 v-text="$t(tab.path)"
                         />
                     </v-tabs>
@@ -65,6 +65,9 @@
       updated() {
           console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
       },
+      watch: {
+          parent() {this.updateTabs()}
+      },
       computed: {
           parent(){
               return this.$route.matched[0].name
@@ -90,8 +93,17 @@
                   return 'end'
 
               return undefined
-          }
+          },
       },
+      methods: {
+          updateTabs: function(){
+              this.tabs = []
+
+              let children = searchChildren(this.parent)
+              for(let child of children)
+                  if(child.path !== '') this.tabs.push(child)
+          }
+      }
   }
 </script>
 
