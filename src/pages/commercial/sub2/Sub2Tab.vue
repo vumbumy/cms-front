@@ -15,54 +15,35 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <v-row justify="space-between">
-            <v-col class="text-left">
-                <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
-                <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>
-                <v-icon class="mr-2" @click="$router.push('/tabs/0')">mdi-plus</v-icon>
-                <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-refresh</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-download</v-icon>
-                <v-icon v-if="!dots">mdi-trash-can-outline</v-icon>
-            </v-col>
-            <v-col class="text-right">
-                15 of 200
-                <v-icon>mdi-chevron-left</v-icon>
-                <v-icon>mdi-chevron-right</v-icon>
-            </v-col>
-        </v-row>
-        <v-row v-for="item in items" :key="item.id" dense>
-            <v-col v-if="isCardView">
+        <list-view :items="items" :view="view">
+            <template v-slot:item="{item}">
                 <sub2-list-item :item="item"/>
-            </v-col>
-            <v-col v-else>
-                <item-table/>
-            </v-col>
-        </v-row>
+            </template>
+        </list-view>
     </v-sheet>
 </template>
 
 <script>
 
     import BarChart from "../../../components/BarChart";
-    import Sub2ListItem from "./Sub2ListItem";
     import SortSearchView from "../../../components/SortSearchView";
-    import ItemTable from "../../../components/ItemTable";
+    import ListView from "../../../components/layouts/ListView";
+    import {CARD_VIEW} from "../../../scripts/const";
+    import Sub2ListItem from "./Sub2ListItem";
+
 
     export default {
         components: {
-            ItemTable,
-            SortSearchView,
             Sub2ListItem,
+            ListView,
+            SortSearchView,
             BarChart
         },
         data: () => ({
             // keyword: "",
-            isCardView: true,
+            view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
-            check: false,
-            dots: true,
             alertMsg: [
                 '<strong>Section Warning</strong> (Notice)'
             ],
@@ -101,7 +82,7 @@
                 console.log(param)
             },
             onUpdateView: function (param) {
-                this.isCardView = param
+                this.view = param
             },
             onUpdateOrder: function (param) {
                 console.log(param)

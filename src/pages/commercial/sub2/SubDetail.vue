@@ -1,50 +1,57 @@
 <template>
-  <v-container fluid class="ma-0 py-0">
-    <v-row no-gutters>
-      <v-col class="text-left">
-        <v-icon @click="$router.push('/tabs/sub2')">mdi-arrow-left</v-icon>
-      </v-col>
-      <v-col class="text-right">
-        <v-btn text>저장</v-btn>
-      </v-col>
-    </v-row>
-    <v-card-text>
-      <v-row dense>
-        <v-col
-                v-for="n in 9"
-                :key="n"
-                class="d-flex child-flex"
-                cols="4"
-        >
-          <v-img
-                  :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-              >
-                <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-container>
+    <v-container fluid class="ma-0 pa-0">
+        <v-row no-gutters>
+            <v-col cols="12" sm="6">
+                <photo/>
+            </v-col>
+            <v-col cols="12" sm="5">
+                <v-text-field label="NAME"/>
+                <v-text-field label="DESCRIPTION"/>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-expansion-panels flat dark>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header color="#666">ADVANCED</v-expansion-panel-header>
+                        <v-expansion-panel-content color="#999">
+                            <v-text-field label="A"/>
+                            <v-text-field label="B"/>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </v-col>
+        </v-row>
+        <v-row dense>
+            <v-col>
+                <v-tabs height="40" grow>
+                    <v-tab v-for="(tab, index) in tabs" :key="index">
+                        {{tab}}
+                    </v-tab>
+                </v-tabs>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      dialog: true
-    })
-  }
+    import Photo from "../../../components/Photo";
+
+    export default {
+        components: {Photo},
+        data: () => ({
+            dialog: true,
+            tabs: ['ses x', 'ses y' ,'ses z']
+        }),
+        mounted() {
+            console.log(this.$route)
+        },
+
+    }
 </script>
+
+<!--<style lang="scss" scoped>-->
+<!--  .v-tab{-->
+<!--    font-size: 5px;-->
+<!--  }-->
+<!--</style>-->

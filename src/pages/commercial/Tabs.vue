@@ -28,7 +28,11 @@
                     :class="{detail: this.$vuetify.breakpoint.mdAndDown}"
             >
                 <v-sheet elevation="5" class="fill-height" max-width="600">
-                    <router-view name="detail"/>
+                    <detail-view>
+                        <template v-slot:detail>
+                            <router-view name="detail"/>
+                        </template>
+                    </detail-view>
                 </v-sheet>
             </v-col>
         </v-row>
@@ -38,8 +42,9 @@
 <script>
   import KpiBox from "../../components/KpiBox";
   import {searchChildren} from "../../menu";
+  import DetailView from "../../components/layouts/DetailView";
   export default {
-      components: {KpiBox},
+      components: {DetailView, KpiBox},
       data() {
           return {
               active_tab: 0,

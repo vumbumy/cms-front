@@ -19,11 +19,7 @@
 
 <script>
     import IconSelect from "./IconSelect";
-
-    const TABLE_KEY = "TABLE"
-    const CARD_KEY = "CARD"
-    const TIME_KEY = "TIME"
-    const DICT_KEY = "DICT"
+    import {DICT_ORDER, TIME_ORDER, CARD_VIEW, TABLE_VIEW} from "../scripts/const";
 
     export default {
 
@@ -33,23 +29,23 @@
                 this.$emit('search', this.keyword)
             },
             sort_icon(){
-                this.$emit('update_order', this.sorts[this.sort_icon] === TIME_KEY)
+                this.$emit('update_order', this.sorts[this.sort_icon])
             },
             view_icon(){
-                this.$emit('update_view', this.views[this.view_icon] === CARD_KEY)
+                this.$emit('update_view', this.views[this.view_icon])
             }
         },
         data: () => ({
             keyword: "",
             sort_icon:'mdi-clock',
             sorts: {
-                'mdi-clock': TIME_KEY,
-                'mdi-sort-variant': DICT_KEY,
+                'mdi-clock': TIME_ORDER,
+                'mdi-sort-variant': DICT_ORDER,
             },
             view_icon: "mdi-cards-variant",
             views: {
-                'mdi-cards-variant': CARD_KEY,
-                'mdi-table': TABLE_KEY,
+                'mdi-cards-variant': CARD_VIEW,
+                'mdi-table': TABLE_VIEW,
             }
         })
     }

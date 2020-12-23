@@ -15,7 +15,7 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <v-row justify="space-between">
+        <v-row>
             <v-col class="text-left">
                 <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
                 <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>
@@ -35,30 +35,30 @@
             <v-col v-if="isCardView">
                 <sub1-list-item :item="item"/>
             </v-col>
-            <v-col v-else>
-                <item-table/>
+            <v-col v-else-if="isTableView">
+                <table-view/>
             </v-col>
         </v-row>
     </v-sheet>
 </template>
 
 <script>
-
-    import ItemTable from "../../../components/ItemTable";
+    import TableView from "../../../components/TableView";
     import BarChart from "../../../components/BarChart";
     import Sub1ListItem from "./Sub1ListItem";
     import SortSearchView from "../../../components/SortSearchView";
+    import {CARD_VIEW, TABLE_VIEW} from "../../../scripts/const";
 
     export default {
         components: {
+            TableView,
             SortSearchView,
             Sub1ListItem,
             BarChart,
-            ItemTable
         },
         data: () => ({
             // keyword: "",
-            isCardView: true,
+            view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
             check: false,
@@ -77,6 +77,14 @@
                 }
             ],
         }),
+        computed: {
+            isCardView(){
+                return this.view === CARD_VIEW
+            },
+            isTableView(){
+                return this.view === TABLE_VIEW
+            }
+        },
         methods: {
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)
@@ -94,7 +102,7 @@
                 console.log(param)
             },
             onUpdateView: function (param) {
-                this.isCardView = param
+                this.view = param
             },
             onUpdateOrder: function (param) {
                 console.log(param)
