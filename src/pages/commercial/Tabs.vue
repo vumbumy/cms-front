@@ -1,50 +1,42 @@
 <template>
-    <v-container fluid class="ma-0 py-0">
-        <v-row dense :justify="justify">
-            <v-col class="text-left" :cols="defaultCols">
-                <v-sheet max-width="550" class="fill-height">
-                    <div class="headline font-weight-bold" v-text="$t(parent)"/>
-                    <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
+    <v-container fluid class="ma-0 pa-0 d-flex flex-column">
+        <v-sheet class="col-12 col-sm-6 text-left fill-height" :min-width="defaultMinWidth" max-width="550">
+            <div class="headline font-weight-bold" v-text="$t(parent)"/>
+            <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
 
-                    <v-alert class="mb-0" dense outlined type="error" dismissible>
-                        <strong>Main Warning</strong> (Reminder)
-                    </v-alert>
-                    <kpi-box/>
-                    <v-tabs height="40">
-                        <v-tab
-                                v-for="(tab, index) in tabs"
-                                :key="index"
-                                :to="`/${parent}/${tab.path}`"
-                                v-text="$t(tab.path)"
-                        />
-                    </v-tabs>
-                    <router-view/>
-                </v-sheet>
-            </v-col>
-            <v-col
-                    v-if="$route.query.id"
-                    class="fill-height"
-                    :cols="detailCols"
-                    :class="{detail: this.$vuetify.breakpoint.mdAndDown}"
-            >
-                <v-sheet elevation="5" class="fill-height" max-width="600">
-                    <detail-view>
-                        <template v-slot:detail>
-                            <router-view name="detail"/>
-                        </template>
-                    </detail-view>
-                </v-sheet>
-            </v-col>
-        </v-row>
+            <v-alert class="mb-0" dense outlined type="error" dismissible>
+                <strong>Main Warning</strong> (Reminder)
+            </v-alert>
+            <kpi-box/>
+            <v-tabs>
+                <v-tab
+                    v-for="(tab, index) in tabs"
+                    :key="index"
+                    :to="`/${parent}/${tab.path}`"
+                    v-text="$t(tab.path)"
+                />
+            </v-tabs>
+            <router-view/>
+        </v-sheet>
+        <v-sheet
+            v-if="$route.query.id"
+            class="v-overlay--absolute col-12 col-sm-6 align-self-end"
+            :class="{'detail': $vuetify.breakpoint.smAndUp}"
+
+            :min-width="detailMinWidth"
+            :elevation="detailElevation"
+        >
+            <router-view name="detail"/>
+        </v-sheet>
     </v-container>
 </template>
 
 <script>
   import KpiBox from "../../components/KpiBox";
   import {searchChildren} from "../../menu";
-  import DetailView from "../../components/layouts/DetailView";
+
   export default {
-      components: {DetailView, KpiBox},
+      components: {KpiBox},
       data() {
           return {
               active_tab: 0,
@@ -59,11 +51,10 @@
           console.log(this.tabs)
       },
       mounted() {
-
-          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
+          console.log(this.$vuetify.breakpoint.name)
       },
       updated() {
-          console.log(this.$vuetify.breakpoint.name, this.defaultCols, this.detailCols, this.justify)
+          console.log(this.$vuetify.breakpoint.name)
       },
       watch: {
           parent() {this.updateTabs()}
@@ -72,28 +63,46 @@
           parent(){
               return this.$route.matched[0].name
           },
-          defaultCols() {
-              if(this.$vuetify.breakpoint.lgAndUp)
-                  return 6
+          // defaultCols() {
+          //     if(this.$vuetify.breakpoint.lgAndUp)
+          //         return 6
+          //
+          //     return 12
+          // },
+          // detailCols(){
+          //     if(this.$vuetify.breakpoint.lgAndUp)
+          //         return 6
+          //     else if(this.$vuetify.breakpoint.md)
+          //         return 7
+          //     else if(this.$vuetify.breakpoint.sm)
+          //         return 10
+          //
+          //     return 12
+          // },
+          // justify(){
+          //     if(this.$vuetify.breakpoint.mdAndDown)
+          //         return 'end'
+          //
+          //     return undefined
+          // },
+          defaultMinWidth(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 500
 
-              return 12
+              return 0
           },
-          detailCols(){
-              if(this.$vuetify.breakpoint.lgAndUp)
-                  return 6
-              else if(this.$vuetify.breakpoint.md)
-                  return 7
-              else if(this.$vuetify.breakpoint.sm)
-                  return 10
+          detailMinWidth(){
+              if(this.$vuetify.breakpoint.smAndUp)
+                  return 550
 
-              return 12
+              return 0
           },
-          justify(){
+          detailElevation(){
               if(this.$vuetify.breakpoint.mdAndDown)
-                  return 'end'
+                  return 5
 
-              return undefined
-          },
+              return 0
+          }
       },
       methods: {
           updateTabs: function(){
@@ -110,5 +119,6 @@
 <style lang="scss" scoped>
     .detail{
         position: absolute;
+        height: 100%;
     }
 </style>

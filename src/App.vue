@@ -1,23 +1,32 @@
 <template>
-  <v-app>
-    <app-side/>
-<!--    <v-main style="background: skyblue">-->
-<!--      <router-view style="background: lightgray"/>-->
-<!--    </v-main>-->
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+    <v-app>
+        <app-top @toggle="onClickNavIcon"/>
+        <app-side v-model="drawer"/>
+        <v-main>
+            <router-view/>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
   import AppSide from "./AppSide";
+  import AppTop from "./AppTop";
 
   export default {
-    name: 'App',
-    components: {
-      AppSide,
-    },
+      name: 'App',
+      components: {
+          AppTop,
+          AppSide,
+      },
+      data: () => ({
+          drawer: null
+      }),
+      methods: {
+          onClickNavIcon(){
+              this.drawer = !this.drawer
+              // console.log('onClickNavIcon', this.drawer)
+          }
+      }
   }
 </script>
 

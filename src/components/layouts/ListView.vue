@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="ma-0 pa-0">
+    <div>
         <v-row>
             <v-col class="text-left">
                 <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
@@ -32,7 +32,7 @@
                 </v-col>
             </v-row>
         </div>
-    </v-container>
+    </div>
 </template>
 
 <script>

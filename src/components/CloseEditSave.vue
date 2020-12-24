@@ -8,6 +8,8 @@
         </v-col>
         <v-col class="text-right">
             <v-btn text icon>저장</v-btn>
+            <v-btn text icon>취소</v-btn>
+            <v-btn text icon>삭제</v-btn>
         </v-col>
     </v-row>
 </template>

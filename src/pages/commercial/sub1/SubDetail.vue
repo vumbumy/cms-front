@@ -1,5 +1,17 @@
 <template>
-    <v-container fluid class="ma-0 pa-0">
+    <v-container>
+        <close-edit-save/>
+        <v-row>
+            <v-col class="text-left">
+                <permissions/>
+            </v-col>
+            <v-col class="text-right">
+                {{dateToDateTime(new Date())}}
+            </v-col>
+        </v-row>
+        <v-alert class="mb-1" dense outlined type="error" dismissible>
+            <strong>Main Warning</strong> (Reminder)
+        </v-alert>
         <v-row dense>
             <v-col cols="12" sm="6">
                 <photo/>
@@ -9,7 +21,7 @@
                 <v-text-field label="DESCRIPTION"/>
             </v-col>
         </v-row>
-        <v-row>
+        <v-row dense>
             <v-col>
                 <v-expansion-panels flat dark>
                     <v-expansion-panel>
@@ -24,7 +36,7 @@
         </v-row>
         <v-row dense>
             <v-col>
-                <v-tabs height="40" grow>
+                <v-tabs grow>
                     <v-tab v-for="(tab, index) in tabs" :key="index">
                         {{tab}}
                     </v-tab>
@@ -36,9 +48,16 @@
 
 <script>
     import Photo from "../../../components/Photo";
+    import CloseEditSave from "../../../components/CloseEditSave";
+
+    import Permissions from "../../../components/Permissions";
+    import {dateToDateTime} from "../../../scripts/util";
 
     export default {
-        components: {Photo},
+        components: {
+            Permissions,
+            CloseEditSave,
+            Photo},
         data: () => ({
             dialog: true,
             tabs: ['ses x', 'ses y' ,'ses z']
@@ -46,7 +65,9 @@
         mounted() {
             console.log(this.$route)
         },
-
+        methods: {
+            dateToDateTime: dateToDateTime
+        }
     }
 </script>
 

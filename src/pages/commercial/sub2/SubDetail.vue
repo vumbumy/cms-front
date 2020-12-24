@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid class="ma-0 pa-0">
-        <v-row no-gutters>
+    <v-container>
+        <v-row dense>
             <v-col cols="12" sm="6">
                 <photo/>
             </v-col>
