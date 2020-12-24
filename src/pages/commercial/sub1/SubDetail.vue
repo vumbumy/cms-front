@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <div>
         <close-edit-save/>
         <v-row>
             <v-col class="text-left">
@@ -43,7 +43,7 @@
                 </v-tabs>
             </v-col>
         </v-row>
-    </v-container>
+    </div>
 </template>
 
 <script>

@@ -21,6 +21,7 @@
                         </v-list-item>
                         <v-divider v-else class="py-0 my-0"/>
                     </div>
+                    <log-out/>
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
@@ -43,8 +44,10 @@
 
 <script>
   import {defaultMenus} from "./menu";
+  import LogOut from "./components/LogOut";
 
   export default {
+      components: {LogOut},
       props: {
           value: Boolean
       },

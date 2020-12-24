@@ -1,13 +1,20 @@
 <template>
     <div>
         <v-app-bar app clipped-left height="40" flat class="mx-0 px-0" outlined style="background: white">
-            <!--        <v-img :src="require('../assets/logo.png')" contain max-height="40"/>-->
             <v-img src="https://naim.ai/img/logo.png" max-width="40" contain/><div class="mx-1">|</div><b>ad</b>
 
             <v-spacer/>
-            <div>
-                Hello! <b>Tester</b>
-            </div>
+            Hello,
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn class="px-0" v-bind="attrs" v-on="on" text rounded>
+                        <b>Tester</b>
+                    </v-btn>
+                </template>
+                <v-list dense>
+                    <log-out/>
+                </v-list>
+            </v-menu>
             <v-app-bar-nav-icon
                 v-if="$vuetify.breakpoint.xs"
                 @click.stop="$emit('toggle')"/>
@@ -27,7 +34,9 @@
 </template>
 
 <script>
+  import LogOut from "./components/LogOut";
   export default {
+      components: {LogOut},
       data: () => ({
           systemMsg: "<strong>System Error Message</strong><br>System Error Message",
       }),
