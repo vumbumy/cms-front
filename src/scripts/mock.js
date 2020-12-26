@@ -7,6 +7,8 @@ export function sampleTextList(offset = 0) {
 
     return SAMPLE_TEXT.split(' ').slice(start, end)
 }
-export function sampleTextListLength() {
-    return SAMPLE_TEXT.split(' ').length
+export function sampleTextListLength(offset) {
+    let start = offset * ITEMS_PER_PAGE
+
+    return SAMPLE_TEXT.split(' ').splice(start).length
 }

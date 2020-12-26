@@ -2,7 +2,6 @@
     <div>
         <v-app-bar app clipped-left height="40" flat class="mx-0 px-0" outlined style="background: white">
             <v-img src="https://naim.ai/img/logo.png" max-width="40" contain/><div class="mx-1">|</div><b>ad</b>
-
             <v-spacer/>
             Hello,
             <v-menu offset-y>

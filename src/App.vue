@@ -2,7 +2,7 @@
     <v-app>
         <app-top @toggle="onClickNavIcon"/>
         <app-side v-model="drawer"/>
-        <v-main>
+        <v-main style="height: 100vh;" class="overflow-y-hidden">
             <router-view/>
         </v-main>
     </v-app>

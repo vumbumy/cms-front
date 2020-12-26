@@ -67,9 +67,3 @@
         }
     }
 </script>
-
-<!--<style lang="scss" scoped>-->
-<!--  .v-tab{-->
-<!--    font-size: 5px;-->
-<!--  }-->
-<!--</style>-->

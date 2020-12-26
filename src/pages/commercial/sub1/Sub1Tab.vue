@@ -69,8 +69,8 @@
                 let items = []
                 let textList = sampleTextList(this.page)
 
-                for(let i=0; i<ITEMS_PER_PAGE; i++){
-                    let id = this.page * ITEMS_PER_PAGE + i
+                for(let i=0; i<textList.length; i++){
+                    let id = this.page * ITEMS_PER_PAGE + i + 1
                     items.push(
                         {
                             id: id,

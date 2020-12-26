@@ -3,7 +3,7 @@
         <v-alert dense outlined type="warning" border="left" class="mb-2" v-for="(msg, index) in alertMsg" :key="index" dismissible>
             <div v-html="msg"/>
         </v-alert>
-        <bar-chart style="background: dimgray"/>
+        <bar-chart/>
         <sort-search-view
             @search="onSearch"
             @update_order="onUpdateOrder"
@@ -15,7 +15,13 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <list-view :items="items" :view="view">
+        <list-view
+            v-model="page"
+            :headers="headers"
+            :items="items"
+            :view="view"
+            :items-length="itemsLength"
+        >
             <template v-slot:item="{item}">
                 <sub2-list-item :item="item"/>
             </template>
@@ -28,7 +34,8 @@
     import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
     import ListView from "../../../components/layouts/ListView";
-    import {CARD_VIEW} from "../../../scripts/const";
+    import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
+    import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
     import Sub2ListItem from "./Sub2ListItem";
 
 
@@ -40,31 +47,49 @@
             BarChart
         },
         data: () => ({
-            // keyword: "",
             view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
             alertMsg: [
                 '<strong>Section Warning</strong> (Notice)'
             ],
-            // refreshId: 0,
-            items: [
-                {
-                    id: 1,
-                    label: "LABEL1",
-                    title: "TITLE1",
-                    info: "INFO1",
-                    value: "10"
-                },
-                {
-                    id: 2,
-                    label: "LABEL2",
-                    title: "TITLE2",
-                    info: "INFO2",
-                    value: "20"
-                }
-            ]
+            headers: [
+                { value: 'check' },
+                { text: '#', value: 'id' },
+                { text: 'Name', value: 'name' },
+                { text: 'Type', value: 'type' },
+                { text: 'Description', value: 'description' },
+                { text: 'Stock', value: 'stock' },
+            ],
+            page: 0,
+
+            offset: 7
         }),
+        computed: {
+            items() {
+                let items = []
+                let textList = sampleTextList(this.page + this.offset)
+
+                for(let i=0; i<textList.length; i++){
+                    let id = this.page * ITEMS_PER_PAGE + i + 1
+                    items.push(
+                        {
+                            id: id,
+                            name: textList[i],
+                            type: textList[i],
+                            description: textList[i],
+                            stock: i % 10 * 10,
+                            check: false
+                        }
+                    )
+                }
+
+                return items
+            },
+            itemsLength() {
+                return sampleTextListLength(this.offset)
+            }
+        },
         methods: {
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)

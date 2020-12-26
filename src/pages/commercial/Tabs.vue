@@ -1,9 +1,10 @@
 <template>
-    <div class="d-flex flex-column">
+    <div class="d-flex fill-height">
         <v-sheet
-            class="col-12 col-sm-6 text-left fill-height"
+            class="col-12 col-sm-6 text-left"
             :min-width="defaultMinWidth"
             max-width="550"
+            style="overflow-y: auto"
         >
             <div class="headline font-weight-bold" v-text="$t(parent)"/>
             <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
@@ -24,8 +25,8 @@
         </v-sheet>
         <v-sheet
             v-if="$route.query.id"
-            class="v-overlay--absolute col-12 col-sm-6 align-self-end fill-height"
-            :class="{'detail': $vuetify.breakpoint.smAndUp}"
+            class="col-12 col-sm-6 fill-height"
+            style="position: absolute; overflow-y: auto; top:0; right: 0"
 
             :min-width="detailMinWidth"
             :elevation="detailElevation"
@@ -40,7 +41,9 @@
   import {searchChildren} from "../../menu";
 
   export default {
-      components: {KpiBox},
+      components: {
+          KpiBox
+      },
       data() {
           return {
               active_tab: 0,
@@ -93,14 +96,7 @@
               let children = searchChildren(this.parent)
               for(let child of children)
                   if(child.path !== '') this.tabs.push(child)
-          }
+          },
       }
   }
 </script>
-
-<style lang="scss" scoped>
-    .detail{
-        position: absolute;
-        height: 100%;
-    }
-</style>
