@@ -52,6 +52,30 @@ export default new Router({
             ]
         },
         {
+            name: "logs",
+            path: '/logs',
+            icon: 'mdi-card-text',
+            component: Tabs,
+            children: [
+                {
+                    path: '',
+                    redirect: 'alert'
+                },
+                {
+                    name: "alert",
+                    path: 'alert',
+                },
+                {
+                    name: 'boardAlert',
+                    path: 'board',
+                },
+                {
+                    name: 'contentAlert',
+                    path: 'content',
+                },
+            ]
+        },
+        {
             name: "commercial",
             path: '/commercial',
             icon: 'mdi-bulletin-board',
@@ -139,11 +163,11 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: 'workHistory'
+                    redirect: 'history'
                 },
                 {
                     name: 'workHistory',
-                    path: 'workHistory',
+                    path: 'history',
                     components: {
                         default: Sub1Tab,
                         detail: Sub1Detail
@@ -218,14 +242,14 @@ export default new Router({
                     },
                 },
                 {
-                    name: 'payments',
-                    path: 'payments',
+                    name: 'transactions',
+                    path: 'transactions',
                     components: {
                         default: Sub2Tab,
                         detail: Sub2Detail
                     },
                 }
             ]
-        },
+        }
     ]
 });

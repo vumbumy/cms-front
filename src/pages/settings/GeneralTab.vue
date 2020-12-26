@@ -40,14 +40,14 @@
                 <v-divider/>
             </v-col>
         </v-row>
-        <v-row no-gutters>
-            <v-col>
+        <v-row no-gutters justify="space-between">
+            <v-col cols="5">
                 <v-select
                         :items="items"
                         label="테마"
                 ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="5">
                 <v-select
                         :items="items"
                         label="글자크기"

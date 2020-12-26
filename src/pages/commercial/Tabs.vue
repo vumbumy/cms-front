@@ -8,12 +8,12 @@
                 <strong>Main Warning</strong> (Reminder)
             </v-alert>
             <kpi-box/>
-            <v-tabs>
+            <v-tabs show-arrows>
                 <v-tab
                     v-for="(tab, index) in tabs"
                     :key="index"
                     :to="`/${parent}/${tab.path}`"
-                    v-text="$t(tab.path)"
+                    v-text="$t(tab.name)"
                 />
             </v-tabs>
             <router-view/>
@@ -48,7 +48,7 @@
           for(let child of children)
               if(child.path !== '') this.tabs.push(child)
 
-          console.log(this.tabs)
+          // console.log(this.tabs)
       },
       mounted() {
           console.log(this.$vuetify.breakpoint.name)
@@ -63,28 +63,6 @@
           parent(){
               return this.$route.matched[0].name
           },
-          // defaultCols() {
-          //     if(this.$vuetify.breakpoint.lgAndUp)
-          //         return 6
-          //
-          //     return 12
-          // },
-          // detailCols(){
-          //     if(this.$vuetify.breakpoint.lgAndUp)
-          //         return 6
-          //     else if(this.$vuetify.breakpoint.md)
-          //         return 7
-          //     else if(this.$vuetify.breakpoint.sm)
-          //         return 10
-          //
-          //     return 12
-          // },
-          // justify(){
-          //     if(this.$vuetify.breakpoint.mdAndDown)
-          //         return 'end'
-          //
-          //     return undefined
-          // },
           defaultMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
                   return 500

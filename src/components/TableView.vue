@@ -1,77 +1,51 @@
 <template>
-    <v-simple-table>
-        <template v-slot:default>
-            <thead>
-            <tr>
-                <th class="text-left">
-                    Name
-                </th>
-                <th class="text-left">
-                    Calories
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-                    v-for="item in desserts"
-                    :key="item.name"
-            >
-                <td>{{ item.name }}</td>
-                <td>{{ item.calories }}</td>
-            </tr>
-            </tbody>
+    <v-data-table
+        :headers="headers"
+        :items="items"
+        class="elevation-1"
+        disable-sort
+        hide-default-footer
+        :loading="loading"
+
+        @click:row="onClickRow"
+    >
+        <template v-slot:item.id="{ item }">
+            <v-simple-checkbox
+                v-model="item.id"
+            ></v-simple-checkbox>
         </template>
-    </v-simple-table>
+    </v-data-table>
 </template>
 
 <script>
     export default {
         props: {
-            items: Array
-        },
-        data: () => ({
-            desserts: [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                },
-                {
-                    name: 'Eclair',
-                    calories: 262,
-                },
-                {
-                    name: 'Cupcake',
-                    calories: 305,
-                },
-                {
-                    name: 'Gingerbread',
-                    calories: 356,
-                },
-                {
-                    name: 'Jelly bean',
-                    calories: 375,
-                },
-                {
-                    name: 'Lollipop',
-                    calories: 392,
-                },
-                {
-                    name: 'Honeycomb',
-                    calories: 408,
-                },
-                {
-                    name: 'Donut',
-                    calories: 452,
-                },
-                {
-                    name: 'KitKat',
-                    calories: 518,
+            headers: {
+                type: Array,
+                default: () => {
+                    return [
+                        { text: '#', value: 'id' },
+                        { text: 'Label', value: 'label' },
+                        {
+                            text: 'Title',
+                            align: 'start',
+                            sortable: false,
+                            value: 'title',
+                        },
+                        { text: 'Info', value: 'info' },
+                        { text: 'Description', value: 'description' },
+                    ]
                 }
-            ]
-        }),
+            },
+            items: Array,
+            loading: Boolean
+        },
+        methods: {
+            onClickRow(item) {
+                console.log(item)
+
+                this.$router.replace({query: {id: item.id}});
+            }
+        }
     }
 </script>

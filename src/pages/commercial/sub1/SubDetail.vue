@@ -62,9 +62,6 @@
             dialog: true,
             tabs: ['ses x', 'ses y' ,'ses z']
         }),
-        mounted() {
-            console.log(this.$route)
-        },
         methods: {
             dateToDateTime: dateToDateTime
         }

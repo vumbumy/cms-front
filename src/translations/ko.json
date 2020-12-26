@@ -21,6 +21,10 @@
     "boards": "매체 관리",
     "media": "매체",
     "reservations": "예약현황",
-    "payments": "입금내역",
-    "logout": "로그아웃"
+    "transactions": "입금내역",
+    "logout": "로그아웃",
+    "logs": "시스템 로그",
+    "alert": "알림 기록",
+    "boardAlert": "매체별",
+    "contentAlert": "컨텐츠별"
 }

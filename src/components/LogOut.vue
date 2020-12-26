@@ -1,5 +1,5 @@
 <template>
-    <v-list-item>
+    <v-list-item to="/logout">
         <v-list-item-icon class="mr-2" >
             <v-icon size="20">mdi-logout</v-icon>
         </v-list-item-icon>

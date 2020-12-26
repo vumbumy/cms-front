@@ -11,7 +11,7 @@
                 <v-icon v-if="!dots">mdi-trash-can-outline</v-icon>
             </v-col>
             <v-col class="text-right">
-                15 of 200
+                15 of {{items.length}}
                 <v-icon>mdi-chevron-left</v-icon>
                 <v-icon>mdi-chevron-right</v-icon>
             </v-col>
@@ -19,7 +19,12 @@
         <div v-if="isCardView">
             <v-row v-for="item in items" :key="item.id" dense>
                 <v-col>
-                    <v-card class="mx-auto" outlined  @click="onClickItem(item.id)">
+                    <v-card
+                        class="mx-auto"
+                        :class="{'selected': $route.query.id === String(item.id)}"
+                        outlined
+                        @click="onClickItem(item.id)"
+                    >
                         <slot name="item" :item="item"/>
                     </v-card>
                 </v-col>
@@ -28,7 +33,7 @@
         <div v-else-if="isTableView">
             <v-row dense>
                 <v-col>
-                    <table-view/>
+                    <table-view :headers="headers" :items="items"/>
                 </v-col>
             </v-row>
         </div>
@@ -42,8 +47,9 @@
     export default {
         components: {TableView},
         props: {
+            headers: Array,
             items: Array,
-            view: String
+            view: String,
         },
         data: () => ({
             check: false,
@@ -62,8 +68,19 @@
         },
         methods: {
             onClickItem: function (id) {
-                this.$router.replace({query: {id: id}});
+                if(this.$route.query.id !== String(id))
+                    this.$router.replace({query: {id: id}});
             },
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .v-card {
+        border-left: 5px solid !important
+    }
+
+    .selected {
+        border-left: 5px solid green !important
+    }
+</style>

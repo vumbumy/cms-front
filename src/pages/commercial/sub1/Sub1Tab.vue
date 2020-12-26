@@ -15,75 +15,56 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <v-row>
-            <v-col class="text-left">
-                <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
-                <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>
-                <v-icon class="mr-2" @click="$router.push('/tabs/0')">mdi-plus</v-icon>
-                <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-refresh</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-download</v-icon>
-                <v-icon v-if="!dots">mdi-trash-can-outline</v-icon>
-            </v-col>
-            <v-col class="text-right">
-                15 of 200
-                <v-icon>mdi-chevron-left</v-icon>
-                <v-icon>mdi-chevron-right</v-icon>
-            </v-col>
-        </v-row>
-        <v-row v-for="item in items" :key="item.id" dense>
-            <v-col v-if="isCardView">
+        <list-view :items="items" :view="view">
+            <template v-slot:item="{item}">
                 <sub1-list-item :item="item"/>
-            </v-col>
-            <v-col v-else-if="isTableView">
-                <table-view/>
-            </v-col>
-        </v-row>
+            </template>
+        </list-view>
     </v-sheet>
 </template>
 
 <script>
-    import TableView from "../../../components/TableView";
+
     import BarChart from "../../../components/BarChart";
-    import Sub1ListItem from "./Sub1ListItem";
     import SortSearchView from "../../../components/SortSearchView";
-    import {CARD_VIEW, TABLE_VIEW} from "../../../scripts/const";
+    import ListView from "../../../components/layouts/ListView";
+    import {CARD_VIEW} from "../../../scripts/const";
+    import Sub1ListItem from "./Sub1ListItem";
+
 
     export default {
         components: {
-            TableView,
-            SortSearchView,
             Sub1ListItem,
-            BarChart,
+            ListView,
+            SortSearchView,
+            BarChart
         },
         data: () => ({
-            // keyword: "",
             view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
-            check: false,
-            dots: true,
             alertMsg: [
                 '<strong>Section Warning</strong> (Notice)'
             ],
-            // refreshId: 0,
+            headers: [
+                { text: '#', value: 'id' },
+                { text: 'Name', value: 'name' },
+                { text: 'Type', value: 'type' },
+                { text: 'Description', value: 'description' },
+            ],
             items: [
                 {
                     id: 3,
-                    label: "LABEL3",
+                    type: "LABEL3",
                     title: "TITLE3",
                     info: "INFO3",
-                    value: "30"
+                    value: "30",
+                    description: "SAMPLE3"
                 }
             ],
         }),
-        computed: {
-            isCardView(){
-                return this.view === CARD_VIEW
-            },
-            isTableView(){
-                return this.view === TABLE_VIEW
-            }
+        created() {
+
         },
         methods: {
             onClickAll(){
