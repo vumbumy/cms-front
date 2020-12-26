@@ -9,22 +9,22 @@
             <v-row justify="space-between">
                 <v-col class="py-0">
                     <div class="overline my-0">
-                        {{item.label}}
+                        {{item.type}}
                     </div>
                     <v-list-item-title class="headline mb-1">
-                        {{item.title}}
+                        {{item.name}}
                     </v-list-item-title>
-                    <v-list-item-subtitle>DESCRIPTION</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{item.description}}</v-list-item-subtitle>
                 </v-col>
                 <v-spacer/>
                 <v-col class="py-0" v-if="!$vuetify.breakpoint.xs">
                     <div class="overline my-0">
-                        {{item.info}}
+                        LABEL
                     </div>
                     <v-list-item-title class="headline mb-1">
-                        {{item.value}}
+                        {{item.stock}}
                     </v-list-item-title>
-                    <v-list-item-subtitle>DESCRIPTION</v-list-item-subtitle>
+                    <v-list-item-subtitle>INFO</v-list-item-subtitle>
                 </v-col>
             </v-row>
         </v-list-item-content>
@@ -36,8 +36,5 @@
         props: {
             item: Object
         },
-        created() {
-            console.log("Sub2ListItem", this.item)
-        }
     }
 </script>

@@ -2,6 +2,7 @@
     <v-data-table
         :headers="headers"
         :items="items"
+        :items-per-page="15"
         class="elevation-1"
         disable-sort
         hide-default-footer
@@ -9,9 +10,9 @@
 
         @click:row="onClickRow"
     >
-        <template v-slot:item.id="{ item }">
+        <template v-slot:item.check="{ item }">
             <v-simple-checkbox
-                v-model="item.id"
+                v-model="item.check"
             ></v-simple-checkbox>
         </template>
     </v-data-table>
@@ -24,7 +25,7 @@
                 type: Array,
                 default: () => {
                     return [
-                        { text: '#', value: 'id' },
+                        { text: 'id', value: 'id' },
                         { text: 'Label', value: 'label' },
                         {
                             text: 'Title',
@@ -39,6 +40,9 @@
             },
             items: Array,
             loading: Boolean
+        },
+        created() {
+            console.log(this.headers)
         },
         methods: {
             onClickRow(item) {

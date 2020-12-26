@@ -2,7 +2,6 @@
     <v-sparkline
             :labels="labels"
             :value="value"
-            color="white"
             line-width="2"
             padding="16"
     ></v-sparkline>

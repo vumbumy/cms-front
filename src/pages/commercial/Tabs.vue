@@ -1,6 +1,10 @@
 <template>
-    <v-container fluid class="ma-0 pa-0 d-flex flex-column">
-        <v-sheet class="col-12 col-sm-6 text-left fill-height" :min-width="defaultMinWidth" max-width="550">
+    <div class="d-flex flex-column">
+        <v-sheet
+            class="col-12 col-sm-6 text-left fill-height"
+            :min-width="defaultMinWidth"
+            max-width="550"
+        >
             <div class="headline font-weight-bold" v-text="$t(parent)"/>
             <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
 
@@ -20,7 +24,7 @@
         </v-sheet>
         <v-sheet
             v-if="$route.query.id"
-            class="v-overlay--absolute col-12 col-sm-6 align-self-end"
+            class="v-overlay--absolute col-12 col-sm-6 align-self-end fill-height"
             :class="{'detail': $vuetify.breakpoint.smAndUp}"
 
             :min-width="detailMinWidth"
@@ -28,7 +32,7 @@
         >
             <router-view name="detail"/>
         </v-sheet>
-    </v-container>
+    </div>
 </template>
 
 <script>

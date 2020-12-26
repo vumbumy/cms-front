@@ -3,7 +3,7 @@
         <v-alert dense outlined type="warning" border="left" class="mb-2" v-for="(msg, index) in alertMsg" :key="index" dismissible>
             <div v-html="msg"/>
         </v-alert>
-        <bar-chart style="background: dimgray"/>
+        <bar-chart/>
         <sort-search-view
             @search="onSearch"
             @update_order="onUpdateOrder"
@@ -15,7 +15,13 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <list-view :items="items" :view="view">
+        <list-view
+            v-model="page"
+            :headers="headers"
+            :items="items"
+            :view="view"
+            :items-length="itemsLength"
+        >
             <template v-slot:item="{item}">
                 <sub1-list-item :item="item"/>
             </template>
@@ -28,8 +34,9 @@
     import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
     import ListView from "../../../components/layouts/ListView";
-    import {CARD_VIEW} from "../../../scripts/const";
+    import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
     import Sub1ListItem from "./Sub1ListItem";
+    import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
 
 
     export default {
@@ -47,24 +54,40 @@
                 '<strong>Section Warning</strong> (Notice)'
             ],
             headers: [
+                { value: 'check' },
                 { text: '#', value: 'id' },
                 { text: 'Name', value: 'name' },
                 { text: 'Type', value: 'type' },
                 { text: 'Description', value: 'description' },
+                { text: 'Stock', value: 'stock' },
             ],
-            items: [
-                {
-                    id: 3,
-                    type: "LABEL3",
-                    title: "TITLE3",
-                    info: "INFO3",
-                    value: "30",
-                    description: "SAMPLE3"
-                }
-            ],
+            page: 0
+            // items: [],
         }),
-        created() {
+        computed: {
+            items() {
+                let items = []
+                let textList = sampleTextList(this.page)
 
+                for(let i=0; i<ITEMS_PER_PAGE; i++){
+                    let id = this.page * ITEMS_PER_PAGE + i
+                    items.push(
+                        {
+                            id: id,
+                            name: textList[i],
+                            type: textList[i],
+                            description: textList[i],
+                            stock: i % 10 * 10,
+                            check: false
+                        }
+                    )
+                }
+
+                return items
+            },
+            itemsLength() {
+                return sampleTextListLength()
+            }
         },
         methods: {
             onClickAll(){
