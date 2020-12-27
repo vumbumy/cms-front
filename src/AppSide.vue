@@ -70,3 +70,9 @@
       }
   }
 </script>
+
+<style lang="scss" scoped>
+    .v-snack:not(.v-snack--absolute) {
+        height: 100%;
+    }
+</style>
