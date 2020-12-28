@@ -22,8 +22,6 @@
             </v-btn>
         </div>
         <div v-if="isCardView" class="d-flex flex-column">
-<!--            <v-virtual-scroll :items="items" height="250" :item-height="120">-->
-<!--                <template v-slot:default="{ item }">-->
             <v-card
                 width="100%"
                 class="my-1"
@@ -34,8 +32,6 @@
             >
                 <slot name="item" :item="item"/>
             </v-card>
-<!--                </template>-->
-<!--            </v-virtual-scroll>-->
         </div>
         <div v-else-if="isTableView">
             <v-row dense>

@@ -26,7 +26,7 @@
         <v-sheet
             v-if="$route.query.id"
             class="col-12 col-sm-6 fill-height"
-            style="position: absolute; overflow-y: auto; top:0; right: 0"
+            style="position: absolute; overflow-y: auto; top:0; right: 0; overflow-y: scroll"
 
             :min-width="detailMinWidth"
             :elevation="detailElevation"
@@ -72,13 +72,13 @@
           },
           defaultMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
-                  return 500
+                  return 600
 
               return 0
           },
           detailMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
-                  return 550
+                  return 625
 
               return 0
           },

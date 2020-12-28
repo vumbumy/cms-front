@@ -2,14 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from "../pages/Home";
 import Tabs from "../pages/commercial/Tabs";
-import Sub1Detail from "../pages/commercial/sub1/SubDetail";
 import Sub2Detail from "../pages/commercial/sub2/SubDetail";
-import Sub1Tab from "../pages/commercial/sub1/Sub1Tab";
 import Sub2Tab from "../pages/commercial/sub2/Sub2Tab";
 import SettingsTabs from "../pages/settings/SettingsTabs";
 import GeneralTab from "../pages/settings/GeneralTab";
 import NoticeTab from "../pages/settings/NoticeTab";
 import AccountTab from "../pages/settings/AccountTab";
+import ProductsTab from "../pages/commercial/products/ProductsTab";
+import ProductsDetail from "../pages/commercial/products/ProductsDetail";
 
 
 Vue.use(Router);
@@ -89,8 +89,8 @@ export default new Router({
                     name: 'products',
                     path: 'products',
                     components: {
-                        default: Sub1Tab,
-                        detail: Sub1Detail
+                        default: ProductsTab,
+                        detail: ProductsDetail
                     },
                 },
                 {
@@ -104,18 +104,10 @@ export default new Router({
                 {
                     name: 'cart',
                     path: 'cart',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'orderList',
                     path: 'orderList',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 }
             ]
         },
@@ -132,26 +124,14 @@ export default new Router({
                 {
                     name: 'packages',
                     path: 'packages',
-                    components: {
-                        default: Sub1Tab,
-                        detail: Sub1Detail
-                    },
                 },
                 {
                     name: 'scenes',
                     path: 'scenes',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'pages',
                     path: 'pages',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
             ]
         },
@@ -168,34 +148,18 @@ export default new Router({
                 {
                     name: 'workHistory',
                     path: 'history',
-                    components: {
-                        default: Sub1Tab,
-                        detail: Sub1Detail
-                    },
                 },
                 {
                     name: 'messages',
                     path: 'messages',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'approvals',
                     path: 'approvals',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'reports',
                     path: 'reports',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 }
             ]
         },
@@ -212,42 +176,22 @@ export default new Router({
                 {
                     name: 'media',
                     path: 'media',
-                    components: {
-                        default: Sub1Tab,
-                        detail: Sub1Detail
-                    },
                 },
                 {
                     name: 'resourcePlans',
                     path: 'resourcePlans',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'reservations',
                     path: 'reservations',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'packages',
                     path: 'packages',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 },
                 {
                     name: 'transactions',
                     path: 'transactions',
-                    components: {
-                        default: Sub2Tab,
-                        detail: Sub2Detail
-                    },
                 }
             ]
         }

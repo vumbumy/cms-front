@@ -35,7 +35,7 @@
     import SortSearchView from "../../../components/SortSearchView";
     import ListView from "../../../components/layouts/ListView";
     import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
-    import Sub1ListItem from "./Sub1ListItem";
+    import Sub1ListItem from "./ProductsCard";
     import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
 
 
