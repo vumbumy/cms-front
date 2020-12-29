@@ -1,7 +1,11 @@
 <template>
     <div class="d-flex flex-column">
         <!-- TODO: z-index 최상단 위치 -->
-        <close-edit-save v-model="mode"/>
+        <close-edit-save
+            v-model="mode"
+            v-on:save="onClickSave"
+            v-on:delete="onClickDelete"
+        />
 
         <!-- TOP CONTENTS -->
         <top-contents :readonly="isReadOnly"/>
@@ -54,11 +58,6 @@
             <div class="d-flex flex-column col-4">
                 <div class="text-subtitle-1 text-sm-h7 font-weight-bold">기간</div>
                 <div v-if="isReadOnly" class="text-caption font-weight-medium mt-auto" v-text="dates1"/>
-<!--                <v-text-field-->
-<!--                    v-else-->
-
-<!--                    v-model="item.dates1"-->
-<!--                    prepend-icon="mdi-calendar"/>-->
                 <date-field v-else v-model="item.dates1"/>
             </div>
         </div>
@@ -67,11 +66,8 @@
         <stepper class="mb-3"/>
         <photo class="mb-2"/>
 
-        <v-expansion-panels
-            v-model="panel1"
-            multiple
-            flat
-        >
+        <!-- ADVANCED & CONTENT PACKAGE -->
+        <v-expansion-panels v-model="panel1" multiple flat>
             <v-expansion-panel>
                 <v-expansion-panel-header class="pa-0">
                     <strong>Advanced</strong>
@@ -120,6 +116,9 @@
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </v-expansion-panels>
+        <!--        -->
+
+        <!-- WEB PAGE -->
         <div class="d-flex flex-column">
             <div class="d-flex justify-space-between">
                 <div class="v-expansion-panel-header pa-0 font-weight-bold">
@@ -139,6 +138,7 @@
                 </v-card>
             </v-expand-transition>
         </div>
+        <!--        -->
     </div>
 </template>
 
@@ -213,6 +213,12 @@
             },
             onChangeTags(tags) {
                 this.item.tags = tags.split(',')
+            },
+            onClickSave() {
+                console.log('SAVE')
+            },
+            onClickDelete: function(){
+                console.log('DELETE')
             },
             dateToDateTime: dateToDateTime,
         }
