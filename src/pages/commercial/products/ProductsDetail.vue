@@ -29,35 +29,29 @@
                     #의정부 #디지털특가 #21년 신규
                 </div>
             </div>
-            <v-divider class="mb-2 grey"/>
-            <div class="d-flex justify-space-between flex-wrap">
-                <div class="d-flex col-4 px-0 pb-0">
+            <v-divider class="grey"/>
+            <div class="d-flex justify-space-between flex-wrap text-left">
+                <div class="d-flex col-4">
                     <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
-                        <div class="text-h5 text-sm-h3">2</div>
+                        <div class="text-h5 text-sm-h3 mt-auto">2</div>
                     </div>
-                    <div class="d-flex flex-column mx-1 mt-auto">
-                        <div class="text-h5 text-sm-h3">/</div>
-                    </div>
+                    <div class="text-h5 text-sm-h3 mx-1 mt-auto">/</div>
                     <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>
-                        <div class="text-h5 text-sm-h3">10</div>
+                        <div class="text-h5 text-sm-h3 mt-auto">10</div>
                     </div>
                 </div>
-                <div class="d-flex col-4 px-0 pb-0">
-                    <div class="d-flex flex-column ml-auto">
+                <div class="d-flex col-4">
+                    <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
-                        <div class="text-h5 text-sm-h3 font-weight-bold">100</div>
+                        <div class="text-h5 text-sm-h3 font-weight-bold mt-auto">100</div>
                     </div>
-                    <div class="d-flex flex-column ml-1 mt-auto">
-                        <div class="caption">만원/월</div>
-                    </div>
+                    <div class="mt-auto ml-1 mt-auto">만원/월</div>
                 </div>
-                <div class="d-flex flex-column text-right col-4 px-0">
+                <div class="d-flex flex-column col-3">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">기간</div>
-                    <div class="d-flex justify-end">
-                        <div class="text-caption font-weight-medium text-truncate">20/10/01 20/12/31</div>
-                    </div>
+                    <div class="text-caption font-weight-medium mt-auto">20/10/01 20/12/31</div>
                 </div>
             </div>
             <stepper class="mb-3"/>

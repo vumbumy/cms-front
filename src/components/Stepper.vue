@@ -1,5 +1,5 @@
 <template>
-    <v-stepper>
+    <v-stepper class="elevation-0">
         <v-stepper-header>
             <v-stepper-step
                 step="3"
@@ -8,7 +8,7 @@
                 생성
             </v-stepper-step>
 
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-stepper-step
                 step="4"
@@ -18,7 +18,7 @@
                 <small>Alert message</small>
             </v-stepper-step>
 
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-stepper-step
                 step="5"
@@ -26,11 +26,13 @@
                 게첨 중
             </v-stepper-step>
 
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-stepper-step step="6">
                 종료
             </v-stepper-step>
+
+            <v-divider/>
 
             <v-stepper-step step="7">
                 완료
