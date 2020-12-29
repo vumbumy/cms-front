@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex">
+    <v-sheet class="d-flex align-center under-board" height="50" v-sticky>
         <v-btn @click="onClickReturn" text icon>
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
@@ -19,10 +19,11 @@
                 <v-icon>mdi-delete</v-icon>
             </v-btn>
         </v-btn>
-    </div>
+    </v-sheet>
 </template>
 
 <script>
+    import VueSticky from 'vue-sticky'
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../scripts/const";
 
     export default {
@@ -69,10 +70,13 @@
                 this.$router.replace({'query': null});
                 this.$emit('delete')
             }
-        }
+        },
+        directives: {
+            'sticky': VueSticky,
+        },
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

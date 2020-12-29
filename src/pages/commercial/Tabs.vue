@@ -25,8 +25,8 @@
         </v-sheet>
         <v-sheet
             v-if="$route.query.id"
-            class="col-12 col-sm-6 fill-height"
-            style="position: absolute; overflow-y: auto; top:0; right: 0; overflow-y: scroll"
+            class="col-12 col-sm-6 fill-height py-0"
+            style="position: absolute; top:0; right: 0; overflow-y: scroll"
 
             :min-width="detailMinWidth"
             :elevation="detailElevation"

@@ -57,7 +57,7 @@
             </div>
             <div class="d-flex flex-column col-4">
                 <div class="text-subtitle-1 text-sm-h7 font-weight-bold">기간</div>
-                <div v-if="isReadOnly" class="text-caption font-weight-medium mt-auto" v-text="dates1"/>
+                <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
                 <date-field v-else v-model="item.dates1"/>
             </div>
         </div>
@@ -69,7 +69,7 @@
         <!-- ADVANCED & CONTENT PACKAGE -->
         <v-expansion-panels v-model="panel1" multiple flat>
             <v-expansion-panel>
-                <v-expansion-panel-header class="pa-0">
+                <v-expansion-panel-header>
                     <strong>Advanced</strong>
                 </v-expansion-panel-header>
                 <v-divider/>
@@ -96,7 +96,7 @@
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
-                <v-expansion-panel-header class="pa-0">
+                <v-expansion-panel-header>
                     <strong>Content Package</strong>
                 </v-expansion-panel-header>
                 <v-divider/>
@@ -129,7 +129,7 @@
             <v-divider/>
             <v-expand-transition>
                 <v-card flat v-show="!isReadOnly && webPage" class="mx-auto text-left px-6" width="100%">
-                    <v-select class="col-12 col-sm-4 px-0" label="테마" value="일반광고상품1"/>
+                    <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
                     <div class="text-caption">섹션 추가(html)</div>
                     <div class="d-flex" v-for="(section, index) in sections" :key="index">
                         <v-icon class="pr-2 pb-2">mdi-minus-circle-outline</v-icon>
@@ -139,6 +139,28 @@
             </v-expand-transition>
         </div>
         <!--        -->
+
+        <div
+            v-if="isReadOnly"
+            class="d-flex flex-column elevation-0 py-6"
+        >
+            <div class="d-flex">
+                <v-select label="기간" class="col-3 pa-0 mr-1" placeholder="20.12.01 20.12.31"/>
+                <v-select label="옵션" class="col-3 pa-0 ml-1" placeholder="기본"/>
+                <v-select label="금액" class="col-3 pa-0 ml-auto" placeholder="100,000원"/>
+            </div>
+            <div class="d-flex justify-space-between">
+                <v-btn
+                    class="text-h5 font-weight-bold col-6 rounded-0"
+                    style="color: blue;"
+                    outlined>장바구니</v-btn>
+                <v-btn
+                    class="text-h5 font-weight-bold col-6 rounded-0"
+                    style="background-color: blue"
+                    text
+                    dark>구매하기</v-btn>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -165,7 +187,7 @@
             dialog: true,
             tabs: ['ses x', 'ses y' ,'ses z'],
             mode: READ_MODE,
-            panel1: [],
+            panel1: [0, 1],
             panel2: [0, 1],
 
             item: {
@@ -236,7 +258,12 @@
         font-size: 0.8rem;
     }
 
-    .v-expansion-panel-content .v-expansion-panel-content__wrap {
-        padding: 0;
-    }
+    $expansion-panel-header-padding: 0px;
+    $expansion-panel-content-padding: 0px;
+
+    @import "~vuetify/src/components/VExpansionPanel/VExpansionPanel.sass";
+
+    /*$bottom-nav-btn-max-width: 300px;*/
+
+    /*@import "~vuetify/src/components/VBottomNavigation/VBottomNavigation.sass";*/
 </style>
