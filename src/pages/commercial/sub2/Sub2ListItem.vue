@@ -36,8 +36,8 @@
         props: {
             item: Object
         },
-        created() {
-            console.log("Sub2ListItem", this.item)
-        }
+        // created() {
+        //     console.log("Sub2ListItem", this.item)
+        // }
     }
 </script>

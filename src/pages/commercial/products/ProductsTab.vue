@@ -15,7 +15,7 @@
                 {{tag}}
             </v-chip>
         </v-chip-group>
-        <list-view
+        <item-list
             v-model="page"
             :headers="headers"
             :items="items"
@@ -25,7 +25,7 @@
             <template v-slot:item="{item}">
                 <sub1-list-item :item="item"/>
             </template>
-        </list-view>
+        </item-list>
     </v-sheet>
 </template>
 
@@ -33,16 +33,16 @@
 
     import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
-    import ListView from "../../../components/layouts/ListView";
     import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
     import Sub1ListItem from "./ProductsCard";
     import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
+    import ItemList from "../../../components/layouts/ItemList";
 
 
     export default {
         components: {
+            ItemList,
             Sub1ListItem,
-            ListView,
             SortSearchView,
             BarChart
         },
