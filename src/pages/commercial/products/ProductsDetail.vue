@@ -140,7 +140,7 @@
         </div>
         <!--        -->
 
-        <!-- ADVANCED & CONTENT PACKAGE -->
+        <!-- HISTORY & REVIEWS -->
         <v-expansion-panels v-model="panel2" multiple flat>
             <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -149,26 +149,43 @@
                 <v-divider/>
                 <v-expansion-panel-content>
                     <actions-table/>
+                    <v-btn outlined block>
+                        더보기
+                    </v-btn>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
                 <v-expansion-panel-header>
-                    <strong>Content Package</strong>
+                    <strong>고객리뷰</strong>
                 </v-expansion-panel-header>
                 <v-divider/>
                 <v-expansion-panel-content>
-                    <div class="d-flex justify-space-between flex-wrap panel-content">
-                        <div class="d-flex flex-column col-12 col-sm-5 px-0">
-                            <div class="d-flex">
-                                <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
-                                <div class="text-left mt-3 ml-5">시작일<br>일전</div>
-                            </div>
-                            <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>
+                    <div class="d-flex flex-column mb-3">
+                        <div class="d-flex mb-5">
+                            <v-icon>mdi-tag-outline</v-icon>
+                            <v-chip
+                                class="my-2 mx-1" close close-icon="mdi-close" color="primary"
+                                v-for="(chip, index) in chips" :key="index">{{chip}}</v-chip>
                         </div>
-                        <div class="d-flex flex-column justify-end col-12 px-0 col-sm-4 mt-auto">
-                            <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>
+                        <div class="d-flex flex-column" v-for="(review, index) in reviews" :key="index">
+                            <div class="d-flex justify-space-between">
+                                <p v-text="review.user1"/>
+                                <p v-text="review.user2"/>
+                            </div>
+                            <div class="d-flex justify-space-between ">
+                                <p class="text-caption grey--text text--darken-2" v-text="review.created"/>
+                                <div
+                                    class="text-caption grey--text text--darken-2 ml-auto"
+                                    v-text="'#' + item.tags.join(' #')"/>
+                            </div>
+                            <div class="text-justify">
+                                {{review.comment}}<v-divider/>
+                            </div>
                         </div>
                     </div>
+                    <v-btn outlined block>
+                        더보기
+                    </v-btn>
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </v-expansion-panels>
@@ -207,6 +224,7 @@
     import TopContents from "../../../components/TopContents";
     import DateField from "../../../components/DateField";
     import ActionsTable from "../../../components/Table/ActionsTable";
+    import {SAMPLE_TEXT} from "../../../scripts/mock";
 
     export default {
         components: {
@@ -244,7 +262,17 @@
                     value: null
                 }
             ],
-            webPage: true
+            webPage: true,
+            chips: ["의정부", "디지털", "2020년 처음"],
+            reviews: [
+                {
+                    user1: "vumbumy",
+                    user2: "digi01",
+                    created: "20.12.14 11:14:21",
+                    tags: ["의정부 디지털"],
+                    comment: SAMPLE_TEXT
+                }
+            ]
         }),
         created() {
             this.updateMode()
@@ -295,7 +323,7 @@
     }
 
     $expansion-panel-header-padding: 0px;
-    $expansion-panel-content-padding: 0px;
+    $expansion-panel-content-padding: 1000px;
 
     @import "~vuetify/src/components/VExpansionPanel/VExpansionPanel.sass";
 

@@ -1,35 +1,25 @@
 <template>
     <v-data-table
         class="elevation-1"
+        dense
 
         :headers="headers"
         :items="desserts"
+        :items-per-page="4"
 
         disable-sort
         hide-default-footer
     >
         <template v-slot:item.actions="{ item }">
-            <v-icon
-                small
-                class="mr-2"
-                @click="editItem(item)"
-            >
-                mdi-pencil
-            </v-icon>
-            <v-icon
-                small
-                @click="deleteItem(item)"
-            >
-                mdi-delete
-            </v-icon>
+            <v-btn text class="pa-0" @click="editItem(item)">
+                <v-icon small>mdi-eye</v-icon>보기
+            </v-btn>
+            <v-btn text class="pa-0" @click="deleteItem(item)">
+                <v-icon small>mdi-restore</v-icon>돌리기
+            </v-btn>
         </template>
         <template v-slot:no-data>
-            <v-btn
-                color="primary"
-                @click="initialize"
-            >
-                Reset
-            </v-btn>
+            <v-btn color="primary" @click="initialize">Reset</v-btn>
         </template>
     </v-data-table>
 </template>
@@ -38,16 +28,9 @@
     export default {
         data: () => ({
             headers: [
-                {
-                    text: 'Dessert (100g serving)',
-                    align: 'start',
-                    sortable: false,
-                    value: 'name',
-                },
-                { text: 'Calories', value: 'calories' },
-                { text: 'Fat (g)', value: 'fat' },
-                { text: 'Carbs (g)', value: 'carbs' },
-                { text: 'Protein (g)', value: 'protein' },
+                { text: 'Time', value: 'calories' },
+                { text: 'Editor', value: 'fat' },
+                { text: 'Note', value: 'name'},
                 { text: 'Actions', value: 'actions', sortable: false },
             ],
             desserts: [],
