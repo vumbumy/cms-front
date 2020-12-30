@@ -33,7 +33,7 @@
 
         <!-- HEAD CONTENTS -->
         <div class="d-flex justify-space-between flex-wrap text-left">
-            <div class="d-flex col-3">
+            <div class="d-flex">
                 <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
                     <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.stock}}</div>
@@ -47,7 +47,7 @@
                     <v-text-field v-else v-model="item.amount"/>
                 </div>
             </div>
-            <div class="d-flex col-4">
+            <div class="d-flex">
                 <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
                     <div v-if="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold mt-auto">{{item.price}}</div>
@@ -55,7 +55,7 @@
                 </div>
                 <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
             </div>
-            <div class="d-flex flex-column col-4">
+            <div class="d-flex flex-column">
                 <div class="text-subtitle-1 text-sm-h7 font-weight-bold">기간</div>
                 <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
                 <date-field v-else v-model="item.dates1"/>
@@ -140,6 +140,40 @@
         </div>
         <!--        -->
 
+        <!-- ADVANCED & CONTENT PACKAGE -->
+        <v-expansion-panels v-model="panel2" multiple flat>
+            <v-expansion-panel>
+                <v-expansion-panel-header>
+                    <strong>수정이력</strong>
+                </v-expansion-panel-header>
+                <v-divider/>
+                <v-expansion-panel-content>
+                    <actions-table/>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+                <v-expansion-panel-header>
+                    <strong>Content Package</strong>
+                </v-expansion-panel-header>
+                <v-divider/>
+                <v-expansion-panel-content>
+                    <div class="d-flex justify-space-between flex-wrap panel-content">
+                        <div class="d-flex flex-column col-12 col-sm-5 px-0">
+                            <div class="d-flex">
+                                <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
+                                <div class="text-left mt-3 ml-5">시작일<br>일전</div>
+                            </div>
+                            <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>
+                        </div>
+                        <div class="d-flex flex-column justify-end col-12 px-0 col-sm-4 mt-auto">
+                            <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>
+                        </div>
+                    </div>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+        </v-expansion-panels>
+        <!--        -->
+
         <div
             v-if="isReadOnly"
             class="d-flex flex-column elevation-0 py-6"
@@ -172,9 +206,11 @@
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/TopContents";
     import DateField from "../../../components/DateField";
+    import ActionsTable from "../../../components/Table/ActionsTable";
 
     export default {
         components: {
+            ActionsTable,
             DateField,
             TopContents,
             Stepper,
@@ -187,7 +223,7 @@
             dialog: true,
             tabs: ['ses x', 'ses y' ,'ses z'],
             mode: READ_MODE,
-            panel1: [0, 1],
+            panel1: [],
             panel2: [0, 1],
 
             item: {

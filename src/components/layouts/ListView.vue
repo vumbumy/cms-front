@@ -36,7 +36,7 @@
         <div v-else-if="isTableView">
             <v-row dense>
                 <v-col>
-                    <table-view :headers="headers" :items="items"/>
+                    <item-table :headers="headers" :items="items"/>
                 </v-col>
             </v-row>
         </div>
@@ -44,11 +44,12 @@
 </template>
 
 <script>
-    import TableView from "../TableView";
+
     import {CARD_VIEW, ITEMS_PER_PAGE, TABLE_VIEW} from "../../scripts/const";
+    import ItemTable from "../Table/ItemTable";
 
     export default {
-        components: {TableView},
+        components: {ItemTable},
         props: {
             headers: Array,
             items: Array,

@@ -108,6 +108,18 @@ export default new Router({
                 {
                     name: 'orderList',
                     path: 'orderList',
+                },
+                {
+                    name: 'agreements',
+                    path: 'agreements',
+                },
+                {
+                    name: 'reports',
+                    path: 'reports',
+                },
+                {
+                    name: 'quotations',
+                    path: 'quotations',
                 }
             ]
         },

@@ -5,24 +5,32 @@
     "orders": "주문",
     "cart": "장바구니",
     "orderList": "주문내역",
+    "agreements": "계약서",
+    "quotations": "견적서",
+
     "settings": "설정",
     "general": "일반",
     "notice": "알림",
     "account": "계정",
+
     "contents": "컨텐츠",
     "packages": "패키지",
     "scenes": "장면",
     "pages": "페이지",
+
     "works": "작업",
     "workHistory": "작업내역",
     "messages": "메세지",
     "approvals": "승인/결재",
     "reports": "보고서",
+
     "boards": "매체 관리",
     "media": "매체",
     "reservations": "예약현황",
     "transactions": "입금내역",
+
     "logout": "로그아웃",
+
     "logs": "시스템 로그",
     "alert": "알림 기록",
     "boardAlert": "매체별",
