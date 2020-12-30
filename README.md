@@ -1,6 +1,6 @@
 # CMS Web UI
 
-[Demo](http://1.241.17.48)
+[Demo](https://vumbumy.github.io/cms-web-ui/)
 
 ## Project setup
 ```
