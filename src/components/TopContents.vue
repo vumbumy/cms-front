@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex ">
+    <div class="d-flex">
         <div :class="colors[colorIndex]" style="width: 10px;" @click="colorIndex = (colorIndex + 1) % colors.length"/>
         <v-sheet class="pl-4 my-2 d-flex flex-grow-1">
             <div class="d-flex flex-column text-left">
@@ -42,12 +42,3 @@
         })
     }
 </script>
-
-<style scoped>
-    .draft {
-        border-left: 10px solid lightgray;
-    }
-    .read {
-        border-left: 10px solid orange;
-    }
-</style>

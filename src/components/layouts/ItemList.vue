@@ -107,10 +107,10 @@
 
 <style lang="scss" scoped>
     .v-card {
-        border-left: 5px solid !important
+        border-left: 10px solid orange !important
     }
 
     .selected {
-        border-left: 5px solid green !important
+        border-left: 10px solid blue !important
     }
 </style>

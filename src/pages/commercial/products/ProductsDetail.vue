@@ -32,8 +32,8 @@
         <!--        -->
 
         <!-- HEAD CONTENTS -->
-        <div class="d-flex justify-space-between flex-wrap text-left mt-5">
-            <div class="d-flex">
+        <div class="d-flex justify-space-between flex-nowrap text-left mt-5">
+            <div class="d-flex col-3 pa-0">
                 <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
                     <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.stock}}</div>
@@ -47,7 +47,7 @@
                     <v-text-field v-else v-model="item.amount"/>
                 </div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex col-3 pa-0">
                 <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
                     <div v-if="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold mt-auto">{{item.price}}</div>
@@ -55,8 +55,8 @@
                 </div>
                 <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
             </div>
-            <div class="d-flex flex-column">
-                <div class="text-subtitle-1 text-sm-h7 font-weight-bold">기간</div>
+            <div class="d-flex flex-column col-4 pa-0">
+                <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>
                 <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
                 <date-field v-else v-model="item.dates1"/>
             </div>
