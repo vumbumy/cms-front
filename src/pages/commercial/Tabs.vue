@@ -100,3 +100,9 @@
       }
   }
 </script>
+
+<style lang="scss" scoped>
+    .v-text-field {
+        font-size: 0.8rem;
+    }
+</style>

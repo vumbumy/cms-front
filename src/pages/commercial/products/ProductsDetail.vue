@@ -32,7 +32,7 @@
         <!--        -->
 
         <!-- HEAD CONTENTS -->
-        <div class="d-flex justify-space-between flex-wrap text-left">
+        <div class="d-flex justify-space-between flex-wrap text-left mt-5">
             <div class="d-flex">
                 <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
@@ -66,136 +66,106 @@
         <stepper class="mb-3"/>
         <photo class="mb-2"/>
 
-        <!-- ADVANCED & CONTENT PACKAGE -->
-        <v-expansion-panels v-model="panel1" multiple flat>
-            <v-expansion-panel>
-                <v-expansion-panel-header>
-                    <strong>Advanced</strong>
-                </v-expansion-panel-header>
-                <v-divider/>
-                <v-expansion-panel-content>
-                    <div class="d-flex justify-space-between flex-wrap panel-content">
-                        <div class="d-flex flex-column col-12 pl-0 col-sm-4">
-                            <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
-                            <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
-                            <v-text-field :readonly="isReadOnly" label="환불보상조건" value="일반"/>
-                        </div>
-                        <div class="d-flex flex-column col-12 pl-0 col-sm-3">
-                            <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
-                            <!-- TODO: 페어 텍스트 입력 폼 -->
-                            <v-text-field :readonly="isReadOnly" label="볼륨할인율" value="15%" suffix="200만원 이상"/>
-                            <!-- TODO: 페어 텍스트 입력 폼 -->
-                            <v-text-field :readonly="isReadOnly" label="옵션" value="회룡역만" persistent-hint hint="+100,000원"/>
-                        </div>
-                        <div class="d-flex flex-column col-12 pl-0 col-sm-4 ml-auto">
-                            <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>
-                            <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
-                            <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
-                        </div>
+        <!-- ADVANCED -->
+        <expansion-panel label="Advanced" :value="true">
+            <template v-slot:item>
+                <div class="d-flex justify-space-between flex-wrap panel-content">
+                    <div class="d-flex flex-column col-12 pl-0 col-sm-4">
+                        <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
+                        <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
+                        <v-text-field :readonly="isReadOnly" label="환불보상조건" value="일반"/>
                     </div>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-                <v-expansion-panel-header>
-                    <strong>Content Package</strong>
-                </v-expansion-panel-header>
-                <v-divider/>
-                <v-expansion-panel-content>
-                    <div class="d-flex justify-space-between flex-wrap panel-content">
-                        <div class="d-flex flex-column col-12 col-sm-5 px-0">
-                            <div class="d-flex">
-                                <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
-                                <div class="text-left mt-3 ml-5">시작일<br>일전</div>
-                            </div>
-                            <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>
-                        </div>
-                        <div class="d-flex flex-column justify-end col-12 px-0 col-sm-4 mt-auto">
-                            <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>
-                        </div>
+                    <div class="d-flex flex-column col-12 pl-0 col-sm-3">
+                        <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
+                        <!-- TODO: 페어 텍스트 입력 폼 -->
+                        <v-text-field :readonly="isReadOnly" label="볼륨할인율" value="15%" suffix="200만원 이상"/>
+                        <!-- TODO: 페어 텍스트 입력 폼 -->
+                        <v-text-field :readonly="isReadOnly" label="옵션" value="회룡역만" persistent-hint hint="+100,000원"/>
                     </div>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-        </v-expansion-panels>
+                    <div class="d-flex flex-column col-12 pl-0 col-sm-4 ml-auto">
+                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>
+                        <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
+                        <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
+                    </div>
+                </div>
+            </template>
+        </expansion-panel>
+
+        <!-- CONTENT PACKAGE -->
+        <expansion-panel label="Content Package" :value="true">
+            <template v-slot:item>
+                <div class="d-flex justify-space-between flex-wrap panel-content">
+                    <div class="d-flex flex-column col-12 col-sm-5 pa-0">
+                        <div class="d-flex">
+                            <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
+                            <div class="text-left mt-3 ml-5">시작일<br>일전</div>
+                        </div>
+                        <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>
+                    </div>
+                    <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-4 mt-auto">
+                        <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>
+                    </div>
+                </div>
+            </template>
+        </expansion-panel>
         <!--        -->
 
         <!-- WEB PAGE -->
-        <div class="d-flex flex-column">
-            <div class="d-flex justify-space-between">
-                <div class="v-expansion-panel-header pa-0 font-weight-bold">
-                    웹페이지 보기
+        <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">
+            <template v-slot:item>
+                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
+                <div class="text-caption">섹션 추가(html)</div>
+                <div class="d-flex" v-for="(section, index) in sections" :key="index">
+                    <v-icon class="pr-2 pb-2">mdi-minus-circle-outline</v-icon>
+                    <v-text-field dense :label="section.name" v-model="section.value"/>
                 </div>
-                <v-simple-checkbox v-model="webPage" :disabled="isReadOnly"/>
-            </div>
-            <v-divider/>
-            <v-expand-transition>
-                <v-card flat v-show="!isReadOnly && webPage" class="mx-auto text-left px-6" width="100%">
-                    <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
-                    <div class="text-caption">섹션 추가(html)</div>
-                    <div class="d-flex" v-for="(section, index) in sections" :key="index">
-                        <v-icon class="pr-2 pb-2">mdi-minus-circle-outline</v-icon>
-                        <v-text-field dense :label="section.name" v-model="section.value"/>
-                    </div>
-                </v-card>
-            </v-expand-transition>
-        </div>
+            </template>
+        </expansion-panel>
         <!--        -->
 
+        <!-- HISTORY -->
+        <expansion-panel label="수정이력" :value="true">
+            <template v-slot:item>
+                <actions-table/>
+            </template>
+        </expansion-panel>
         <!-- HISTORY & REVIEWS -->
-        <v-expansion-panels v-model="panel2" multiple flat>
-            <v-expansion-panel>
-                <v-expansion-panel-header>
-                    <strong>수정이력</strong>
-                </v-expansion-panel-header>
-                <v-divider/>
-                <v-expansion-panel-content>
-                    <actions-table/>
-                    <v-btn outlined block>
-                        더보기
-                    </v-btn>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-                <v-expansion-panel-header>
-                    <strong>고객리뷰</strong>
-                </v-expansion-panel-header>
-                <v-divider/>
-                <v-expansion-panel-content>
-                    <div class="d-flex flex-column mb-3">
-                        <div class="d-flex mb-5">
-                            <v-icon>mdi-tag-outline</v-icon>
-                            <v-chip
-                                class="my-2 mx-1" close close-icon="mdi-close" color="primary"
-                                v-for="(chip, index) in chips" :key="index">{{chip}}</v-chip>
+
+        <!-- REVIEWS -->
+        <expansion-panel label="고객리뷰" :value="true">
+            <template v-slot:item>
+                <div class="d-flex flex-column mb-3">
+                    <div class="d-flex mb-5">
+                        <v-icon>mdi-tag-outline</v-icon>
+                        <v-chip
+                            class="my-2 mx-1" close close-icon="mdi-close" color="primary"
+                            v-for="(chip, index) in chips" :key="index">{{chip}}</v-chip>
+                    </div>
+                    <div class="d-flex flex-column" v-for="(review, index) in reviews" :key="index">
+                        <div class="d-flex justify-space-between">
+                            <p v-text="review.user1"/>
+                            <p v-text="review.user2"/>
                         </div>
-                        <div class="d-flex flex-column" v-for="(review, index) in reviews" :key="index">
-                            <div class="d-flex justify-space-between">
-                                <p v-text="review.user1"/>
-                                <p v-text="review.user2"/>
-                            </div>
-                            <div class="d-flex justify-space-between ">
-                                <p class="text-caption grey--text text--darken-2" v-text="review.created"/>
-                                <div
-                                    class="text-caption grey--text text--darken-2 ml-auto"
-                                    v-text="'#' + item.tags.join(' #')"/>
-                            </div>
-                            <div class="text-justify">
-                                {{review.comment}}<v-divider/>
-                            </div>
+                        <div class="d-flex justify-space-between ">
+                            <p class="text-caption grey--text text--darken-2" v-text="review.created"/>
+                            <div
+                                class="text-caption grey--text text--darken-2 ml-auto"
+                                v-text="'#' + item.tags.join(' #')"/>
+                        </div>
+                        <div class="text-justify">
+                            {{review.comment}}<v-divider/>
                         </div>
                     </div>
-                    <v-btn outlined block>
-                        더보기
-                    </v-btn>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-        </v-expansion-panels>
+                </div>
+                <v-btn outlined block>
+                    더보기
+                </v-btn>
+            </template>
+        </expansion-panel>
         <!--        -->
 
-        <div
-            v-if="isReadOnly"
-            class="d-flex flex-column elevation-0 py-6"
-        >
-            <div class="d-flex">
+        <div v-if="isReadOnly" class="d-flex flex-column elevation-0 py-3">
+            <div class="d-flex pt-3">
                 <v-select label="기간" class="col-3 pa-0 mr-1" placeholder="20.12.01 20.12.31"/>
                 <v-select label="옵션" class="col-3 pa-0 ml-1" placeholder="기본"/>
                 <v-select label="금액" class="col-3 pa-0 ml-auto" placeholder="100,000원"/>
@@ -223,11 +193,13 @@
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/TopContents";
     import DateField from "../../../components/DateField";
-    import ActionsTable from "../../../components/Table/ActionsTable";
+    import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
+    import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
 
     export default {
         components: {
+            ExpansionPanel,
             ActionsTable,
             DateField,
             TopContents,
@@ -241,8 +213,6 @@
             dialog: true,
             tabs: ['ses x', 'ses y' ,'ses z'],
             mode: READ_MODE,
-            panel1: [],
-            panel2: [0, 1],
 
             item: {
                 sku: 'uj10-21',
@@ -321,13 +291,4 @@
     .panel-content > div > div > div {
         font-size: 0.8rem;
     }
-
-    $expansion-panel-header-padding: 0px;
-    $expansion-panel-content-padding: 1000px;
-
-    @import "~vuetify/src/components/VExpansionPanel/VExpansionPanel.sass";
-
-    /*$bottom-nav-btn-max-width: 300px;*/
-
-    /*@import "~vuetify/src/components/VBottomNavigation/VBottomNavigation.sass";*/
 </style>

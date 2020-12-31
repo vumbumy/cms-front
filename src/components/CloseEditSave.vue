@@ -1,5 +1,5 @@
 <template>
-    <v-sheet class="d-flex align-center under-board" height="50" v-sticky="{zIndex: 3}">
+    <v-sheet class="d-flex align-center" height="50" v-sticky="{zIndex: 3}">
         <v-btn @click="onClickReturn" text icon>
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>

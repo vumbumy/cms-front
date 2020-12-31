@@ -1,4 +1,5 @@
 <template>
+    <div class="mb-2">
     <v-data-table
         class="elevation-1"
         dense
@@ -22,6 +23,10 @@
             <v-btn color="primary" @click="initialize">Reset</v-btn>
         </template>
     </v-data-table>
+        <v-btn outlined block>
+            더보기
+        </v-btn>
+    </div>
 </template>
 
 <script>

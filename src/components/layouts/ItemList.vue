@@ -46,7 +46,7 @@
 <script>
 
     import {CARD_VIEW, ITEMS_PER_PAGE, TABLE_VIEW} from "../../scripts/const";
-    import ItemTable from "../Table/ItemTable";
+    import ItemTable from "../tables/ItemTable";
 
     export default {
         components: {ItemTable},
