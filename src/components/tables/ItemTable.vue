@@ -11,9 +11,7 @@
         @click:row="onClickRow"
     >
         <template v-slot:item.check="{ item }">
-            <v-simple-checkbox
-                v-model="item.check"
-            ></v-simple-checkbox>
+            <v-simple-checkbox v-model="item.check"/>
         </template>
     </v-data-table>
 </template>

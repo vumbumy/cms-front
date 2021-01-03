@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column py-3">
-        <div class="d-flex subtitle-1 font-weight-bold py-2">
+        <div class="d-flex subtitle-1 py-2">
             <div class="d-flex" v-if="type === 'checkbox'">
                 {{label}}<v-simple-checkbox v-if="!readonly" class="ml-2" v-model="active" @input="onClickBox"/>
             </div>
@@ -12,7 +12,7 @@
         <v-divider/>
         <v-expand-transition>
             <v-card flat v-show="!readonly && active" class="text-left">
-                <slot name="item" :item="item"/>
+                <slot/>
             </v-card>
         </v-expand-transition>
     </div>
@@ -25,7 +25,6 @@
             value: Boolean,
             readonly: Boolean,
             label: String,
-            item: Object
         },
         data: () => ({
             active: true

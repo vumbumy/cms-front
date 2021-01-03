@@ -68,19 +68,47 @@
 
         <!-- ADVANCED -->
         <expansion-panel label="Advanced" :value="true">
-            <template v-slot:item>
+
                 <div class="d-flex justify-space-between flex-wrap panel-content">
-                    <div class="d-flex flex-column col-12 pl-0 col-sm-4">
+                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
                         <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
                         <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
                         <v-text-field :readonly="isReadOnly" label="환불보상조건" value="일반"/>
                     </div>
-                    <div class="d-flex flex-column col-12 pl-0 col-sm-3">
+                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
                         <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
                         <!-- TODO: 페어 텍스트 입력 폼 -->
-                        <v-text-field :readonly="isReadOnly" label="볼륨할인율" value="15%" suffix="200만원 이상"/>
+<!--                        <v-text-field :readonly="isReadOnly" label="볼륨할인율" value="15%" suffix="200만원 이상"/>-->
+                        <pair-list
+                            label="볼륨할인율"
+                            class="caption"
+
+                            :items="discounts"
+                            :readonly="isReadOnly"
+                            v-on:append="discounts.push({name: '', value: ''})"
+                            v-on:delete="index => discounts.splice(index, 1)"
+                        >
+                            <template v-slot:item={item}>
+                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
+                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value" suffix="만원이상"/>
+                            </template>
+                        </pair-list>
                         <!-- TODO: 페어 텍스트 입력 폼 -->
-                        <v-text-field :readonly="isReadOnly" label="옵션" value="회룡역만" persistent-hint hint="+100,000원"/>
+<!--                        <v-text-field :readonly="isReadOnly" label="옵션" value="회룡역만" persistent-hint hint="+100,000원"/>-->
+                        <pair-list
+                            label="옵션"
+                            class="caption"
+
+                            :items="options"
+                            :readonly="isReadOnly"
+                            v-on:append="options.push({name: '', value: ''})"
+                            v-on:delete="index => options.splice(index, 1)"
+                        >
+                            <template v-slot:item={item}>
+                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
+                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
+                            </template>
+                        </pair-list>
                     </div>
                     <div class="d-flex flex-column col-12 pl-0 col-sm-4 ml-auto">
                         <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>
@@ -88,52 +116,79 @@
                         <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
                     </div>
                 </div>
-            </template>
+
         </expansion-panel>
 
         <!-- CONTENT PACKAGE -->
         <expansion-panel label="Content Package" :value="true">
-            <template v-slot:item>
+
                 <div class="d-flex justify-space-between flex-wrap panel-content">
                     <div class="d-flex flex-column col-12 col-sm-5 pa-0">
                         <div class="d-flex">
                             <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
                             <div class="text-left mt-3 ml-5">시작일<br>일전</div>
                         </div>
-                        <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>
+<!--                        <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>-->
+                        <pair-list
+                            label="매체"
+                            class="caption indigo--text accent-3"
+
+                            :items="[{name: 'UJ-DID(의정부경전철)', value: '(spec json value)'}]"
+                            :readonly="isReadOnly"
+                        >
+                            <template v-slot:item={item}>
+                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>
+                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
+                            </template>
+                        </pair-list>
                     </div>
-                    <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-4 mt-auto">
-                        <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>
+                    <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-6 mt-auto">
+<!--                        <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>-->
+                        <pair-list
+                            label="컨텐츠 포맷"
+                            class="caption indigo--text accent-3"
+
+                            :items="[{name: '항목', value: '(spec json value)'}]"
+                            :readonly="isReadOnly"
+                        >
+                            <template v-slot:item={item}>
+                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>
+                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
+                            </template>
+                        </pair-list>
                     </div>
                 </div>
-            </template>
         </expansion-panel>
         <!--        -->
 
         <!-- WEB PAGE -->
         <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">
-            <template v-slot:item>
                 <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
-                <div class="text-caption">섹션 추가(html)</div>
-                <div class="d-flex" v-for="(section, index) in sections" :key="index">
-                    <v-icon class="pr-2 pb-2">mdi-minus-circle-outline</v-icon>
-                    <v-text-field dense :label="section.name" v-model="section.value"/>
-                </div>
-            </template>
+                <pair-list
+                    label="섹션 추가(html)"
+                    class="caption indigo--text accent-3"
+                    :items="sections"
+                    :readonly="isReadOnly"
+
+                    v-on:append="sections.push({name: '', value: ''})"
+                    v-on:delete="index => sections.splice(index, 1)"
+                >
+                    <template v-slot:item={item}>
+                        <v-text-field class="col-2 py-0 pl-0" dense v-model="item.name"/>
+                        <v-textarea outlined dense v-model="item.value" :rows="2"/>
+                    </template>
+                </pair-list>
         </expansion-panel>
         <!--        -->
 
         <!-- HISTORY -->
         <expansion-panel label="수정이력" :value="true">
-            <template v-slot:item>
-                <actions-table/>
-            </template>
+            <actions-table/>
         </expansion-panel>
         <!-- HISTORY & REVIEWS -->
 
         <!-- REVIEWS -->
         <expansion-panel label="고객리뷰" :value="true">
-            <template v-slot:item>
                 <div class="d-flex flex-column mb-3">
                     <div class="d-flex mb-5">
                         <v-icon>mdi-tag-outline</v-icon>
@@ -160,7 +215,6 @@
                 <v-btn outlined block>
                     더보기
                 </v-btn>
-            </template>
         </expansion-panel>
         <!--        -->
 
@@ -196,9 +250,11 @@
     import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
+    import PairList from "../../../components/layouts/PairList";
 
     export default {
         components: {
+            PairList,
             ExpansionPanel,
             ActionsTable,
             DateField,
@@ -223,15 +279,13 @@
                 tags: ["의정부", "디지털특가", "21년 신규"]
             },
             sections: [
-                {
-                    name: "설명",
-                    value: null
-                },
-                {
-                    name: "항목",
-                    value: null
-                }
+                {name: "설명", value: null},
+                {name: "항목", value: null}
             ],
+            options: [
+                {name: '회룡역만', value: '+100000'},
+            ],
+            discounts: [{name: '15%', value: '200'}],
             webPage: true,
             chips: ["의정부", "디지털", "2020년 처음"],
             reviews: [
