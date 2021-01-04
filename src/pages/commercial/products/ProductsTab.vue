@@ -1,9 +1,7 @@
 <template>
     <v-sheet class="my-2">
-        <v-alert dense outlined type="warning" border="left" class="mb-2" v-for="(msg, index) in alertMsg" :key="index" dismissible>
-            <div v-html="msg"/>
-        </v-alert>
-        <bar-chart/>
+        <warning :messages="warnings"/>
+<!--        <bar-chart/>-->
         <sort-search-view
             @search="onSearch"
             @update_order="onUpdateOrder"
@@ -31,28 +29,28 @@
 
 <script>
 
-    import BarChart from "../../../components/BarChart";
+    // import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
     import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
     import Sub1ListItem from "./ProductsCard";
     import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
     import ItemList from "../../../components/layouts/ItemList";
+    import Warning from "../../../components/alerts/Warning";
 
 
     export default {
         components: {
+            Warning,
             ItemList,
             Sub1ListItem,
             SortSearchView,
-            BarChart
+            // BarChart
         },
         data: () => ({
             view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
-            alertMsg: [
-                '<strong>Section Warning</strong> (Notice)'
-            ],
+            warnings: [],
             headers: [
                 { value: 'check' },
                 { text: '#', value: 'id' },

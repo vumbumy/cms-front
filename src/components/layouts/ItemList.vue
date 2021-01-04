@@ -74,7 +74,7 @@
             this.page = this.value
             this.maxPage = Math.trunc(this.itemsLength / ITEMS_PER_PAGE);
 
-            console.log('maxPage', this.maxPage)
+            // console.log('maxPage', this.maxPage)
         },
         computed: {
             isCardView(){

@@ -1,8 +1,6 @@
 <template>
     <v-sheet class="my-2">
-        <v-alert dense outlined type="warning" border="left" class="mb-2" v-for="(msg, index) in alertMsg" :key="index" dismissible>
-            <div v-html="msg"/>
-        </v-alert>
+
         <bar-chart/>
         <sort-search-view
             @search="onSearch"

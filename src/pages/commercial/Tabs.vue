@@ -9,9 +9,7 @@
             <div class="headline font-weight-bold" v-text="$t(parent)"/>
             <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
 
-            <v-alert class="mb-0" dense outlined type="error" dismissible>
-                <strong>Main Warning</strong> (Reminder)
-            </v-alert>
+            <error :message="error"/>
             <kpi-box/>
             <v-tabs show-arrows>
                 <v-tab
@@ -39,13 +37,16 @@
 <script>
   import KpiBox from "../../components/KpiBox";
   import {searchChildren} from "../../menu";
+  import Error from "../../components/alerts/Error";
 
   export default {
       components: {
+          Error,
           KpiBox
       },
       data() {
           return {
+              error: '',
               active_tab: 0,
               tabs: []
           };
@@ -57,12 +58,12 @@
 
           // console.log(this.tabs)
       },
-      mounted() {
-          console.log(this.$vuetify.breakpoint.name)
-      },
-      updated() {
-          console.log(this.$vuetify.breakpoint.name)
-      },
+      // mounted() {
+      //     console.log(this.$vuetify.breakpoint.name)
+      // },
+      // updated() {
+      //     console.log(this.$vuetify.breakpoint.name)
+      // },
       watch: {
           parent() {this.updateTabs()}
       },
