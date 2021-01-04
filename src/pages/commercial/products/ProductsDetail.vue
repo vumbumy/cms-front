@@ -1,82 +1,84 @@
 <template>
-    <div class="d-flex flex-column main">
-        <close-edit-save
-            v-model="mode"
-            v-on:save="onClickSave"
-            v-on:delete="onClickDelete"
-        />
-
-        <!-- TOP CONTENTS -->
-        <top-contents
-            :readonly="isReadOnly"
-            :updated="Date.parse('2020-12-13')"
-            :created="Date.parse('2020-12-01')"
-        >
-            <div v-if="isReadOnly" class="text-h5 text-sm-h4">
-                <strong v-text="item.name"/>
-            </div>
-            <v-text-field v-else label="이름" v-model="item.name"/>
-            <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey--text text--darken-2">
-                <strong v-text="item.category"/>
-            </div>
-            <v-text-field v-else label="카테고리" v-model="item.category"/>
-        </top-contents>
-        <!--        -->
-
-        <!-- TOP UNDER CONTENTS -->
-        <div class="d-flex" v-if="isReadOnly">
-            <div class="caption grey--text text--darken-2 text-truncate">
-                https://naim.ai/products/{{item.sku}}
-            </div>
-            <div
-                class="d-flex text-caption grey--text text--darken-2 ml-auto text-truncate"
-                v-text="'#' + item.tags.join(' #')"/>
+    <div class="d-flex flex-column">
+        <div class="header">
+            <close-edit-save
+                v-model="mode"
+                v-on:save="onClickSave"
+                v-on:delete="onClickDelete"
+            />
         </div>
-        <div v-else class="d-flex justify-space-between">
-            <v-text-field class="flex-grow-0" label="SKU" v-model="item.sku"/>
-            <v-spacer/>
-            <v-text-field class="flex-grow-1" label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
-        </div>
-        <v-divider class="grey"/>
-        <!--        -->
-
-        <!-- HEAD CONTENTS -->
-        <div class="d-flex justify-space-between flex-nowrap text-left mt-5">
-            <div class="d-flex col-3 pa-0">
-                <div class="d-flex flex-column">
-                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
-                    <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.stock}}</div>
-                    <v-text-field v-else v-model="item.stock"/>
+        <div class="d-flex flex-column">
+            <!-- TOP CONTENTS -->
+            <top-contents
+                :readonly="isReadOnly"
+                :updated="Date.parse('2020-12-13')"
+                :created="Date.parse('2020-12-01')"
+            >
+                <div v-if="isReadOnly" class="text-h5 text-sm-h4">
+                    <strong v-text="item.name"/>
                 </div>
-                <div v-if="isReadOnly" class="text-h5 text-sm-h3 mx-1 mt-auto">/</div>
-                <div v-else class="mx-1"/>
-                <div class="d-flex flex-column">
-                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>
-                    <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.amount}}</div>
-                    <v-text-field v-else v-model="item.amount"/>
+                <v-text-field v-else label="이름" v-model="item.name"/>
+                <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey--text text--darken-2">
+                    <strong v-text="item.category"/>
+                </div>
+                <v-text-field v-else label="카테고리" v-model="item.category"/>
+            </top-contents>
+            <!--        -->
+
+            <!-- TOP UNDER CONTENTS -->
+            <div class="d-flex" v-if="isReadOnly">
+                <div class="caption grey--text text--darken-2 text-truncate">
+                    https://naim.ai/products/{{item.sku}}
+                </div>
+                <div
+                    class="d-flex text-caption grey--text text--darken-2 ml-auto text-truncate"
+                    v-text="'#' + item.tags.join(' #')"/>
+            </div>
+            <div v-else class="d-flex justify-space-between">
+                <v-text-field class="flex-grow-0" label="SKU" v-model="item.sku"/>
+                <v-spacer/>
+                <v-text-field class="flex-grow-1" label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
+            </div>
+            <v-divider class="grey"/>
+            <!--        -->
+
+            <!-- HEAD CONTENTS -->
+            <div class="d-flex justify-space-between flex-nowrap text-left mt-5">
+                <div class="d-flex col-3 pa-0">
+                    <div class="d-flex flex-column">
+                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.stock}}</div>
+                        <v-text-field v-else v-model="item.stock"/>
+                    </div>
+                    <div v-if="isReadOnly" class="text-h5 text-sm-h3 mx-1 mt-auto">/</div>
+                    <div v-else class="mx-1"/>
+                    <div class="d-flex flex-column">
+                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.amount}}</div>
+                        <v-text-field v-else v-model="item.amount"/>
+                    </div>
+                </div>
+                <div class="d-flex col-3 pa-0">
+                    <div class="d-flex flex-column">
+                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold mt-auto">{{item.price}}</div>
+                        <v-text-field v-else v-model="item.price" suffix="만원/월"/>
+                    </div>
+                    <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
+                </div>
+                <div class="d-flex flex-column col-4 pa-0">
+                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>
+                    <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
+                    <date-field v-else v-model="item.dates1"/>
                 </div>
             </div>
-            <div class="d-flex col-3 pa-0">
-                <div class="d-flex flex-column">
-                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
-                    <div v-if="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold mt-auto">{{item.price}}</div>
-                    <v-text-field v-else v-model="item.price" suffix="만원/월"/>
-                </div>
-                <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
-            </div>
-            <div class="d-flex flex-column col-4 pa-0">
-                <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>
-                <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
-                <date-field v-else v-model="item.dates1"/>
-            </div>
-        </div>
-        <!--        -->
+            <!--        -->
 
-        <stepper class="mb-3"/>
-        <photo class="mb-2"/>
+            <stepper class="mb-3"/>
+            <photo class="mb-2"/>
 
-        <!-- ADVANCED -->
-        <expansion-panel label="Advanced" :value="true">
+            <!-- ADVANCED -->
+            <expansion-panel label="Advanced" :value="true">
 
                 <div class="d-flex justify-space-between flex-wrap">
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
@@ -116,17 +118,17 @@
                         </pair-list>
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0">
-<!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
+                        <!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
                         <date-field :readonly="isReadOnly" label="상품 노출 기간" :value="['2020-07-01', '2020-11-30']"/>
                         <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
                         <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
                     </div>
                 </div>
 
-        </expansion-panel>
+            </expansion-panel>
 
-        <!-- CONTENT PACKAGE -->
-        <expansion-panel label="Content Package" :value="true">
+            <!-- CONTENT PACKAGE -->
+            <expansion-panel label="Content Package" :value="true">
 
                 <div class="d-flex justify-space-between flex-wrap">
                     <div class="d-flex flex-column col-12 col-sm-5 pa-0">
@@ -162,11 +164,11 @@
                         </pair-list>
                     </div>
                 </div>
-        </expansion-panel>
-        <!--        -->
+            </expansion-panel>
+            <!--        -->
 
-        <!-- WEB PAGE -->
-        <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">
+            <!-- WEB PAGE -->
+            <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">
                 <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
                 <pair-list
                     label="섹션 추가(html)"
@@ -182,17 +184,17 @@
                         <v-textarea outlined dense v-model="item.value" :rows="2"/>
                     </template>
                 </pair-list>
-        </expansion-panel>
-        <!--        -->
+            </expansion-panel>
+            <!--        -->
 
-        <!-- HISTORY -->
-        <expansion-panel label="수정이력" :value="true">
-            <actions-table/>
-        </expansion-panel>
-        <!-- HISTORY & REVIEWS -->
+            <!-- HISTORY -->
+            <expansion-panel label="수정이력" :value="true">
+                <actions-table/>
+            </expansion-panel>
+            <!-- HISTORY & REVIEWS -->
 
-        <!-- REVIEWS -->
-        <expansion-panel label="고객리뷰" :value="true">
+            <!-- REVIEWS -->
+            <expansion-panel label="고객리뷰" :value="true">
                 <div class="d-flex flex-column mb-3">
                     <div class="d-flex mb-5">
                         <v-icon>mdi-tag-outline</v-icon>
@@ -219,8 +221,9 @@
                 <v-btn outlined block>
                     더보기
                 </v-btn>
-        </expansion-panel>
-        <!--        -->
+            </expansion-panel>
+            <!--        -->
+        </div>
 
         <v-sheet v-if="isReadOnly" class="footer d-flex flex-column elevation-0 py-3 pr-3 px-sm-3">
             <div class="d-flex pt-3">
@@ -342,13 +345,17 @@
 </script>
 
 <style lang="scss" scoped>
-    .main {
-        margin-bottom: 140px;
+    .header {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        height: 50px;
+        z-index: 3;
     }
     .footer {
-        position: fixed;
+        width: 100%;
+        position: sticky;
         bottom: 0;
         height: 140px;
-        min-width: inherit;
     }
 </style>

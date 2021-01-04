@@ -10,6 +10,7 @@ import ProductsTab from "../pages/commercial/products/ProductsTab";
 import ProductsDetail from "../pages/commercial/products/ProductsDetail";
 import OrdersTab from "../pages/commercial/orders/OrdersTab";
 import OrderDetail from "../pages/commercial/orders/OrderDetail";
+import NotFoundComponent from "../components/NotFoundComponent";
 
 
 Vue.use(Router);
@@ -206,6 +207,7 @@ export default new Router({
                     path: 'transactions',
                 }
             ]
-        }
+        },
+        { path: '*', component: NotFoundComponent },
     ]
 });
