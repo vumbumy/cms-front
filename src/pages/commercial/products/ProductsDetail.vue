@@ -1,6 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
-        <!-- TODO: z-index 최상단 위치 -->
+    <div class="d-flex flex-column main">
         <close-edit-save
             v-model="mode"
             v-on:save="onClickSave"
@@ -213,7 +212,7 @@
         </expansion-panel>
         <!--        -->
 
-        <div v-if="isReadOnly" class="d-flex flex-column elevation-0 py-3">
+        <v-sheet v-if="isReadOnly" class="footer d-flex flex-column elevation-0 py-3 pr-3 px-sm-3">
             <div class="d-flex pt-3">
                 <v-select label="기간" class="col-3 pa-0 mr-1" placeholder="20.12.01 20.12.31"/>
                 <v-select label="옵션" class="col-3 pa-0 ml-1" placeholder="기본"/>
@@ -230,7 +229,7 @@
                     text
                     dark>구매하기</v-btn>
             </div>
-        </div>
+        </v-sheet>
     </div>
 </template>
 
@@ -339,5 +338,14 @@
     }
     .panel-content > div > div > div {
         font-size: 0.8rem;
+    }
+    .main {
+        margin-bottom: 140px;
+    }
+    .footer {
+        position: fixed;
+        bottom: 0;
+        height: 140px;
+        min-width: inherit;
     }
 </style>

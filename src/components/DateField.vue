@@ -79,7 +79,6 @@
                 console.log(this.dates)
                 this.$emit('input', this.dates)
             },
-            onClickCancel: function(){},
             datesToString: datesToString
         }
     }
