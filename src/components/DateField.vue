@@ -10,11 +10,12 @@
     >
         <template v-slot:activator="{ on, attrs }">
             <v-text-field
+                :label="label"
                 :value="datesToString(dates)"
                 readonly
                 v-bind="attrs"
-                v-on="on"
-            ></v-text-field>
+                v-on="readonly ? null : on"
+            />
         </template>
         <v-date-picker
             v-model="dates"
@@ -22,7 +23,7 @@
             scrollable
             range
         >
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-btn
                 text
                 color="primary"
@@ -46,7 +47,12 @@
 
     export default {
         props: {
-            value: Array
+            label: String,
+            value: Array,
+            readonly: {
+                type: Boolean,
+                default: false
+            }
         },
         data: () => ({
             dates: [],
@@ -73,6 +79,7 @@
                 console.log(this.dates)
                 this.$emit('input', this.dates)
             },
+            onClickCancel: function(){},
             datesToString: datesToString
         }
     }

@@ -77,8 +77,6 @@
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
                         <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
-                        <!-- TODO: 페어 텍스트 입력 폼 -->
-<!--                        <v-text-field :readonly="isReadOnly" label="볼륨할인율" value="15%" suffix="200만원 이상"/>-->
                         <pair-list
                             label="볼륨할인율"
                             class="caption"
@@ -93,8 +91,6 @@
                                 <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value" suffix="만원이상"/>
                             </template>
                         </pair-list>
-                        <!-- TODO: 페어 텍스트 입력 폼 -->
-<!--                        <v-text-field :readonly="isReadOnly" label="옵션" value="회룡역만" persistent-hint hint="+100,000원"/>-->
                         <pair-list
                             label="옵션"
                             class="caption"
@@ -110,8 +106,9 @@
                             </template>
                         </pair-list>
                     </div>
-                    <div class="d-flex flex-column col-12 pl-0 col-sm-4 ml-auto">
-                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>
+                    <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0">
+<!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
+                        <date-field :readonly="isReadOnly" label="상품 노출 기간" :value="['2020-07-01', '2020-11-30']"/>
                         <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
                         <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
                     </div>
@@ -128,7 +125,6 @@
                             <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
                             <div class="text-left mt-3 ml-5">시작일<br>일전</div>
                         </div>
-<!--                        <v-text-field :readonly="isReadOnly" label="매체" value="UJ-DID(의정부경전철)"/>-->
                         <pair-list
                             label="매체"
                             class="caption indigo--text accent-3"
@@ -143,7 +139,6 @@
                         </pair-list>
                     </div>
                     <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-6 mt-auto">
-<!--                        <v-text-field :readonly="isReadOnly" label="컨텐츠 포맷" value="항목"/>-->
                         <pair-list
                             label="컨텐츠 포맷"
                             class="caption indigo--text accent-3"
