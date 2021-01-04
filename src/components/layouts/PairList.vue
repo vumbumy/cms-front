@@ -46,6 +46,6 @@
 
 <style lang="scss" scoped>
     .v-text-field {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 </style>

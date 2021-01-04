@@ -68,7 +68,7 @@
         <!-- ADVANCED -->
         <expansion-panel label="Advanced" :value="true">
 
-                <div class="d-flex justify-space-between flex-wrap panel-content">
+                <div class="d-flex justify-space-between flex-wrap">
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
                         <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
                         <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
@@ -118,11 +118,11 @@
         <!-- CONTENT PACKAGE -->
         <expansion-panel label="Content Package" :value="true">
 
-                <div class="d-flex justify-space-between flex-wrap panel-content">
+                <div class="d-flex justify-space-between flex-wrap">
                     <div class="d-flex flex-column col-12 col-sm-5 pa-0">
                         <div class="d-flex">
                             <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>
-                            <div class="text-left mt-3 ml-5">시작일<br>일전</div>
+                            <div class="text-left mt-2 ml-5">시작일<br>일전</div>
                         </div>
                         <pair-list
                             label="매체"
@@ -330,15 +330,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .panel-content > div > .v-text-field {
-        font-size: 0.8rem;
-    }
-    .panel-content > div > div > .v-text-field {
-        font-size: 0.8rem;
-    }
-    .panel-content > div > div > div {
-        font-size: 0.8rem;
-    }
     .main {
         margin-bottom: 140px;
     }

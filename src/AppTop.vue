@@ -1,13 +1,21 @@
 <template>
     <div>
-        <v-app-bar app clipped-left height="40" flat class="mx-0 px-0" outlined style="background: white">
+        <v-app-bar
+            app
+            flat
+            outlined
+            clipped-left
+            height="40"
+            class="mx-0 px-0 text-subtitle-2 font-weight-light"
+            style="background: white"
+        >
             <v-img src="https://naim.ai/img/logo.png" max-width="40" contain/><div class="mx-1">|</div><b>ad</b>
             <v-spacer/>
             Hello,
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="px-0" v-bind="attrs" v-on="on" text rounded>
-                        <b>Tester</b>
+                    <v-btn class="px-0 text-subtitle-2" v-bind="attrs" v-on="on" text rounded>
+                        Tester
                     </v-btn>
                 </template>
                 <v-list dense>
