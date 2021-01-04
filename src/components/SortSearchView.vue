@@ -17,10 +17,10 @@
             keyword(){
                 this.$emit('search', this.keyword)
             },
-            sort_icon(){
+            sort(){
                 this.$emit('update_order', this.sort)
             },
-            view_icon(){
+            view(){
                 this.$emit('update_view', this.view)
             }
         },

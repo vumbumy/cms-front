@@ -1,18 +1,16 @@
 <template>
     <v-data-table
+        disable-sort
+        hide-default-footer
+        show-select
+
         :headers="headers"
         :items="items"
         :items-per-page="15"
-        class="elevation-1"
-        disable-sort
-        hide-default-footer
         :loading="loading"
 
         @click:row="onClickRow"
     >
-        <template v-slot:item.check="{ item }">
-            <v-simple-checkbox v-model="item.check"/>
-        </template>
     </v-data-table>
 </template>
 

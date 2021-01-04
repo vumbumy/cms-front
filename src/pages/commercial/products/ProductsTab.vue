@@ -52,7 +52,6 @@
             tags: ['의정부', '최근 1주'],
             warnings: [],
             headers: [
-                { value: 'check' },
                 { text: '#', value: 'id' },
                 { text: 'Name', value: 'name' },
                 { text: 'Type', value: 'type' },
@@ -76,7 +75,6 @@
                             type: textList[i],
                             description: textList[i],
                             stock: i % 10 * 10,
-                            check: false
                         }
                     )
                 }
@@ -101,13 +99,15 @@
                 }
             },
             onSearch: function(param){
-                console.log(param)
+                console.log('onSearch', param)
             },
             onUpdateView: function (param) {
+                console.log('onUpdateView', param)
+
                 this.view = param
             },
             onUpdateOrder: function (param) {
-                console.log(param)
+                console.log('onUpdateOrder', param)
             }
         }
     }

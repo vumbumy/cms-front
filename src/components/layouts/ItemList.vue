@@ -2,13 +2,13 @@
     <div class="d-flex flex-column">
         <div class="d-flex align-center">
             <div>
-                <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>
-                <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>
+<!--                <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>-->
+<!--                <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>-->
                 <v-icon class="mr-2" @click="onClickAdd">mdi-plus</v-icon>
-                <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-refresh</v-icon>
-                <v-icon class="mr-2" v-if="!dots">mdi-download</v-icon>
-                <v-icon v-if="!dots">mdi-trash-can-outline</v-icon>
+<!--                <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>-->
+                <v-icon class="mr-2" @click="onClickRefresh">mdi-refresh</v-icon>
+                <v-icon class="mr-2" v-if="isTableView">mdi-download</v-icon>
+                <v-icon v-if="isTableView">mdi-trash-can-outline</v-icon>
             </div>
 
             <div class="ml-auto">
@@ -22,23 +22,24 @@
             </v-btn>
         </div>
         <div v-if="isCardView" class="d-flex flex-column">
+            <v-progress-linear
+                :active="loading"
+                indeterminate
+            />
             <v-card
-                width="100%"
+                outlined
+
                 class="my-1"
                 v-for="item in items" :key="item.id"
                 :class="{'selected': $route.query.id === String(item.id)}"
-                outlined
+
                 @click="onClickItem(item.id)"
             >
                 <slot name="item" :item="item"/>
             </v-card>
         </div>
         <div v-else-if="isTableView">
-            <v-row dense>
-                <v-col>
-                    <item-table :headers="headers" :items="items"/>
-                </v-col>
-            </v-row>
+            <item-table :headers="headers" :items="items" :loading="loading"/>
         </div>
     </div>
 </template>
@@ -64,7 +65,8 @@
         },
         data: () => ({
             check: false,
-            dots: true,
+            // dots: true,
+            loading: false,
 
             page: 1,
 
@@ -90,6 +92,13 @@
         methods: {
             onClickAdd: function () {
                 this.onClickItem(0)
+            },
+            onClickRefresh: function() {
+                this.loading = true;
+
+                let vm = this
+
+                setTimeout(() => vm.loading = false, 1000)
             },
             onClickItem: function (id) {
                 if(this.$route.query.id !== String(id))
