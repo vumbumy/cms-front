@@ -240,7 +240,7 @@
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/TopContents";
-    import DateField from "../../../components/DateField";
+    import DateField from "../../../components/menus/DateField";
     import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
