@@ -7,7 +7,20 @@
         />
 
         <!-- TOP CONTENTS -->
-        <top-contents :readonly="isReadOnly"/>
+        <top-contents
+            :readonly="isReadOnly"
+            :updated="Date.parse('2020-12-13')"
+            :created="Date.parse('2020-12-01')"
+        >
+            <div v-if="isReadOnly" class="text-h5 text-sm-h4">
+                <strong v-text="item.name"/>
+            </div>
+            <v-text-field v-else label="이름" v-model="item.name"/>
+            <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey--text text--darken-2">
+                <strong v-text="item.category"/>
+            </div>
+            <v-text-field v-else label="카테고리" v-model="item.category"/>
+        </top-contents>
         <!--        -->
 
         <!-- TOP UNDER CONTENTS -->
@@ -19,13 +32,10 @@
                 class="d-flex text-caption grey--text text--darken-2 ml-auto text-truncate"
                 v-text="'#' + item.tags.join(' #')"/>
         </div>
-        <div v-else class="d-flex">
-            <div class="col-3 pb-0">
-                <v-text-field label="SKU" v-model="item.sku"/>
-            </div>
-            <div class="ml-auto col-8 pb-0">
-                <v-text-field label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
-            </div>
+        <div v-else class="d-flex justify-space-between">
+            <v-text-field class="flex-grow-0" label="SKU" v-model="item.sku"/>
+            <v-spacer/>
+            <v-text-field class="flex-grow-1" label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
         </div>
         <v-divider class="grey"/>
         <!--        -->
@@ -239,7 +249,7 @@
     import {datesToString, dateToDateTime} from "../../../scripts/util";
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
     import Stepper from "../../../components/Stepper";
-    import TopContents from "../../../components/TopContents";
+    import TopContents from "../../../components/layouts/TopContents";
     import DateField from "../../../components/menus/DateField";
     import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
@@ -265,6 +275,8 @@
             mode: READ_MODE,
 
             item: {
+                name: "디지털01-의정부",
+                category: "나임의 정부",
                 sku: 'uj10-21',
                 stock: 2,
                 amount: 10,

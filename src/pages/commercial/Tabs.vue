@@ -58,9 +58,9 @@
 
           // console.log(this.tabs)
       },
-      // mounted() {
-      //     console.log(this.$vuetify.breakpoint.name)
-      // },
+      mounted() {
+          console.log(this.$vuetify.breakpoint.name)
+      },
       // updated() {
       //     console.log(this.$vuetify.breakpoint.name)
       // },
@@ -79,12 +79,12 @@
           },
           detailMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
-                  return 625
+                  return 800
 
               return 0
           },
           detailElevation(){
-              if(this.$vuetify.breakpoint.mdAndDown)
+              if(this.$vuetify.breakpoint.lgAndDown)
                   return 5
 
               return 0

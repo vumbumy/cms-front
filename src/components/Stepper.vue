@@ -1,49 +1,23 @@
 <template>
-    <v-stepper class="elevation-0">
-        <v-stepper-header>
-            <v-stepper-step
-                step="3"
-                complete
-            >
-                생성
-            </v-stepper-step>
-
-            <v-divider/>
-
-            <v-stepper-step
-                step="4"
-                :rules="[() => false]"
-            >
-                제작 중
-                <small>Alert message</small>
-            </v-stepper-step>
-
-            <v-divider/>
-
-            <v-stepper-step
-                step="5"
-            >
-                게첨 중
-            </v-stepper-step>
-
-            <v-divider/>
-
-            <v-stepper-step step="6">
-                종료
-            </v-stepper-step>
-
-            <v-divider/>
-
-            <v-stepper-step step="7">
-                완료
-            </v-stepper-step>
-        </v-stepper-header>
-    </v-stepper>
+    <div class="d-flex my-3" @click="index = (index + 1) % steps.length">
+        <v-sheet :class="steps[index].classes" class="font-weight-bold" v-text="steps[index].name"/>
+        <v-sheet class="flex-grow-1 grey lighten-2"/>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "Stepper"
+        data: () => ({
+            index: 0,
+            steps: [
+                {name: "생성", classes: ['col-12', 'pa-1', 'grey', 'lighten-2', 'text-left']},
+                {name: "주문확정", classes: ['col-3', 'pa-1', 'blue', 'darken-4', 'text-right', 'theme--dark']},
+                {name: "제작중", classes: ['col-6', 'pa-1', 'blue', 'darken-4', 'text-right', 'theme--dark']},
+                {name: "게첨중", classes: ['col-9', 'pa-1', 'blue', 'darken-4', 'text-right', 'theme--dark']},
+                {name: "종료", classes: ['col-12', 'pa-1', 'blue', 'darken-4', 'text-right', 'theme--dark']},
+                {name: "완료", classes: ['col-12', 'pa-1', 'grey', 'lighten-2', 'text-right']},
+            ]
+        })
     }
 </script>
 
