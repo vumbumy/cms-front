@@ -1,12 +1,11 @@
 <template>
     <div class="d-flex flex-column">
-        <div class="header">
-            <close-edit-save
-                v-model="mode"
-                v-on:save="onClickSave"
-                v-on:delete="onClickDelete"
-            />
-        </div>
+        <close-edit-save
+            class="header"
+            v-model="mode"
+            v-on:save="onClickSave"
+            v-on:delete="onClickDelete"
+        />
         <div class="d-flex flex-column">
             <!-- TOP CONTENTS -->
             <top-contents
@@ -225,7 +224,7 @@
             <!--        -->
         </div>
 
-        <v-sheet v-if="isReadOnly" class="footer d-flex flex-column elevation-0 py-3 pr-3 px-sm-3">
+        <v-sheet v-if="isReadOnly" class="footer d-flex flex-column">
             <div class="d-flex pt-3">
                 <v-select label="기간" class="col-3 pa-0 mr-1" placeholder="20.12.01 20.12.31"/>
                 <v-select label="옵션" class="col-3 pa-0 ml-1" placeholder="기본"/>
@@ -345,17 +344,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .header {
-        width: 100%;
-        position: sticky;
-        top: 0;
-        height: 50px;
-        z-index: 3;
-    }
-    .footer {
-        width: 100%;
-        position: sticky;
-        bottom: 0;
-        height: 140px;
-    }
+
 </style>

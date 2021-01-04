@@ -55,15 +55,13 @@
           let children = searchChildren(this.parent)
           for(let child of children)
               if(child.path !== '') this.tabs.push(child)
-
-          // console.log(this.tabs)
       },
       mounted() {
           console.log(this.$vuetify.breakpoint.name)
       },
-      // updated() {
-      //     console.log(this.$vuetify.breakpoint.name)
-      // },
+      updated() {
+          console.log(this.$vuetify.breakpoint.name)
+      },
       watch: {
           parent() {this.updateTabs()}
       },
@@ -79,7 +77,7 @@
           },
           detailMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
-                  return 800
+                  return 625
 
               return 0
           },
@@ -102,8 +100,18 @@
   }
 </script>
 
-<style lang="scss" scoped>
-    .v-text-field {
-        font-size: 0.8rem;
+<style lang="scss">
+    .header {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        height: 50px;
+        z-index: 3;
+    }
+    .footer {
+        width: 100%;
+        position: sticky;
+        bottom: 0;
+        height: 120px;
     }
 </style>
