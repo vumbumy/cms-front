@@ -42,30 +42,30 @@
             <!--        -->
 
             <!-- HEAD CONTENTS -->
-            <div class="d-flex justify-space-between flex-nowrap text-left mt-5">
-                <div class="d-flex col-3 pa-0">
+            <div class="d-flex justify-space-between text-left mt-5">
+                <div class="d-flex">
                     <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.stock}}</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.stock}}</div>
                         <v-text-field v-else v-model="item.stock"/>
                     </div>
-                    <div v-if="isReadOnly" class="text-h5 text-sm-h3 mx-1 mt-auto">/</div>
+                    <div v-if="isReadOnly" class="text-h5 text-sm-h4 mx-1 mt-auto">/</div>
                     <div v-else class="mx-1"/>
                     <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 mt-auto">{{item.amount}}</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.amount}}</div>
                         <v-text-field v-else v-model="item.amount"/>
                     </div>
                 </div>
-                <div class="d-flex col-3 pa-0">
+                <div class="d-flex">
                     <div class="d-flex flex-column">
                         <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold mt-auto">{{item.price}}</div>
+                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 font-weight-bold mt-auto">{{item.price}}</div>
                         <v-text-field v-else v-model="item.price" suffix="만원/월"/>
                     </div>
                     <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
                 </div>
-                <div class="d-flex flex-column col-4 pa-0">
+                <div class="d-flex flex-column">
                     <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>
                     <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
                     <date-field v-else v-model="item.dates1"/>

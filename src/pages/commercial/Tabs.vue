@@ -82,7 +82,7 @@
               return 0
           },
           detailElevation(){
-              if(this.$vuetify.breakpoint.lgAndDown)
+              if(this.$vuetify.breakpoint.mdAndDown)
                   return 5
 
               return 0

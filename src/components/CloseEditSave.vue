@@ -23,7 +23,6 @@
 </template>
 
 <script>
-    import VueSticky from 'vue-sticky'
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../scripts/const";
 
     export default {
@@ -70,9 +69,6 @@
                 this.$router.replace({'query': null});
                 this.$emit('delete')
             }
-        },
-        directives: {
-            'sticky': VueSticky,
         },
     }
 </script>

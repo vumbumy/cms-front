@@ -40,9 +40,9 @@
                 "border-green",
             ],
         }),
-        mounted() {
-            console.log(this.borders.length)
-        },
+        // mounted() {
+        //     console.log(this.borders.length)
+        // },
         methods: {
             dateToDateTime: dateToDateTime
         }

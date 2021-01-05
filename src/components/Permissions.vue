@@ -1,6 +1,5 @@
 <template>
     <div class="d-flex flex-column text-left">
-        <div class="text-caption font-weight-bold">전근권한</div>
         <div class="d-flex align-center">
             <div class="text-caption">읽기</div>
             <access-select :value="accesses[read]">
@@ -43,7 +42,7 @@
                 PUBLIC: 'mdi-earth',
                 GROUP1: 'mdi-account-group',
                 GROUP2: 'mdi-account-group',
-                PRIVATE: 'mdi-lock',
+                PRIVATE: 'mdi-lock-outline',
             },
             read: 'PUBLIC',
             write: 'PRIVATE',

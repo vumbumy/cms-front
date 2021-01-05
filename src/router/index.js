@@ -11,6 +11,8 @@ import ProductsDetail from "../pages/commercial/products/ProductsDetail";
 import OrdersTab from "../pages/commercial/orders/OrdersTab";
 import OrderDetail from "../pages/commercial/orders/OrderDetail";
 import NotFoundComponent from "../components/NotFoundComponent";
+import AgreementsTab from "../pages/commercial/agreements/AgreementsTab";
+import AgreementDetail from "../pages/commercial/agreements/AgreementDetail";
 
 
 Vue.use(Router);
@@ -113,6 +115,10 @@ export default new Router({
                 {
                     name: 'agreements',
                     path: 'agreements',
+                    components: {
+                        default: AgreementsTab,
+                        detail: AgreementDetail
+                    },
                 },
                 {
                     name: 'reports',

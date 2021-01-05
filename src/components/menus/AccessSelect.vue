@@ -2,20 +2,19 @@
     <v-menu offset-y v-model="menu">
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-                text
+                icon
                 class="pa-0"
-                :icon="$vuetify.breakpoint.xs"
                 v-bind="attrs"
                 v-on="on"
             >
                 <v-icon dense v-text="value"/>
-                <v-icon
-                    dense
-                    v-if="!$vuetify.breakpoint.xs"
-                    :class="{'active': menu}"
-                >
-                    mdi-menu-down
-                </v-icon>
+<!--                <v-icon-->
+<!--                    dense-->
+<!--                    v-if="!$vuetify.breakpoint.xs"-->
+<!--                    :class="{'active': menu}"-->
+<!--                >-->
+<!--                    mdi-menu-down-->
+<!--                </v-icon>-->
             </v-btn>
         </template>
         <v-sheet class="d-flex flex-column">
