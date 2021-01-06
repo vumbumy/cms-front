@@ -14,12 +14,15 @@ import NotFoundComponent from "../components/NotFoundComponent";
 import AgreementsTab from "../pages/commercial/agreements/AgreementsTab";
 import AgreementDetail from "../pages/commercial/agreements/AgreementDetail";
 
+import {publicPath} from "../../vue.config";
+
 
 Vue.use(Router);
 
 /* Const Routes */
 export default new Router({
-    mode: 'history',
+    mode: 'hash',
+    base: publicPath,
     routes: [
         {
             name: 'home',

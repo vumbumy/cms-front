@@ -1,5 +1,29 @@
-// vue.config.js
 module.exports = {
+    publicPath: process.env.NODE_ENV === 'production' ? '/cms-web-ui/' : '/',
+    outputDir: 'docs',
+    configureWebpack: {
+        output: {
+            filename: "js/[name].js",
+            chunkFilename: "js/[name].js"
+        }
+    },
+    chainWebpack: config => {
+        if (config.plugins.has("extract-css")) {
+            const extractCSSPlugin = config.plugin("extract-css");
+            extractCSSPlugin &&
+            extractCSSPlugin.tap(() => [
+                {
+                    filename: "css/[name].css",
+                    chunkFilename: "css/[name].css"
+                }
+            ]);
+        }
+
+        // config.plugins
+        //     .delete("html")
+        //     .delete("prefetch")
+        //     .delete("preload");
+    },
     css: {
         loaderOptions: {
             // pass options to sass-loader
