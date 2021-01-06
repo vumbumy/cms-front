@@ -6,7 +6,18 @@
             :updated="Date.parse('2020-12-13')"
             :created="Date.parse('2020-12-01')"
         >
-            <v-text-field :readonly="readonly" label="계약양식명" v-model="item.title"/>
+            <v-text-field
+                label="계약양식명"
+
+                class="text-h4 font-weight-bold pb-0"
+
+                v-model="item.title"
+                :readonly="readonly"
+                messages="HINT"
+            />
+            <!--            <v-input label="계약양식명">-->
+            <!--                <input type="text" v-model="item.title">-->
+            <!--            </v-input>-->
         </top-contents>
     </div>
 </template>
@@ -27,6 +38,6 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

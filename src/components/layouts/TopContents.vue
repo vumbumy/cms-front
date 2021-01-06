@@ -2,13 +2,14 @@
     <div class="d-flex">
         <div :class="borders[index]" @click="index = (index + 1) % borders.length"/>
         <v-sheet class="d-flex col-12 py-0">
-            <div class="d-flex flex-column text-left col-7 pa-0">
+            <div class="d-flex flex-column text-left">
                 <slot/>
             </div>
-            <div class="d-flex flex-column text-right ml-auto">
+            <v-spacer/>
+            <div class="d-flex flex-column text-right">
                 <div class="caption" v-text="dateToDateTime(updated)"/>
                 <div class="caption grey--text text--darken-2" v-text="dateToDateTime(created)"/>
-                <permissions class="mt-auto"/>
+                <permissions/>
             </div>
         </v-sheet>
     </div>
@@ -19,7 +20,9 @@
     import {dateToDateTime} from "../../scripts/util";
 
     export default {
-        components: {Permissions},
+        components: {
+            Permissions
+        },
         props: {
             readonly: Boolean,
             updated: {

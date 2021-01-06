@@ -28,8 +28,8 @@
     import CloseEditSave from "../../../components/CloseEditSave";
     import {dateToDateTime} from "../../../scripts/util";
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
-    import AgreementForm from "./tabs/AgreementForm";
-    import TemplateForm from "./tabs/TemplateForm";
+    import AgreementForm from "./forms/AgreementForm";
+    import TemplateForm from "./forms/TemplateForm";
 
     export default {
         components: {

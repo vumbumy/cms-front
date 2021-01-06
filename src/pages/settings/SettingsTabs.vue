@@ -81,7 +81,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    $tab-font-size: map-deep-get('h2', 'subtitle-1', 'size') !default;
+<!--<style lang="scss" scoped>-->
+<!--    $tab-font-size: map-deep-get('h2', 'subtitle-1', 'size') !default;-->
 
-</style>
+<!--</style>-->
