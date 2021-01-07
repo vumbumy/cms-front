@@ -42,33 +42,33 @@
             <!--        -->
 
             <!-- HEAD CONTENTS -->
-            <div class="d-flex justify-space-between text-left mt-5">
-                <div class="d-flex">
-                    <div class="d-flex flex-column">
-                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.stock}}</div>
-                        <v-text-field v-else v-model="item.stock"/>
-                    </div>
-                    <div v-if="isReadOnly" class="text-h5 text-sm-h4 mx-1 mt-auto">/</div>
-                    <div v-else class="mx-1"/>
-                    <div class="d-flex flex-column">
-                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.amount}}</div>
-                        <v-text-field v-else v-model="item.amount"/>
-                    </div>
+            <div class="d-flex justify-space-between">
+                <div class="d-flex col-3 pb-0 px-0">
+<!--                    <div class="d-flex flex-column">-->
+<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>-->
+<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.stock}}</div>-->
+                        <v-text-field label="재고" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.stock"/>
+<!--                    </div>-->
+                    <div class="text-h5 text-sm-h3 mt-auto mb-7 mb-sm-8 mx-1">/</div>
+<!--                    <div class="d-flex flex-column">-->
+<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>-->
+<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.amount}}</div>-->
+                        <v-text-field label="수량" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.amount"/>
+<!--                    </div>-->
                 </div>
-                <div class="d-flex">
-                    <div class="d-flex flex-column">
-                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>
-                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 font-weight-bold mt-auto">{{item.price}}</div>
-                        <v-text-field v-else v-model="item.price" suffix="만원/월"/>
-                    </div>
-                    <div v-if="isReadOnly" class="mt-auto ml-1 mt-auto">만원/월</div>
+                <div class="d-flex col-4 pb-0 px-0">
+<!--                    <div class="d-flex flex-column">-->
+<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>-->
+<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 font-weight-bold mt-auto">{{item.price}}</div>-->
+<!--                        <v-text-field v-else v-model="item.price" suffix="만원/월"/>-->
+                    <v-text-field label="가격" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.price"/>
+<!--                    </div>-->
+                    <div class="mt-auto ml-1 mb-7 mb-sm-9 text-no-wrap">만원/월</div>
                 </div>
-                <div class="d-flex flex-column">
-                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>
-                    <div v-if="isReadOnly" class="text-subtitle-1 font-weight-medium mt-auto" v-text="dates1"/>
-                    <date-field v-else v-model="item.dates1"/>
+                <div class="d-flex flex-column col-4 pb-0 px-0 text-right">
+<!--                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>-->
+<!--                    <div v-if="isReadOnly" class="text-caption" v-text="dates1"/>-->
+                    <date-field :readonly="isReadOnly" label="기간" class="text-right" v-model="item.dates1"/>
                 </div>
             </div>
             <!--        -->
@@ -78,18 +78,17 @@
 
             <!-- ADVANCED -->
             <expansion-panel label="Advanced" :value="true">
-
                 <div class="d-flex justify-space-between flex-wrap">
-                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
+                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0 mb-auto">
                         <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
                         <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
                         <v-text-field :readonly="isReadOnly" label="환불보상조건" value="일반"/>
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
-                        <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
+                        <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월" class="flex-grow-0"/>
                         <multi-field-list
                             label="볼륨할인율"
-                            class="caption"
+                            class="text-caption"
 
                             :items="discounts"
                             :readonly="isReadOnly"
@@ -97,8 +96,8 @@
                             v-on:delete="index => discounts.splice(index, 1)"
                         >
                             <template v-slot:item={item}>
-                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
-                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value" suffix="만원이상"/>
+                                <v-text-field :readonly="isReadOnly" dense class="pr-1" v-model="item.name"/>
+                                <v-text-field :readonly="isReadOnly" dense class="pl-1" v-model="item.value" suffix="만원이상"/>
                             </template>
                         </multi-field-list>
                         <multi-field-list
@@ -111,13 +110,12 @@
                             v-on:delete="index => options.splice(index, 1)"
                         >
                             <template v-slot:item={item}>
-                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
+                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>
                                 <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
                             </template>
                         </multi-field-list>
                     </div>
-                    <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0">
-                        <!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
+                    <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0 mb-auto">
                         <date-field :readonly="isReadOnly" label="상품 노출 기간" :value="['2020-07-01', '2020-11-30']"/>
                         <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
                         <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>

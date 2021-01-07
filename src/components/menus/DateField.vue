@@ -11,6 +11,7 @@
             <v-text-field
                 :label="label"
                 :value="datesToString(dates)"
+                class="font-weight-bold text-caption text-sm-subtitle-1"
                 readonly
                 v-bind="attrs"
                 v-on="readonly ? null : on"
@@ -51,7 +52,8 @@
             readonly: {
                 type: Boolean,
                 default: false
-            }
+            },
+            class: String
         },
         data: () => ({
             dates: [],

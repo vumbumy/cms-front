@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-3">
+    <div>
         <div class="d-flex align-center">
             <div v-text="label"/>
             <v-btn class="ml-auto" :disabled="readonly" icon @click="onClickPlus">

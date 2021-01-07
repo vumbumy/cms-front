@@ -15,10 +15,18 @@
                 :readonly="readonly"
                 hide-details
             />
-            <!--            <v-input label="계약양식명">-->
-            <!--                <input type="text" v-model="item.title">-->
-            <!--            </v-input>-->
         </top-contents>
+
+        <!-- TOP UNDER CONTENTS -->
+        <div class="d-flex">
+            <div v-if="readonly" class="text-caption grey--text text--darken-2" v-text="item.url"/>
+            <v-text-field v-else label="문서 URL" class="text-caption align-self-end" v-model="item.url"/>
+            <v-spacer/>
+            <div v-if="readonly" class="text-caption grey--text text--darken-2" v-text="'#' + item.tags.join(' #')"/>
+            <v-text-field v-else label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
+        </div>
+        <v-divider class="grey"/>
+        <!--        -->
 
         <!-- COMMON -->
         <expansion-panel label="공통기본" :value="true">
@@ -32,11 +40,11 @@
                 v-on:delete="index => commons.splice(index, 1)"
             >
                 <template v-slot:item={item}>
-                    <v-text-field dense :readonly="readonly" label="제목" class="col-3 pl-0" v-model="item.title"/>
-                    <v-text-field dense :readonly="readonly" label="크기" class="col-1 pl-0" v-model="item.size"/>
-                    <v-select dense :readonly="readonly" label="형식" class="col-2 pl-0" :items="types" v-model="item.type"/>
-                    <v-select dense :readonly="readonly" label="필수" class="col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
-                    <v-text-field dense :readonly="readonly" label="SUBSECTION" v-model="item.subsection" placeholder="없음"/>
+                    <v-text-field dense :readonly="readonly" label="제목" class="text-caption col-2 pl-0" v-model="item.title"/>
+                    <v-text-field dense :readonly="readonly" label="크기" class="text-caption col-1 pl-0" v-model="item.size"/>
+                    <v-select dense :readonly="readonly" label="형식" class="text-caption col-2 pl-0" :items="types" v-model="item.type"/>
+                    <v-select dense :readonly="readonly" label="필수" class="text-caption col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
+                    <v-text-field dense :readonly="readonly" label="SUBSECTION" class="text-caption" v-model="item.subsection" placeholder="없음"/>
                 </template>
             </multi-field-list>
         </expansion-panel>
@@ -54,11 +62,11 @@
                 v-on:delete="index => advances.splice(index, 1)"
             >
                 <template v-slot:item={item}>
-                    <v-text-field dense :readonly="readonly" label="제목" class="col-3 pl-0" v-model="item.title"/>
-                    <v-text-field dense :readonly="readonly" label="크기" class="col-1 pl-0" v-model="item.size"/>
-                    <v-select dense :readonly="readonly" label="형식" class="col-2 pl-0" :items="types" v-model="item.type"/>
-                    <v-select dense :readonly="readonly" label="필수" class="col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
-                    <v-text-field dense :readonly="readonly" label="SUBSECTION" v-model="item.subsection" placeholder="없음"/>
+                    <v-text-field dense :readonly="readonly" label="제목" class="text-caption col-2 pl-0" v-model="item.title"/>
+                    <v-text-field dense :readonly="readonly" label="크기" class="text-caption col-1 pl-0" v-model="item.size"/>
+                    <v-select dense :readonly="readonly" label="형식" class="text-caption col-2 pl-0" :items="types" v-model="item.type"/>
+                    <v-select dense :readonly="readonly" label="필수" class="text-caption col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
+                    <v-text-field dense :readonly="readonly" label="SUBSECTION" class="text-caption" v-model="item.subsection" placeholder="없음"/>
                 </template>
             </multi-field-list>
         </expansion-panel>
@@ -85,6 +93,7 @@
         data: () => ({
             item: {
                 title: "일반광고계약template1",
+                url: "https://gdocument/skdjhfs677878",
                 tags: ["의정부", "디지털특가", "21년 신규"],
             },
 
@@ -117,7 +126,10 @@
                 this.item.required = !this.item.required
 
                 console.log(this.item.required)
-            }
+            },
+            onChangeTags(tags) {
+                this.item.tags = tags.split(',')
+            },
         }
     }
 </script>
