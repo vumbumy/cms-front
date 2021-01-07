@@ -13,19 +13,72 @@
 
                 v-model="item.title"
                 :readonly="readonly"
-                messages="HINT"
+                hide-details
             />
             <!--            <v-input label="계약양식명">-->
             <!--                <input type="text" v-model="item.title">-->
             <!--            </v-input>-->
         </top-contents>
+
+        <!-- COMMON -->
+        <expansion-panel label="공통기본" :value="true">
+            <multi-field-list
+                class="caption"
+
+                :items="commons"
+                :readonly="readonly"
+
+                v-on:append="commons.push(newCommon())"
+                v-on:delete="index => commons.splice(index, 1)"
+            >
+                <template v-slot:item={item}>
+                    <v-text-field dense :readonly="readonly" label="제목" class="col-3 pl-0" v-model="item.title"/>
+                    <v-text-field dense :readonly="readonly" label="크기" class="col-1 pl-0" v-model="item.size"/>
+                    <v-select dense :readonly="readonly" label="형식" class="col-2 pl-0" :items="types" v-model="item.type"/>
+                    <v-select dense :readonly="readonly" label="필수" class="col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
+                    <v-text-field dense :readonly="readonly" label="SUBSECTION" v-model="item.subsection" placeholder="없음"/>
+                </template>
+            </multi-field-list>
+        </expansion-panel>
+        <!--        -->
+
+        <!-- ADVANCED -->
+        <expansion-panel label="Advanced" :value="true">
+            <multi-field-list
+                class="caption"
+
+                :items="advances"
+                :readonly="readonly"
+
+                v-on:append="advances.push(newCommon())"
+                v-on:delete="index => advances.splice(index, 1)"
+            >
+                <template v-slot:item={item}>
+                    <v-text-field dense :readonly="readonly" label="제목" class="col-3 pl-0" v-model="item.title"/>
+                    <v-text-field dense :readonly="readonly" label="크기" class="col-1 pl-0" v-model="item.size"/>
+                    <v-select dense :readonly="readonly" label="형식" class="col-2 pl-0" :items="types" v-model="item.type"/>
+                    <v-select dense :readonly="readonly" label="필수" class="col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
+                    <v-text-field dense :readonly="readonly" label="SUBSECTION" v-model="item.subsection" placeholder="없음"/>
+                </template>
+            </multi-field-list>
+        </expansion-panel>
+        <!--        -->
+
+        <!-- HISTORY -->
+        <expansion-panel label="수정이력" :value="true">
+            <actions-table/>
+        </expansion-panel>
+        <!--        -->
     </div>
 </template>
 
 <script>
     import TopContents from "../../../../components/layouts/TopContents";
+    import ExpansionPanel from "../../../../components/layouts/ExpansionPanel";
+    import MultiFieldList from "../../../../components/layouts/MultiFieldList";
+    import ActionsTable from "../../../../components/tables/ActionsTable";
     export default {
-        components: {TopContents},
+        components: {ActionsTable, MultiFieldList, ExpansionPanel, TopContents},
         props: {
             readonly: Boolean
         },
@@ -34,7 +87,38 @@
                 title: "일반광고계약template1",
                 tags: ["의정부", "디지털특가", "21년 신규"],
             },
-        })
+
+            types: ["String", "Number", "Date"],
+
+            commons: [
+                {title: "계약명", size: 6, type: "String", required: "Yes", subsection: ""},
+                {title: "금액", size: 12, type: "Number", required: "Yes", subsection: ""},
+                {title: "기간(시작)", size: 6, type: "Date", required: "Yes", subsection: ""},
+            ],
+
+            advances: [
+                {title: "연결데이터", size: 6, type: "String", required: "Yes", subsection: ""},
+                {title: "입금기한, 금액", size: 12, type: "K-V", required: "Yes", subsection: "Content Package"},
+                {title: "기간(시작)", size: 6, type: "Date", required: "Yes", subsection: ""},
+            ],
+        }),
+        methods: {
+            newCommon: () => ({
+                title: "",
+                size: 0,
+                type: "String",
+                required: "Yes",
+                subsection: ""
+            }),
+            onClickRequired(){
+                if(this.readonly)
+                    return
+
+                this.item.required = !this.item.required
+
+                console.log(this.item.required)
+            }
+        }
     }
 </script>
 

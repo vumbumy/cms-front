@@ -82,7 +82,7 @@
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
                         <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
-                        <pair-list
+                        <multi-field-list
                             label="볼륨할인율"
                             class="caption"
 
@@ -95,8 +95,8 @@
                                 <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
                                 <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value" suffix="만원이상"/>
                             </template>
-                        </pair-list>
-                        <pair-list
+                        </multi-field-list>
+                        <multi-field-list
                             label="옵션"
                             class="caption"
 
@@ -109,7 +109,7 @@
                                 <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
                                 <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
                             </template>
-                        </pair-list>
+                        </multi-field-list>
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0">
                         <!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
@@ -129,7 +129,7 @@
 <!--                            <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>-->
 <!--                            <div class="text-left mt-2 ml-5">시작일<br>일전</div>-->
 <!--                        </div>-->
-<!--                        <pair-list-->
+<!--                        <multi-field-list-->
 <!--                            label="매체"-->
 <!--                            class="caption indigo&#45;&#45;text accent-3"-->
 
@@ -140,10 +140,10 @@
 <!--                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>-->
 <!--                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>-->
 <!--                            </template>-->
-<!--                        </pair-list>-->
+<!--                        </multi-field-list>-->
 <!--                    </div>-->
 <!--                    <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-6 mt-auto">-->
-<!--                        <pair-list-->
+<!--                        <multi-field-list-->
 <!--                            label="컨텐츠 포맷"-->
 <!--                            class="caption indigo&#45;&#45;text accent-3"-->
 
@@ -154,7 +154,7 @@
 <!--                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>-->
 <!--                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>-->
 <!--                            </template>-->
-<!--                        </pair-list>-->
+<!--                        </multi-field-list>-->
 <!--                    </div>-->
 <!--                </div>-->
 <!--        </expansion-panel>-->
@@ -163,7 +163,7 @@
 <!--        &lt;!&ndash; WEB PAGE &ndash;&gt;-->
 <!--        <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">-->
 <!--                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>-->
-<!--                <pair-list-->
+<!--                <multi-field-list-->
 <!--                    label="섹션 추가(html)"-->
 <!--                    class="caption indigo&#45;&#45;text accent-3"-->
 <!--                    :items="sections"-->
@@ -176,7 +176,7 @@
 <!--                        <v-text-field class="col-2 py-0 pl-0" dense v-model="item.name"/>-->
 <!--                        <v-textarea outlined dense v-model="item.value" :rows="2"/>-->
 <!--                    </template>-->
-<!--                </pair-list>-->
+<!--                </multi-field-list>-->
 <!--        </expansion-panel>-->
 <!--        &lt;!&ndash;        &ndash;&gt;-->
 
@@ -250,11 +250,11 @@
     // import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
-    import PairList from "../../../components/layouts/PairList";
+    import MultiFieldList from "../../../components/layouts/MultiFieldList";
 
     export default {
         components: {
-            PairList,
+            MultiFieldList,
             ExpansionPanel,
             // ActionsTable,
             DateField,

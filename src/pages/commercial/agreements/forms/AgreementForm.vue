@@ -22,7 +22,7 @@
                     class="text-h6 font-weight-bold"
 
                     :items="templates"
-                    v-model="item.template_id"
+                    v-model="item.templateId"
                     item-value="id"
                     item-text="name"
                 />
@@ -54,7 +54,7 @@
         data: () => ({
             item: {
                 title: "일반광고계약-34",
-                template_id: 1,
+                templateId: 1,
                 tags: ["의정부", "디지털특가", "21년 신규"],
                 url: "https://gdocument/skdjhfs677878"
             },
@@ -72,7 +72,7 @@
         },
         computed: {
             templateName(){
-                return this.templates.find(e => e.id === this.item.template_id).name
+                return this.templates.find(e => e.id === this.item.templateId).name
             }
         }
     }
