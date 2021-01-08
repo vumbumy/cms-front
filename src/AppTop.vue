@@ -18,9 +18,7 @@
                         Tester
                     </v-btn>
                 </template>
-                <v-list dense>
-                    <log-out/>
-                </v-list>
+                <user-menu/>
             </v-menu>
             <v-app-bar-nav-icon
                 v-if="$vuetify.breakpoint.xs"
@@ -41,9 +39,9 @@
 </template>
 
 <script>
-  import LogOut from "./components/LogOut";
+  import UserMenu from "./components/UserMenu";
   export default {
-      components: {LogOut},
+      components: {UserMenu},
       data: () => ({
           systemMsg: "<strong>System Error Message</strong><br>System Error Message",
       }),

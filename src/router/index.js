@@ -15,6 +15,8 @@ import AgreementsTab from "../pages/commercial/agreements/AgreementsTab";
 import AgreementDetail from "../pages/commercial/agreements/AgreementDetail";
 
 import {publicPath} from "../../vue.config";
+import TemplatesTab from "../pages/commercial/templates/TemplatesTab";
+import TemplateDetail from "../pages/commercial/templates/TemplateDetail";
 
 
 Vue.use(Router);
@@ -126,7 +128,10 @@ export default new Router({
                 {
                     name: 'templates',
                     path: 'templates',
-
+                    components: {
+                        default: TemplatesTab,
+                        detail: TemplateDetail
+                    },
                 },
                 {
                     name: 'reports',

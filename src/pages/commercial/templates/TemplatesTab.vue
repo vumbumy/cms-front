@@ -18,10 +18,13 @@
             :headers="headers"
             :items="items"
             :view="view"
-            :items-length="itemsLength"
+            :items-length="items.length"
+            :loading="loading"
+
+            v-on:refresh="updateList"
         >
             <template v-slot:item="{item}">
-                <agreement-card :item="item"/>
+                <template-card :item="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -34,12 +37,14 @@
     import {CARD_VIEW} from "../../../scripts/const";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
-    import AgreementCard from "./TemplateCard";
+    import TemplateCard from "./TemplateCard";
+    import {getTemplates} from "../../../api/templates";
+    import EventBus from "../../../plugins/eventBus";
 
 
     export default {
         components: {
-            AgreementCard,
+            TemplateCard,
             Warning,
             ItemList,
             SortSearchView,
@@ -58,38 +63,14 @@
                 { text: 'Stock', value: 'stock' },
             ],
             page: 0,
-            items: [
-                {
-                    id: 10,
-                    name: '일반광고계약-34',
-                    template: '일반광고계약template1',
-                    document: 'https://gdocument/skdjhfs677878',
-                }
-            ],
+            items: [],
+
+            loading: true
         }),
-        computed: {
-            // items() {
-            //     let items = []
-            //     let textList = sampleTextList(this.page)
-            //
-            //     for(let i=0; i<textList.length; i++){
-            //         let id = this.page * ITEMS_PER_PAGE + i + 1
-            //         items.push(
-            //             {
-            //                 id: id,
-            //                 name: textList[i],
-            //                 type: textList[i],
-            //                 description: textList[i],
-            //                 stock: i % 10 * 10,
-            //             }
-            //         )
-            //     }
-            //
-            //     return items
-            // },
-            itemsLength() {
-                return 1
-            }
+        created() {
+            EventBus.$on("refresh", this.updateList)
+
+            this.updateList()
         },
         methods: {
             onClickAll(){
@@ -114,6 +95,13 @@
             },
             onUpdateOrder: function (param) {
                 console.log('onUpdateOrder', param)
+            },
+            updateList(){
+                this.loading = true
+
+                this.items = getTemplates()
+
+                setTimeout(() => this.loading = false, 1000)
             }
         }
     }

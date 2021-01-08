@@ -2,7 +2,7 @@
     <div class="d-flex flex-column pa-2">
         <div class="d-flex">
             <div class="col-4 pa-0 d-flex flex-column">
-                <div class="text-h7 text-sm-h6 font-weight-bold" v-text="item.name"/>
+                <div class="text-h7 text-sm-h6 font-weight-bold" v-text="item.title"/>
                 <div class="text-subtitle-2 text-sm-subtitle-1 grey--text text--darken-2">
                     {{item.template}}
                 </div>

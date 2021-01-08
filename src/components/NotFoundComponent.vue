@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "NotFoundComponent"
+        name: "NotFoundComponent",
+        created() {
+            localStorage.clear()
+        }
     }
 </script>
 

@@ -61,12 +61,13 @@
                 }
             },
             view: String,
-            value: Number
+            value: Number,
+            loading: Boolean
         },
         data: () => ({
             check: false,
             // dots: true,
-            loading: false,
+            // loading: false,
 
             page: 1,
 
@@ -94,11 +95,13 @@
                 this.onClickItem(0)
             },
             onClickRefresh: function() {
-                this.loading = true;
+                // this.loading = true;
 
-                let vm = this
+                // let vm = this
 
-                setTimeout(() => vm.loading = false, 1000)
+                // setTimeout(() => vm.loading = false, 1000)
+
+                this.$emit('refresh')
             },
             onClickItem: function (id) {
                 if(this.$route.query.id !== String(id))
