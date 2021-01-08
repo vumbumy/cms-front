@@ -69,7 +69,7 @@
                     <v-text-field dense :readonly="isReadOnly" label="크기" class="text-caption col-1 pl-0" v-model="item.size"/>
                     <v-select dense :readonly="isReadOnly" label="형식" class="text-caption col-2 pl-0" :items="types" v-model="item.type"/>
                     <v-select dense :readonly="isReadOnly" label="필수" class="text-caption col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
-                    <v-select dense :readonly="isReadOnly" label="SECTION" class="text-caption" v-model="item.section" :items="template.sections" item-text="title" item-value="order" placeholder="없음"/>
+                    <v-select dense :readonly="isReadOnly" label="SECTION" class="text-caption" v-model="item.section" :items="template.sections" item-text="title" item-value="title" placeholder="없음"/>
                 </template>
             </multi-field-list>
         </expansion-panel>
@@ -172,7 +172,7 @@
                 size: 0,
                 type: "String",
                 required: "Yes",
-                section: 0
+                section: ""
             }),
             onClickRequired(){
                 if(this.readonly)

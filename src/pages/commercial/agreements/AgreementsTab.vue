@@ -18,7 +18,7 @@
             :headers="headers"
             :items="items"
             :view="view"
-            :items-length="itemsLength"
+            :items-length="items.length"
         >
             <template v-slot:item="{item}">
                 <agreement-card :item="item"/>
@@ -58,39 +58,8 @@
                 { text: 'Stock', value: 'stock' },
             ],
             page: 0,
-            items: [
-                {
-                    id: 10,
-                    name: '일반광고계약-34',
-                    template: '일반광고계약template1',
-                    document: 'https://gdocument/skdjhfs677878',
-                }
-            ],
+            items: [],
         }),
-        computed: {
-            // items() {
-            //     let items = []
-            //     let textList = sampleTextList(this.page)
-            //
-            //     for(let i=0; i<textList.length; i++){
-            //         let id = this.page * ITEMS_PER_PAGE + i + 1
-            //         items.push(
-            //             {
-            //                 id: id,
-            //                 name: textList[i],
-            //                 type: textList[i],
-            //                 description: textList[i],
-            //                 stock: i % 10 * 10,
-            //             }
-            //         )
-            //     }
-            //
-            //     return items
-            // },
-            itemsLength() {
-                return 1
-            }
-        },
         methods: {
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)

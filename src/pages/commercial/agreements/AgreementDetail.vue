@@ -13,27 +13,36 @@
             :created="Date.parse('2020-12-01')"
         >
             <div v-if="isReadOnly">
-                <div class="text-h4 font-weight-bold" v-text="item.title"/>
-                <div class="text-h6 font-weight-bold" v-text="templateName"/>
+                <div class="text-h4 font-weight-bold" v-text="contract.title"/>
+                <div class="text-h6 font-weight-bold" v-text="templateTitle"/>
             </div>
             <div v-else>
                 <v-text-field
                     label="계약명"
                     class="text-h4 font-weight-bold"
 
-                    v-model="item.title"
+                    v-model="contract.title"
                 />
                 <v-select
                     label="계약양식명"
                     class="text-h6 font-weight-bold"
+                    clearable
 
                     :items="templates"
-                    v-model="item.templateId"
+                    item-text="title"
                     item-value="id"
-                    item-text="name"
+
+                    v-model="contract.templateId"
                 />
             </div>
         </top-contents>
+        <v-slide-y-reverse-transition>
+            <v-slide-y-reverse-transition group v-if="contract.templateId">
+                <expansion-panel v-for="(section, index) in this.template.sections" :key="index" :label="section.title">
+                    <v-text-field v-for="(field, index) in fields(section.title)" :key="index" :label="field.title"/>
+                </expansion-panel>
+            </v-slide-y-reverse-transition>
+        </v-slide-y-reverse-transition>
     </div>
 </template>
 
@@ -42,9 +51,12 @@
     import {dateToDateTime} from "../../../scripts/util";
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
     import TopContents from "../../../components/layouts/TopContents";
+    import {getTemplates} from "../../../api/templates";
+    import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
 
     export default {
         components: {
+            ExpansionPanel,
             TopContents,
             CloseEditSave,
         },
@@ -53,30 +65,40 @@
         },
         data: () => ({
             mode: READ_MODE,
+            contract: {},
             templates: []
         }),
         created() {
-            this.updateMode()
+            this.initialize()
         },
         watch: {
             $route(){
-                this.updateMode()
+                this.initialize()
             }
         },
         computed: {
             isReadOnly(){
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
             },
-            templateName(){
-                return this.templates.find(e => e.id === this.item.templateId).name
-            }
+            template(){
+                return this.templates.find(t => t.id === this.contract.templateId)
+            },
+            templateTitle(){
+                if(this.template === undefined) return ""
+
+                return this.template.title
+            },
         },
         methods: {
-            updateMode(){
+            initialize(){
+                this.templates = getTemplates()
+
                 if(this.$route.query.id === '0')
                     this.mode = Add_MODE
                 else
                     this.mode = READ_MODE
+
+                console.log(this.contract.templateId)
             },
             onChangeTags(tags) {
                 this.item.tags = tags.split(',')
@@ -86,6 +108,15 @@
             },
             onClickDelete: function(){
                 console.log('DELETE')
+            },
+            fields(section) {
+                console.log(this.template)
+
+                let fields = this.template.fields.filter(field => field.section === section)
+
+                console.log(fields)
+
+                return fields
             },
             dateToDateTime: dateToDateTime,
         }
