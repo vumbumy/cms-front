@@ -33,5 +33,6 @@
         props: {
             item: Object
         },
+        data: () => ({})
     }
 </script>

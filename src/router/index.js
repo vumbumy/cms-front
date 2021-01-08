@@ -7,7 +7,7 @@ import GeneralTab from "../pages/settings/GeneralTab";
 import NoticeTab from "../pages/settings/NoticeTab";
 import AccountTab from "../pages/settings/AccountTab";
 import ProductsTab from "../pages/commercial/products/ProductsTab";
-import ProductsDetail from "../pages/commercial/products/ProductsDetail";
+import ProductsDetail from "../pages/commercial/products/ProductDetail";
 import OrdersTab from "../pages/commercial/orders/OrdersTab";
 import OrderDetail from "../pages/commercial/orders/OrderDetail";
 import NotFoundComponent from "../components/NotFoundComponent";
@@ -122,6 +122,11 @@ export default new Router({
                         default: AgreementsTab,
                         detail: AgreementDetail
                     },
+                },
+                {
+                    name: 'templates',
+                    path: 'templates',
+
                 },
                 {
                     name: 'reports',

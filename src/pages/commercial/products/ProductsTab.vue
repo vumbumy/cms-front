@@ -21,7 +21,7 @@
             :items-length="itemsLength"
         >
             <template v-slot:item="{item}">
-                <sub1-list-item :item="item"/>
+                <product-card :item="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -32,7 +32,7 @@
     // import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
     import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
-    import Sub1ListItem from "./ProductsCard";
+    import ProductCard from "./ProductCard";
     import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
@@ -40,9 +40,9 @@
 
     export default {
         components: {
+            ProductCard,
             Warning,
             ItemList,
-            Sub1ListItem,
             SortSearchView,
             // BarChart
         },

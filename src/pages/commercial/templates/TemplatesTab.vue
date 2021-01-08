@@ -1,7 +1,7 @@
 <template>
     <v-sheet class="my-2">
-
-        <bar-chart/>
+        <warning :messages="warnings"/>
+<!--        <bar-chart/>-->
         <sort-search-view
             @search="onSearch"
             @update_order="onUpdateOrder"
@@ -21,7 +21,7 @@
             :items-length="itemsLength"
         >
             <template v-slot:item="{item}">
-                <sub2-list-item :item="item"/>
+                <agreement-card :item="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -29,30 +29,28 @@
 
 <script>
 
-    import BarChart from "../../../components/BarChart";
+    // import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
-    import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
-    import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
-    import Sub2ListItem from "./Sub2ListItem";
+    import {CARD_VIEW} from "../../../scripts/const";
     import ItemList from "../../../components/layouts/ItemList";
+    import Warning from "../../../components/alerts/Warning";
+    import AgreementCard from "./TemplateCard";
 
 
     export default {
         components: {
+            AgreementCard,
+            Warning,
             ItemList,
-            Sub2ListItem,
             SortSearchView,
-            BarChart
+            // BarChart
         },
         data: () => ({
             view: CARD_VIEW,
             active_tags: [],
             tags: ['의정부', '최근 1주'],
-            alertMsg: [
-                '<strong>Section Warning</strong> (Notice)'
-            ],
+            warnings: [],
             headers: [
-                { value: 'check' },
                 { text: '#', value: 'id' },
                 { text: 'Name', value: 'name' },
                 { text: 'Type', value: 'type' },
@@ -60,32 +58,37 @@
                 { text: 'Stock', value: 'stock' },
             ],
             page: 0,
-
-            offset: 7
+            items: [
+                {
+                    id: 10,
+                    name: '일반광고계약-34',
+                    template: '일반광고계약template1',
+                    document: 'https://gdocument/skdjhfs677878',
+                }
+            ],
         }),
         computed: {
-            items() {
-                let items = []
-                let textList = sampleTextList(this.page + this.offset)
-
-                for(let i=0; i<textList.length; i++){
-                    let id = this.page * ITEMS_PER_PAGE + i + 1
-                    items.push(
-                        {
-                            id: id,
-                            name: textList[i],
-                            type: textList[i],
-                            description: textList[i],
-                            stock: i % 10 * 10,
-                            check: false
-                        }
-                    )
-                }
-
-                return items
-            },
+            // items() {
+            //     let items = []
+            //     let textList = sampleTextList(this.page)
+            //
+            //     for(let i=0; i<textList.length; i++){
+            //         let id = this.page * ITEMS_PER_PAGE + i + 1
+            //         items.push(
+            //             {
+            //                 id: id,
+            //                 name: textList[i],
+            //                 type: textList[i],
+            //                 description: textList[i],
+            //                 stock: i % 10 * 10,
+            //             }
+            //         )
+            //     }
+            //
+            //     return items
+            // },
             itemsLength() {
-                return sampleTextListLength(this.offset)
+                return 1
             }
         },
         methods: {
@@ -102,13 +105,15 @@
                 }
             },
             onSearch: function(param){
-                console.log(param)
+                console.log('onSearch', param)
             },
             onUpdateView: function (param) {
+                console.log('onUpdateView', param)
+
                 this.view = param
             },
             onUpdateOrder: function (param) {
-                console.log(param)
+                console.log('onUpdateOrder', param)
             }
         }
     }
