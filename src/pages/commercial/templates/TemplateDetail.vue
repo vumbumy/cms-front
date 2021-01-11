@@ -84,7 +84,7 @@
     import TopContents from "../../../components/layouts/TopContents";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
     import MultiFieldList from "../../../components/layouts/MultiFieldList";
-    import {getTemplate, setTemplate} from "../../../api/templates";
+    import {deleteTemplate, getTemplate, setTemplate} from "../../../api/templates";
     import EventBus from "../../../plugins/eventBus";
 
     export default {
@@ -161,7 +161,14 @@
                 EventBus.$emit('refresh')
             },
             onClickDelete: function(){
-                console.log('DELETE')
+                console.log('DELETE', this.template.id)
+
+                deleteTemplate(this.template.id)
+
+                this.$router.replace({'query': null})
+                    .catch(() => ({}))
+
+                EventBus.$emit('refresh')
             },
             newSection: (lastOrder) => ({
                 title: "",

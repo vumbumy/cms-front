@@ -6,7 +6,7 @@ function setTemplates(templates) {
     localStorage.setItem('template', jsonStr)
 }
 
-export function getTemplates() {
+function getAllTemplates() {
     let jsonStr = localStorage.getItem("template")
     if(jsonStr == null)
         return []
@@ -14,17 +14,23 @@ export function getTemplates() {
     return JSON.parse(jsonStr)
 }
 
+export function getTemplates() {
+    let templates = getAllTemplates()
+
+    return templates.filter(template => !template.delete)
+}
+
 function newTemplateId() {
     let lastId = 0
 
-    let templates = getTemplates()
+    let templates = getAllTemplates()
 
     templates.forEach((e) => lastId = Math.max(lastId, e.id))
 
     return lastId + 1
 }
 
-function addTemplate(template) {
+function postTemplate(template) {
     let templates = getTemplates()
 
     // TODO: 임시 ID 발급
@@ -37,23 +43,32 @@ function addTemplate(template) {
     return template.id
 }
 
-function updateTemplate(template) {
+function putTemplate(template) {
     let templates = getTemplates()
 
-    let updated = templates.map(t => {
-        return t.id === template.id ? template : t
-    })
+    let updated = templates.map(t => t.id === template.id ? template : t)
 
     setTemplates(updated)
 
     return template.id
 }
 
+export function deleteTemplate(id) {
+    let templates = getTemplates()
+
+    let index = templates.findIndex(t => t.id === id)
+    // if (index !== -1) templates.splice(index, 1);
+
+    templates[index].delete = true
+
+    setTemplates(templates)
+}
+
 export function setTemplate(template) {
     if(!template.id || template.id === 0)
-        return addTemplate(template)
+        return postTemplate(template)
     else
-        return updateTemplate(template)
+        return putTemplate(template)
 }
 
 export function getTemplate(id) {

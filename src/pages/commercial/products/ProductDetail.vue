@@ -68,7 +68,7 @@
                 <div class="d-flex flex-column col-4 pb-0 px-0 text-right">
 <!--                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>-->
 <!--                    <div v-if="isReadOnly" class="text-caption" v-text="dates1"/>-->
-                    <date-field :readonly="isReadOnly" label="기간" class="text-right" v-model="item.dates1"/>
+                    <date-field :readonly="isReadOnly" label="기간" v-model="item.dates1"/>
                 </div>
             </div>
             <!--        -->
