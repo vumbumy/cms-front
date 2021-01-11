@@ -53,6 +53,11 @@
                 this.$router.replace({'query': null});
             },
             onClickClose: function () {
+                if(this.isAddMode){
+                    this.onClickReturn()
+
+                    return
+                }
                 this.mode = READ_MODE
                 this.$emit('input', READ_MODE)
             },

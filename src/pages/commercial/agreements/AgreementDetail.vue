@@ -32,20 +32,33 @@
                     item-text="title"
                     item-value="id"
 
-                    v-model="templateId"
+                    v-model="contract.templateId"
                 />
             </div>
         </top-contents>
         <v-slide-y-reverse-transition>
-            <v-slide-y-reverse-transition group v-if="templateId">
-                <expansion-panel v-for="(section, sIndex) in template.sections" :key="sIndex" :label="section.title">
-                    <div v-for="(field, fIndex) in fields(section.title)" :key="fIndex">
-                        <date-field v-if="field.type === 'Date'" :label="field.title" v-model="values[sIndex * 100 + fIndex]"/>
-                        <v-text-field v-else :label="field.title" v-model="values[sIndex * 100 + fIndex]"/>
+            <v-slide-y-reverse-transition group v-if="contract.templateId">
+                <expansion-panel v-for="(panel, pIndex) in rootSections" :key="pIndex" :label="panel.title" :value="true">
+                    <div class="d-flex flex-wrap">
+                        <div v-for="(field, fIndex) in fields(panel.title)" :key="fIndex" class="col-4 py-0">
+                            <auto-field :header="field" v-model="contract.values[hash(field)]" :readonly="isReadOnly" :rules="field.required ? [rules.required] : []"/>
+                        </div>
+                        <div v-for="(section, sIndex) in subSections(panel.title)" :key="sIndex" class="d-flex flex-column col-4 py-0">
+                            <div class="text-subtitle-2 font-weight-bold" v-text="section.title"/>
+                            <div v-for="(field, fIndex) in fields(section.title)" :key="fIndex">
+                                <auto-field :header="field" v-model="contract.values[hash(field)]" :readonly="isReadOnly" :rules="field.required ? [rules.required] : []"/>
+                            </div>
+                        </div>
                     </div>
                 </expansion-panel>
             </v-slide-y-reverse-transition>
         </v-slide-y-reverse-transition>
+
+        <!-- HISTORY -->
+        <expansion-panel label="수정이력" :value="true">
+            <actions-table/>
+        </expansion-panel>
+        <!--        -->
     </div>
 </template>
 
@@ -56,11 +69,17 @@
     import TopContents from "../../../components/layouts/TopContents";
     import {getTemplates} from "../../../api/templates";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
-    import DateField from "../../../components/menus/DateField";
+    import AutoField from "../../../components/menus/AutoField";
+    import ActionsTable from "../../../components/tables/ActionsTable";
+    import {getContract, setContract} from "../../../api/contracts";
+    import EventBus from "../../../plugins/eventBus";
+
+    const hash = require('object-hash');
 
     export default {
         components: {
-            DateField,
+            ActionsTable,
+            AutoField,
             ExpansionPanel,
             TopContents,
             CloseEditSave,
@@ -70,10 +89,14 @@
         },
         data: () => ({
             mode: READ_MODE,
-            templateId: 0,
-            values: {},
+            rules: {
+                required: value => !!value || 'Required.',
+            },
 
-            contract: {},
+            contract: {
+                templateId: 0,
+                values: {}
+            },
             templates: []
         }),
         created() {
@@ -82,10 +105,6 @@
         watch: {
             $route(){
                 this.initialize()
-            },
-            templateId(){
-                this.contract.templateId = this.templateId
-                this.values = {}
             }
         },
         computed: {
@@ -93,43 +112,63 @@
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
             },
             template(){
-                return this.templates.find(t => t.id === this.templateId)
+                console.log(this.contract.values)
+
+                return this.templates.find(t => t.id === this.contract.templateId)
             },
             templateTitle(){
                 if(this.template === undefined) return ""
 
                 return this.template.title
             },
+            rootSections(){
+                let sections = this.template.sections.filter(section => section.parent == null)
+
+                return sections.sort((a, b) => a.order - b.order)
+            }
         },
         methods: {
             initialize(){
+                let id = parseInt(this.$route.query.id)
+
                 this.templates = getTemplates()
 
-                if(this.$route.query.id === '0')
+                if(id === 0 ){
                     this.mode = Add_MODE
-                else
+
+                    this.contract = {
+                        templateId: 0,
+                        values: {}
+                    }
+                } else {
                     this.mode = READ_MODE
+                    this.contract = getContract(id)
+                }
             },
             onChangeTags(tags) {
                 this.item.tags = tags.split(',')
             },
             onClickSave() {
-                console.log('SAVE')
+                console.log('SAVE', this.contract)
 
-                // for(const [key, value] of Object.entries(this.values)){
-                //     console.log(key, value)
-                // }
+                let id = setContract(this.contract)
+                this.$router.replace({query: {id: id}})
+                    .catch(() => ({}))
 
-                this.contract.values = this.values
-
-                console.log(this.contract)
+                EventBus.$emit('refresh')
             },
             onClickDelete: function(){
                 console.log('DELETE')
             },
-            fields(section) {
-                return this.template.fields.filter(field => field.section === section)
+            subSections(section) {
+                let sections = this.template.sections.filter(s => s.parent === section)
+
+                return sections.sort((a, b) => a.order - b.order)
             },
+            fields(section) {
+                return this.template.fields.filter(f => f.section === section)
+            },
+            hash: hash,
             dateToDateTime: dateToDateTime,
         }
     }

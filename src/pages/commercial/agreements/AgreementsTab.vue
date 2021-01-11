@@ -19,6 +19,7 @@
             :items="items"
             :view="view"
             :items-length="items.length"
+            :loading="loading"
         >
             <template v-slot:item="{item}">
                 <agreement-card :item="item"/>
@@ -35,6 +36,8 @@
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
     import AgreementCard from "./AgreementCard";
+    import EventBus from "../../../plugins/eventBus";
+    import {getContracts} from "../../../api/contracts";
 
 
     export default {
@@ -59,7 +62,14 @@
             ],
             page: 0,
             items: [],
+
+            loading: false
         }),
+        created() {
+            EventBus.$on("refresh", this.updateList)
+
+            this.updateList()
+        },
         methods: {
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)
@@ -83,6 +93,13 @@
             },
             onUpdateOrder: function (param) {
                 console.log('onUpdateOrder', param)
+            },
+            updateList(){
+                this.loading = true
+
+                this.items = getContracts()
+
+                this.loading = false
             }
         }
     }

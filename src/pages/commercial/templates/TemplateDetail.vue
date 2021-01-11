@@ -46,8 +46,21 @@
                 v-on:delete="index => template.sections.splice(index, 1)"
             >
                 <template v-slot:item={item}>
-                    <v-text-field dense :readonly="isReadOnly" label="제목" class="text-caption col-2 pl-0" v-model="item.title"/>
+                    <v-text-field dense :readonly="isReadOnly" label="제목" class="text-caption col-2 pl-0" v-model="item.title" :rules="[rules.required]"/>
                     <v-text-field dense :readonly="isReadOnly" label="순서" class="text-caption col-2 pl-0" v-model="item.order" type="number"/>
+                    <v-select
+                        dense
+                        :readonly="isReadOnly"
+                        label="PARENT"
+                        class="text-caption col-3 pl-0"
+                        :items="sections(item.title)"
+                        item-text="title"
+                        item-value="title"
+                        v-model="item.parent"
+                        type="number"
+                        placeholder="없음"
+                        :clearable="!isReadOnly"
+                    />
                 </template>
             </multi-field-list>
         </expansion-panel>
@@ -65,13 +78,55 @@
                 v-on:delete="index => template.fields.splice(index, 1)"
             >
                 <template v-slot:item={item}>
-                    <v-text-field dense :readonly="isReadOnly" label="제목" class="text-caption col-2 pl-0" v-model="item.title"/>
-                    <v-text-field dense :readonly="isReadOnly" label="크기" class="text-caption col-1 pl-0" v-model="item.size"/>
-                    <v-select dense :readonly="isReadOnly" label="형식" class="text-caption col-2 pl-0" :items="types" v-model="item.type"/>
-                    <v-select dense :readonly="isReadOnly" label="필수" class="text-caption col-2 pl-0" :items="['Yes', 'No']" v-model="item.required" @click="onClickRequired"/>
-                    <v-select dense :readonly="isReadOnly" label="SECTION" class="text-caption" v-model="item.section" :items="template.sections" item-text="title" item-value="title" placeholder="없음"/>
+                    <v-text-field
+                        dense
+                        :readonly="isReadOnly"
+                        label="제목"
+                        class="text-caption col-2 pl-0"
+                        v-model="item.title"
+                        :rules="[rules.required]"
+                    />
+<!--                    <v-text-field dense :readonly="isReadOnly" label="크기" class="text-caption col-1 pl-0" v-model="item.size"/>-->
+                    <v-select
+                        dense
+                        :readonly="isReadOnly"
+                        label="형식"
+                        class="text-caption col-2 pl-0"
+                        :items="types"
+                        v-model="item.type"
+                        :rules="[rules.required]"
+                    />
+                    <v-select
+                        dense
+                        :readonly="isReadOnly"
+                        label="필수"
+                        class="text-caption col-2 pl-0"
+                        :items="yesOrNo"
+                        item-text="text"
+                        item-value="value"
+                        v-model="item.required"
+                        @click="onClickRequired"
+                    />
+                    <v-select
+                        dense
+                        :readonly="isReadOnly"
+                        label="SECTION"
+                        class="text-caption"
+                        v-model="item.section"
+                        :items="template.sections"
+                        item-text="title"
+                        item-value="title"
+                        placeholder="없음"
+                        :rules="[rules.required]"
+                    />
                 </template>
             </multi-field-list>
+        </expansion-panel>
+        <!--        -->
+
+        <!-- HISTORY -->
+        <expansion-panel label="수정이력" :value="true">
+            <actions-table/>
         </expansion-panel>
         <!--        -->
     </div>
@@ -86,9 +141,11 @@
     import MultiFieldList from "../../../components/layouts/MultiFieldList";
     import {deleteTemplate, getTemplate, setTemplate} from "../../../api/templates";
     import EventBus from "../../../plugins/eventBus";
+    import ActionsTable from "../../../components/tables/ActionsTable";
 
     export default {
         components: {
+            ActionsTable,
             MultiFieldList,
             ExpansionPanel,
             TopContents,
@@ -100,11 +157,23 @@
         data: () => ({
             mode: READ_MODE,
 
-            types: ["String", "Number", "Date"],
+            yesOrNo: [
+                {text: 'Yes', value: true},
+                {text: 'No', value: false}
+                ],
+            types: ["String", "Number", "Date", "Boolean"],
 
             template: {
                 sections: [],
                 fields: []
+            },
+            rules: {
+                required: value => !!value || 'Required.',
+                counter: value => value.length <= 20 || 'Max 20 characters',
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || 'Invalid e-mail.'
+                },
             },
         }),
         created() {
@@ -127,6 +196,9 @@
                 )
 
                 return lastOrder + 1
+            },
+            rootSections(){
+                return this.template.sections.filter(section => section.parent == null && section.title !== '')
             }
         },
         methods: {
@@ -174,11 +246,14 @@
                 title: "",
                 order: lastOrder,
             }),
+            sections(section){
+                return this.rootSections.filter(s => s.title !== section)
+            },
             newField: () => ({
                 title: "",
                 size: 0,
                 type: "String",
-                required: "Yes",
+                required: false,
                 section: ""
             }),
             onClickRequired(){

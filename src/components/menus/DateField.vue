@@ -11,10 +11,12 @@
             <v-text-field
                 :label="label"
                 :value="datesToString(dates)"
-                class="font-weight-bold text-caption text-sm-subtitle-1"
+                class="text-caption text-sm-subtitle-1"
                 readonly
+                :loading="loading"
                 v-bind="attrs"
                 v-on="readonly ? null : on"
+                :rules="rules"
             />
         </template>
         <v-date-picker
@@ -53,7 +55,11 @@
                 type: Boolean,
                 default: false
             },
-            class: String
+            loading: {
+                type: Boolean,
+                default: false
+            },
+            rules: Array
         },
         data: () => ({
             dates: [],
@@ -77,7 +83,6 @@
             onClickOK: function(){
                 this.$refs.menu.save(this.dates)
 
-                console.log(this.dates)
                 this.$emit('input', this.dates)
             },
             datesToString: datesToString

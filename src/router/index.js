@@ -109,14 +109,14 @@ export default new Router({
                         detail: OrderDetail
                     },
                 },
-                {
-                    name: 'cart',
-                    path: 'cart',
-                },
-                {
-                    name: 'orderList',
-                    path: 'orderList',
-                },
+                // {
+                //     name: 'cart',
+                //     path: 'cart',
+                // },
+                // {
+                //     name: 'orderList',
+                //     path: 'orderList',
+                // },
                 {
                     name: 'agreements',
                     path: 'agreements',
@@ -133,14 +133,14 @@ export default new Router({
                         detail: TemplateDetail
                     },
                 },
-                {
-                    name: 'reports',
-                    path: 'reports',
-                },
-                {
-                    name: 'quotations',
-                    path: 'quotations',
-                }
+                // {
+                //     name: 'reports',
+                //     path: 'reports',
+                // },
+                // {
+                //     name: 'quotations',
+                //     path: 'quotations',
+                // }
             ]
         },
         {
