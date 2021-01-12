@@ -24,7 +24,7 @@
 <!--                <v-text-field v-else label="카테고리" v-model="item.subtitle"/>-->
                 <div v-if="isReadOnly">
                     <div class="text-h4 font-weight-bold" v-text="item.title"/>
-                    <div class="d-flex align-center" v-if="item.productId >= 0">
+                    <div class="d-flex align-center" v-if="item.productId > 0">
                         <div class="text-h6 font-weight-bold">{{productTitle}}</div>
                         <v-btn icon :href="productPath" color="indigo">
                             <v-icon size="20px">mdi-arrow-top-right</v-icon>
@@ -103,55 +103,41 @@
             <!-- ADVANCED -->
             <expansion-panel label="Advanced" :value="true">
                 <div class="d-flex justify-space-between flex-wrap">
-                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
-                        <v-text-field :readonly="isReadOnly" label="계약서" value="DIGI-01001(D01클래스)"/>
-                        <v-text-field :readonly="isReadOnly" label="상품타입1" value="일반"/>
-                        <v-text-field :readonly="isReadOnly" label="환불보상조건" value="일반"/>
+                    <div class="d-flex flex-column col-12 col-sm-4 pa-0 mb-auto">
+                        <v-text-field :readonly="isReadOnly" label="광고 상품명" value="DIGI-01001(D01클래스)"/>
+                        <v-text-field :readonly="isReadOnly" label="광고주 담당자 연락처" value="일반"/>
+                        <v-text-field :readonly="isReadOnly" label="매체사 담당자 연락처" value="일반"/>
                     </div>
-                    <div class="d-flex flex-column col-12 col-sm-4 py-0 pl-0">
-                        <v-text-field :readonly="isReadOnly" label="정가" value="1500000" suffix="만원/월"/>
-                        <multi-field-list
-                            label="볼륨할인율"
-                            class="caption"
-
-                            :items="discounts"
-                            :readonly="isReadOnly"
-                            v-on:append="discounts.push({name: '', value: ''})"
-                            v-on:delete="index => discounts.splice(index, 1)"
-                        >
-                            <template v-slot:item={item}>
-                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
-                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value" suffix="만원이상"/>
-                            </template>
-                        </multi-field-list>
-                        <multi-field-list
-                            label="옵션"
-                            class="caption"
-
-                            :items="options"
-                            :readonly="isReadOnly"
-                            v-on:append="options.push({name: '', value: ''})"
-                            v-on:delete="index => options.splice(index, 1)"
-                        >
-                            <template v-slot:item={item}>
-                                <v-text-field class="pr-1 small" :readonly="isReadOnly" dense v-model="item.name"/>
-                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>
-                            </template>
-                        </multi-field-list>
+                    <div class="d-flex flex-column col-12 col-sm-4 py-0 px-2 mb-auto">
+                        <v-text-field :readonly="isReadOnly" label="계약금액" value="3,000,000"/>
+                        <v-text-field :readonly="isReadOnly" label="주문자" value="이름(user_id)"/>
                     </div>
-                    <div class="d-flex flex-column col-12 col-sm-4 ml-auto py-0 pl-0">
-                        <!--                        <v-text-field :readonly="isReadOnly" label="상품 노출 기간" value="20/07/01 20/11/30"/>-->
-                        <date-field :readonly="isReadOnly" label="상품 노출 기간" :value="['2020-07-01', '2020-11-30']"/>
-                        <v-text-field :readonly="isReadOnly" label="최소판매기간" value="Week"/>
-                        <v-text-field :readonly="isReadOnly" label="입금형식" value="선입/할부/후불/가능"/>
+                    <div class="d-flex flex-column col-12 col-sm-4 pa-0 mb-auto">
+                        <v-select label="진행상태" :items="['게첨중']" value="게첨중"/>
+                        <date-field :readonly="isReadOnly" label="시작/종료일" :value="['2020-07-01', '2020-11-30']"/>
+                        <div class="d-flex">
+                            <v-text-field :readonly="isReadOnly" label="수량" value="3"/>
+                            <v-spacer class="mx-1"/>
+                            <v-text-field :readonly="isReadOnly" label="매체명" value="의정부DID"/>
+                        </div>
                     </div>
                 </div>
             </expansion-panel>
 
-        <!-- CONTENT PACKAGE -->
-<!--        <expansion-panel label="Content Package" :value="true">-->
+        <!-- CONTRACT -->
+        <expansion-panel label="계약서" :value="true">
+                <div class="d-flex flex-column col-4 py-0 pl-0">
+                    <v-text-field
+                        label="계약서"
+                        v-if="isReadOnly"
+                        readonly
+                        :value="contractTitle"
+                        append-icon="mdi-arrow-top-right"
+                        @click:append="onClickContract"
+                    />
+                    <v-select label="계약서" v-else :items="contracts" item-value="id" item-text="title" v-model="item.contractId"/>
 
-<!--                <div class="d-flex justify-space-between flex-wrap">-->
+                    <v-select label="견적서" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
 <!--                    <div class="d-flex flex-column col-12 col-sm-5 pa-0">-->
 <!--                        <div class="d-flex">-->
 <!--                            <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>-->
@@ -184,35 +170,22 @@
 <!--                            </template>-->
 <!--                        </multi-field-list>-->
 <!--                    </div>-->
-<!--                </div>-->
-<!--        </expansion-panel>-->
-<!--        &lt;!&ndash;        &ndash;&gt;-->
+                </div>
+        </expansion-panel>
+        <!--        -->
 
-<!--        &lt;!&ndash; WEB PAGE &ndash;&gt;-->
-<!--        <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">-->
+        <!-- CONTENT PACKAGE -->
+        <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green">
 <!--                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>-->
-<!--                <multi-field-list-->
-<!--                    label="섹션 추가(html)"-->
-<!--                    class="caption indigo&#45;&#45;text accent-3"-->
-<!--                    :items="sections"-->
-<!--                    :readonly="isReadOnly"-->
 
-<!--                    v-on:append="sections.push({name: '', value: ''})"-->
-<!--                    v-on:delete="index => sections.splice(index, 1)"-->
-<!--                >-->
-<!--                    <template v-slot:item={item}>-->
-<!--                        <v-text-field class="col-2 py-0 pl-0" dense v-model="item.name"/>-->
-<!--                        <v-textarea outlined dense v-model="item.value" :rows="2"/>-->
-<!--                    </template>-->
-<!--                </multi-field-list>-->
-<!--        </expansion-panel>-->
-<!--        &lt;!&ndash;        &ndash;&gt;-->
+        </expansion-panel>
+        <!--        -->
 
-<!--        &lt;!&ndash; HISTORY &ndash;&gt;-->
-<!--        <expansion-panel label="수정이력" :value="true">-->
-<!--            <actions-table/>-->
-<!--        </expansion-panel>-->
-<!--        &lt;!&ndash; HISTORY & REVIEWS &ndash;&gt;-->
+        <!-- HISTORY -->
+        <expansion-panel label="수정이력" :value="true">
+            <actions-table/>
+        </expansion-panel>
+        <!-- HISTORY & REVIEWS -->
 
 <!--        &lt;!&ndash; REVIEWS &ndash;&gt;-->
 <!--        <expansion-panel label="고객리뷰" :value="true">-->
@@ -275,16 +248,17 @@
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/layouts/TopContents";
     import DateField from "../../../components/menus/DateField";
-    // import ActionsTable from "../../../components/tables/ActionsTable";
+    import ActionsTable from "../../../components/tables/ActionsTable";
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
-    import MultiFieldList from "../../../components/layouts/MultiFieldList";
+    import {getContracts} from "../../../api/contracts";
+    // import MultiFieldList from "../../../components/layouts/MultiFieldList";
 
     export default {
         components: {
-            MultiFieldList,
+            // MultiFieldList,
             ExpansionPanel,
-            // ActionsTable,
+            ActionsTable,
             DateField,
             TopContents,
             Stepper,
@@ -295,12 +269,13 @@
             value: Object
         },
         data: () => ({
-            dialog: true,
+            mode: READ_MODE,
             item: {
                 title: "디지털01-UJ-12",
                 tags: ["의정부", "디지털특가", "21년 신규"],
                 dates: ["2020-10-01", "2020-12-30"],
                 productId: 1,
+                contractId: 1,
             },
             products: [
                 {
@@ -308,19 +283,9 @@
                     title: "디지털01-의정부(상품명)-123"
                 }
             ],
+            contracts: [],
 
-            mode: READ_MODE,
 
-            sections: [
-                {name: "설명", value: null},
-                {name: "항목", value: null}
-            ],
-            options: [
-                {name: '회룡역만', value: '+100000'},
-            ],
-            discounts: [{name: '15%', value: '200'}],
-            webPage: true,
-            chips: ["의정부", "디지털", "2020년 처음"],
             reviews: [
                 {
                     user1: "vumbumy",
@@ -332,11 +297,11 @@
             ]
         }),
         created() {
-            this.updateMode()
+            this.initialize()
         },
         watch: {
             $route(){
-                this.updateMode()
+                this.initialize()
             }
         },
         computed: {
@@ -354,10 +319,18 @@
             },
             productPath(){
                 return `#/${this.$route.matched[0].name}/products?id=${this.product.id}`
+            },
+            contract(){
+                return this.contracts.find(c => c.id === this.item.contractId)
+            },
+            contractTitle(){
+                return this.contract.title
             }
         },
         methods: {
-            updateMode(){
+            initialize(){
+                this.contracts = getContracts()
+
                 if(this.$route.query.id === '0')
                     this.mode = Add_MODE
                 else
@@ -371,6 +344,15 @@
             },
             onClickDelete: function(){
                 console.log('DELETE')
+            },
+            onClickContract() {
+                let contractPath = {
+                    path: "/commercial/agreements",
+                    query: {id: this.item.contractId}
+                }
+
+                this.$router.push(contractPath)
+                    .catch(() => ({}))
             },
             dateToDateTime: dateToDateTime,
         }

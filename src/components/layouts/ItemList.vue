@@ -105,7 +105,7 @@
             },
             onClickItem: function (id) {
                 if(this.$route.query.id !== String(id))
-                    this.$router.replace({query: {id: id}});
+                    this.$router.push({query: {id: id}});
             },
             onMovePage(add){
                 this.page = Math.max(this.page + add, 0)

@@ -152,7 +152,7 @@
                 console.log('SAVE', this.contract)
 
                 let id = setContract(this.contract)
-                this.$router.replace({query: {id: id}})
+                this.$router.push({query: {id: id}})
                     .catch(() => ({}))
 
                 EventBus.$emit('refresh')

@@ -50,7 +50,7 @@
         },
         methods: {
             onClickReturn: function () {
-                this.$router.replace({'query': null});
+                this.$router.push({query: null});
             },
             onClickClose: function () {
                 if(this.isAddMode){
@@ -71,7 +71,7 @@
                 this.$emit('save')
             },
             onClickDelete: function(){
-                this.$router.replace({'query': null});
+                this.$router.push({query: null});
                 this.$emit('delete')
             }
         },

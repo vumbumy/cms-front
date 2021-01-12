@@ -230,7 +230,7 @@
 
                 let id = setTemplate(this.template)
 
-                this.$router.replace({query: {id: id}})
+                this.$router.push({query: {id: id}})
                     .catch(() => ({}))
 
                 EventBus.$emit('refresh')
@@ -240,7 +240,7 @@
 
                 deleteTemplate(this.template.id)
 
-                this.$router.replace({'query': null})
+                this.$router.push({query: null})
                     .catch(() => ({}))
 
                 EventBus.$emit('refresh')

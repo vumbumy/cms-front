@@ -44,7 +44,7 @@
             onClickRow(item) {
                 // console.log(item)
 
-                this.$router.replace({query: {id: item.id}});
+                this.$router.push({query: {id: item.id}});
             }
         }
     }
