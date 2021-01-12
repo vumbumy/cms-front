@@ -82,7 +82,7 @@
                         dense
                         :readonly="isReadOnly"
                         label="제목"
-                        class="text-caption col-2 pl-0"
+                        class="text-caption col-3 pl-0"
                         v-model="item.title"
                         :rules="[rules.required]"
                     />
@@ -142,6 +142,7 @@
     import {deleteTemplate, getTemplate, setTemplate} from "../../../api/templates";
     import EventBus from "../../../plugins/eventBus";
     import ActionsTable from "../../../components/tables/ActionsTable";
+    import {templateSample} from "../../../scripts/mock";
 
     export default {
         components: {
@@ -208,10 +209,12 @@
                 if(id === 0 ) {
                     this.mode = Add_MODE
 
-                    this.template = {
-                        sections: [],
-                        fields: []
-                    }
+                    this.template = templateSample
+
+                    // this.template = {
+                    //     sections: [],
+                    //     fields: []
+                    // }
                 }
                 else {
                     this.mode = READ_MODE

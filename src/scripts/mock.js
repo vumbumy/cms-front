@@ -12,3 +12,26 @@ export function sampleTextListLength(offset) {
 
     return SAMPLE_TEXT.split(' ').splice(start).length
 }
+
+export const templateSample = {
+    title: "일반광고계약양식-1",
+    sections: [
+        {title: "공통기본", order: 1},
+        {title: "Advanced", order: 2},
+        {title: "연결데이터", order: 3, parent: "Advanced"},
+        {title: "입금스케쥴", order: 4, parent: "Advanced"},
+        {title: "환불취소조건", order: 5, parent: "Advanced"},
+    ],
+    fields: [
+        {title: "계약명", size: 0, type: "String", required: true, section: "공통기본"},
+        {title: "계약자(갑)", size: 0, type: "String", required: true, section: "공통기본"},
+        {title: "계약자(을)", size: 0, type: "String", required: true, section: "공통기본"},
+        {title: "계약금액(원)", size: 0, type: "Number", required: true, section: "공통기본"},
+        {title: "사업자번호/주민번호(갑)", size: 0, type: "String", required: true, section: "공통기본"},
+        {title: "사업자번호/주민번호(을)", size: 0, type: "String", required: true, section: "공통기본"},
+        {title: "광고상품명", size: 0, type: "String", required: false, section: "연결데이터"},
+        {title: "입금기한일", size: 0, type: "Date", required: false, section: "입금스케쥴"},
+        {title: "금액", size: 0, type: "Number", required: false, section: "입금스케쥴"},
+        {title: "취소불가", size: 0, type: "Boolean", required: false, section: "환불취소조건"}
+    ]
+}
