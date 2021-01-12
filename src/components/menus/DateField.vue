@@ -12,6 +12,7 @@
                 :label="label"
                 :value="datesToString(dates)"
                 class="text-caption text-sm-subtitle-1"
+                :class="{'font-weight-bold': bold}"
                 readonly
                 :loading="loading"
                 v-bind="attrs"
@@ -59,7 +60,8 @@
                 type: Boolean,
                 default: false
             },
-            rules: Array
+            rules: Array,
+            bold: Boolean
         },
         data: () => ({
             dates: [],

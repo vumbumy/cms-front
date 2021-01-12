@@ -14,14 +14,42 @@
                 :updated="Date.parse('2020-12-13')"
                 :created="Date.parse('2020-12-01')"
             >
-                <div v-if="isReadOnly" class="text-h5 text-sm-h4">
-                    <strong v-text="item.title"/>
+<!--                <div v-if="isReadOnly" class="text-h5 text-sm-h4">-->
+<!--                    <strong v-text="item.title"/>-->
+<!--                </div>-->
+<!--                <v-text-field v-else label="이름" v-model="item.title"/>-->
+<!--                <div v-if="isReadOnly" class="text-h7 text-sm-h6 grey&#45;&#45;text text&#45;&#45;darken-2 text-truncate">-->
+<!--                    <strong v-text="item.subtitle"/>-->
+<!--                </div>-->
+<!--                <v-text-field v-else label="카테고리" v-model="item.subtitle"/>-->
+                <div v-if="isReadOnly">
+                    <div class="text-h4 font-weight-bold" v-text="item.title"/>
+                    <div class="d-flex align-center" v-if="item.productId >= 0">
+                        <div class="text-h6 font-weight-bold">{{productTitle}}</div>
+                        <v-btn icon :href="productPath" color="indigo">
+                            <v-icon size="20px">mdi-arrow-top-right</v-icon>
+                        </v-btn>
+                    </div>
                 </div>
-                <v-text-field v-else label="이름" v-model="item.title"/>
-                <div v-if="isReadOnly" class="text-h7 text-sm-h6 grey--text text--darken-2 text-truncate">
-                    <strong v-text="item.subtitle"/>
+                <div v-else>
+                    <v-text-field
+                        label="주문명"
+                        class="text-h4 font-weight-bold"
+
+                        v-model="item.title"
+                    />
+                    <v-select
+                        label="상품명"
+                        class="text-h6 font-weight-bold"
+                        clearable
+
+                        :items="products"
+                        item-text="title"
+                        item-value="id"
+
+                        v-model="item.productId"
+                    />
                 </div>
-                <v-text-field v-else label="카테고리" v-model="item.subtitle"/>
             </top-contents>
             <!--        -->
 
@@ -120,7 +148,7 @@
                 </div>
             </expansion-panel>
 
-<!--        &lt;!&ndash; CONTENT PACKAGE &ndash;&gt;-->
+        <!-- CONTENT PACKAGE -->
 <!--        <expansion-panel label="Content Package" :value="true">-->
 
 <!--                <div class="d-flex justify-space-between flex-wrap">-->
@@ -270,10 +298,16 @@
             dialog: true,
             item: {
                 title: "디지털01-UJ-12",
-                subtitle: "디지털01-의정부(상품명)-123",
                 tags: ["의정부", "디지털특가", "21년 신규"],
                 dates: ["2020-10-01", "2020-12-30"],
+                productId: 1,
             },
+            products: [
+                {
+                    id: 1,
+                    title: "디지털01-의정부(상품명)-123"
+                }
+            ],
 
             mode: READ_MODE,
 
@@ -311,6 +345,15 @@
             },
             datesString(){
                 return datesToString(this.item.dates)
+            },
+            product(){
+                return this.products.find(p => p.id === this.item.productId)
+            },
+            productTitle(){
+                return this.product.title
+            },
+            productPath(){
+                return `#/${this.$route.matched[0].name}/products?id=${this.product.id}`
             }
         },
         methods: {

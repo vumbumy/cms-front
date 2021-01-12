@@ -6,21 +6,39 @@
             v-on:save="onClickSave"
             v-on:delete="onClickDelete"
         />
-        <div class="d-flex flex-column">
+
             <!-- TOP CONTENTS -->
             <top-contents
                 :readonly="isReadOnly"
                 :updated="Date.parse('2020-12-13')"
                 :created="Date.parse('2020-12-01')"
             >
-                <div v-if="isReadOnly" class="text-h5 text-sm-h4">
-                    <strong v-text="item.name"/>
+<!--                <div v-if="isReadOnly" class="text-h5 text-sm-h4">-->
+<!--                    <strong v-text="item.name"/>-->
+<!--                </div>-->
+<!--                <v-text-field v-else label="이름" v-model="item.name"/>-->
+<!--                <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey&#45;&#45;text text&#45;&#45;darken-2">-->
+<!--                    <strong v-text="item.category"/>-->
+<!--                </div>-->
+<!--                <v-text-field v-else label="카테고리" v-model="item.category"/>-->
+                <div v-if="isReadOnly">
+                    <div class="text-h5 text-sm-h4 font-weight-bold" v-text="item.name"/>
+                    <div class="text-h6 text-sm-h5 font-weight-bold" v-text="item.category"/>
                 </div>
-                <v-text-field v-else label="이름" v-model="item.name"/>
-                <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey--text text--darken-2">
-                    <strong v-text="item.category"/>
+                <div v-else>
+                    <v-text-field
+                        label="이름"
+                        class="text-h5 text-sm-h4 font-weight-bold"
+
+                        v-model="item.name"
+                    />
+                    <v-text-field
+                        label="카테고리"
+                        class="text-h6 text-sm-h5 font-weight-bold"
+
+                        v-model="item.category"
+                    />
                 </div>
-                <v-text-field v-else label="카테고리" v-model="item.category"/>
             </top-contents>
             <!--        -->
 
@@ -68,7 +86,7 @@
                 <div class="d-flex flex-column col-4 pb-0 px-0 text-right">
 <!--                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>-->
 <!--                    <div v-if="isReadOnly" class="text-caption" v-text="dates1"/>-->
-                    <date-field :readonly="isReadOnly" label="기간" v-model="item.dates1"/>
+                    <date-field bold :readonly="isReadOnly" label="기간" v-model="item.dates1"/>
                 </div>
             </div>
             <!--        -->
@@ -220,7 +238,6 @@
                 </v-btn>
             </expansion-panel>
             <!--        -->
-        </div>
 
         <v-sheet v-if="isReadOnly" class="footer d-flex flex-column">
             <div class="d-flex pt-3">
