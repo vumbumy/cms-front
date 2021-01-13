@@ -8,7 +8,7 @@
                 {{label}}
                 <v-icon class="ml-auto flex-grow-0" :class="{'active':active}">mdi-chevron-down</v-icon>
             </div>
-            <v-icon class="ml-auto" size="15px" :color="circle">mdi-checkbox-blank-circle</v-icon>
+            <v-icon class="ml-auto pa-1" size="15px" :color="circle">mdi-circle</v-icon>
         </div>
         <v-divider/>
         <v-expand-transition>

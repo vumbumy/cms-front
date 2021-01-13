@@ -1,29 +1,29 @@
 <template>
     <div class="mb-2">
-    <v-data-table
-        class="elevation-1"
-        dense
+        <v-data-table
+            class="elevation-1"
+            dense
 
-        :headers="headers"
-        :items="desserts"
-        :items-per-page="4"
+            :headers="headers"
+            :items="desserts"
+            :items-per-page="4"
 
-        disable-sort
-        hide-default-footer
-    >
-        <template v-slot:item.actions="{ item }">
-            <v-btn text class="pa-0" @click="editItem(item)">
-                <v-icon small>mdi-eye</v-icon>보기
-            </v-btn>
-            <v-btn text class="pa-0" @click="deleteItem(item)">
-                <v-icon small>mdi-restore</v-icon>돌리기
-            </v-btn>
-        </template>
-        <template v-slot:no-data>
-            <v-btn color="primary" @click="initialize">Reset</v-btn>
-        </template>
-    </v-data-table>
-        <v-btn outlined block>
+            disable-sort
+            hide-default-footer
+        >
+            <template v-slot:item.actions="{ item }">
+                <v-btn text class="pa-0" @click="editItem(item)">
+                    <v-icon small>mdi-eye</v-icon>보기
+                </v-btn>
+                <v-btn text class="pa-0" @click="deleteItem(item)">
+                    <v-icon small>mdi-restore</v-icon>돌리기
+                </v-btn>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+        </v-data-table>
+        <v-btn outlined block v-if="more">
             더보기
         </v-btn>
     </div>
@@ -31,16 +31,21 @@
 
 <script>
     export default {
+        props: {
+            more: {type: Boolean, default: false},
+            headers: {
+                type: Array,
+                default: () => ([
+                    { text: 'Time', value: 'calories' },
+                    { text: 'Editor', value: 'fat' },
+                    { text: 'Note', value: 'name'},
+                    { text: 'Actions', value: 'actions', sortable: false },
+                ])
+            },
+        },
         data: () => ({
-            headers: [
-                { text: 'Time', value: 'calories' },
-                { text: 'Editor', value: 'fat' },
-                { text: 'Note', value: 'name'},
-                { text: 'Actions', value: 'actions', sortable: false },
-            ],
             desserts: [],
         }),
-
         created () {
             this.initialize()
         },

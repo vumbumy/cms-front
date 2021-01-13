@@ -26,7 +26,7 @@
                     <div class="text-h4 font-weight-bold" v-text="item.title"/>
                     <div class="d-flex align-center" v-if="item.productId > 0">
                         <div class="text-h6 font-weight-bold">{{productTitle}}</div>
-                        <v-btn icon :href="productPath" color="indigo">
+                        <v-btn icon @click="onClickProduct" color="indigo">
                             <v-icon size="20px">mdi-arrow-top-right</v-icon>
                         </v-btn>
                     </div>
@@ -133,7 +133,7 @@
                         readonly
                         :value="contractTitle"
                         append-icon="mdi-arrow-top-right"
-                        @click:append="item.contractId > 0 ? onClickContract: null"
+                        @click:append="onClickContract"
                     />
                     <v-select label="계약서" v-else :items="contracts" item-value="id" item-text="title" v-model="item.contractId" placeholder="없음"/>
 
@@ -145,52 +145,23 @@
                         append-icon="mdi-arrow-top-right"
                     />
                     <v-select label="견적서" v-else :readonly="isReadOnly" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
-<!--                    <div class="d-flex flex-column col-12 col-sm-5 pa-0">-->
-<!--                        <div class="d-flex">-->
-<!--                            <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>-->
-<!--                            <div class="text-left mt-2 ml-5">시작일<br>일전</div>-->
-<!--                        </div>-->
-<!--                        <multi-field-list-->
-<!--                            label="매체"-->
-<!--                            class="caption indigo&#45;&#45;text accent-3"-->
-
-<!--                            :items="[{name: 'UJ-DID(의정부경전철)', value: '(spec json value)'}]"-->
-<!--                            :readonly="isReadOnly"-->
-<!--                        >-->
-<!--                            <template v-slot:item={item}>-->
-<!--                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>-->
-<!--                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>-->
-<!--                            </template>-->
-<!--                        </multi-field-list>-->
-<!--                    </div>-->
-<!--                    <div class="d-flex flex-column justify-end col-12 pa-0 col-sm-6 mt-auto">-->
-<!--                        <multi-field-list-->
-<!--                            label="컨텐츠 포맷"-->
-<!--                            class="caption indigo&#45;&#45;text accent-3"-->
-
-<!--                            :items="[{name: '항목', value: '(spec json value)'}]"-->
-<!--                            :readonly="isReadOnly"-->
-<!--                        >-->
-<!--                            <template v-slot:item={item}>-->
-<!--                                <v-text-field class="pr-1" :readonly="isReadOnly" dense v-model="item.name"/>-->
-<!--                                <v-text-field class="pl-1" :readonly="isReadOnly" dense v-model="item.value"/>-->
-<!--                            </template>-->
-<!--                        </multi-field-list>-->
-<!--                    </div>-->
                 </div>
         </expansion-panel>
         <!--        -->
 
         <!-- CONTENT PACKAGE -->
-        <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green">
-<!--                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>-->
-
+        <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green" :value="true">
+            <div class="d-flex">
+                <v-text-field class="col-8 px-0" :readonly="isReadOnly" label="컨텐츠형식" value="(DID스크린) w:1902, h:1080, l:15 (포스터) w:1902, h:1080, format:’pdf,png’"/>
+                <v-select class="col-3 px-0 ml-auto" :readonly="isReadOnly" :items="['정상', '비정상']" value="정상" />
+            </div>
+            <actions-table/>
         </expansion-panel>
         <!--        -->
 
         <!-- HISTORY -->
         <expansion-panel label="수정이력" :value="true">
-            <actions-table/>
+            <actions-table more/>
         </expansion-panel>
         <!-- HISTORY & REVIEWS -->
 
@@ -355,7 +326,19 @@
             onClickDelete: function(){
                 console.log('DELETE')
             },
+            onClickProduct(){
+                if(this.item.productId <= 0) return
+
+                let productPath = {
+                    path: "/commercial/agreements",
+                    query: {id: this.item.productId}
+                }
+                this.$router.push(productPath)
+                    .catch(() => ({}))
+            },
             onClickContract() {
+                if(this.item.contractId <= 0) return
+
                 let contractPath = {
                     path: "/commercial/agreements",
                     query: {id: this.item.contractId}

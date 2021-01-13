@@ -126,7 +126,7 @@
 
         <!-- HISTORY -->
         <expansion-panel label="수정이력" :value="true">
-            <actions-table/>
+            <actions-table more/>
         </expansion-panel>
         <!--        -->
     </div>
