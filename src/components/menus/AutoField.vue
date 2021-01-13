@@ -7,7 +7,7 @@
             :rules="rules"
 
             v-model="item"
-            @input="$emit('input', item)"/>
+            @change="$emit('input', item)"/>
         <v-checkbox
             v-else-if="header.type === 'Boolean'"
             :label="header.title"
@@ -15,7 +15,7 @@
             :rules="rules"
 
             v-model="item"
-            @input="$emit('input', item)"/>
+            @change="$emit('input', item)"/>
         <v-text-field
             v-else
             :label="header.title"
@@ -24,7 +24,7 @@
             :rules="rules"
 
             v-model="item"
-            @input="$emit('input', item)"/>
+            @change="$emit('input', item)"/>
     </div>
 </template>
 
@@ -46,7 +46,6 @@
         },
         watch: {
             value() {
-                console.log(this.value)
                 this.initialize()
             },
             readonly() {
@@ -56,8 +55,6 @@
         methods: {
             initialize(){
                 this.item = this.value
-
-                // console.log(this.item, typeof this.item)
             }
         }
     }

@@ -134,7 +134,7 @@
 
 <script>
     import CloseEditSave from "../../../components/CloseEditSave";
-    import {dateToDateTime} from "../../../scripts/util";
+    import {cloneObject, dateToDateTime} from "../../../scripts/util";
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
     import TopContents from "../../../components/layouts/TopContents";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
@@ -209,7 +209,7 @@
                 if(id === 0 ) {
                     this.mode = Add_MODE
 
-                    this.template = templateSample
+                    this.template = cloneObject(templateSample)
 
                     // this.template = {
                     //     sections: [],
