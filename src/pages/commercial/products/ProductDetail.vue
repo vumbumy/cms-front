@@ -339,7 +339,7 @@
         },
         methods: {
             updateMode(){
-                if(this.$route.query.id === '0')
+                if(this.$route.params.sku === '0')
                     this.mode = Add_MODE
                 else
                     this.mode = READ_MODE

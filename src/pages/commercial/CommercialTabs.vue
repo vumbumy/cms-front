@@ -6,23 +6,24 @@
             max-width="550"
             style="overflow-y: auto"
         >
-            <div class="headline font-weight-bold" v-text="$t(parent)"/>
+            <div class="headline font-weight-bold" v-text="$t('commercial')"/>
             <div class="subtitle-1 mb-4" v-text="$t($route.name)"/>
 
             <error :message="error"/>
             <kpi-box/>
-            <v-tabs show-arrows>
+            <v-tabs show-arrows v-model="tab">
                 <v-tab
-                    v-for="(tab, index) in tabs"
-                    :key="index"
-                    :to="`/${parent}/${tab.path}`"
-                    v-text="$t(tab.name)"
+                    v-for="tab in tabs"
+                    :key="tab"
+
+                    :to="{name: tab}"
+                    v-text="$t(tab)"
                 />
             </v-tabs>
             <router-view/>
         </v-sheet>
         <v-sheet
-            v-if="$route.query.id"
+            v-if="isParams"
             class="col-12 col-sm-6 fill-height py-0"
             style="position: absolute; top:0; right: 0; overflow-y: scroll"
 
@@ -36,11 +37,14 @@
 
 <script>
   import KpiBox from "../../components/KpiBox";
-  import {searchChildren} from "../../menu";
+  // import {searchChildren} from "../../menu";
   import Error from "../../components/alerts/Error";
+  import {isEmptyObject} from "../../scripts/util";
+  // import ProductsTab from "./products/ProductsTab";
 
   export default {
       components: {
+          // ProductsTab,
           Error,
           KpiBox
       },
@@ -48,26 +52,33 @@
           return {
               error: '',
               active_tab: 0,
-              tabs: []
+              tabs: [
+                  'products',
+                  'orders',
+                  'agreements',
+                  'templates'
+              ],
+              tab: null
           };
       },
-      created() {
-          let children = searchChildren(this.parent)
-          for(let child of children)
-              if(child.path !== '') this.tabs.push(child)
-      },
-      mounted() {
-          console.log(this.$vuetify.breakpoint.name)
-      },
-      updated() {
-          console.log(this.$vuetify.breakpoint.name)
-      },
-      watch: {
-          parent() {this.updateTabs()}
-      },
+      // created() {
+      //     console.log(this.$route)
+      //     let children = searchChildren(this.parent)
+      //     for(let child of children)
+      //         if(child.path !== '') this.tabs.push(child)
+      // },
+      // mounted() {
+      //     console.log(this.$vuetify.breakpoint.name)
+      // },
+      // updated() {
+      //     console.log(this.$vuetify.breakpoint.name)
+      // },
+      // watch: {
+      //     parent() {this.updateTabs()}
+      // },
       computed: {
-          parent(){
-              return this.$route.matched[0].name
+          isParams(){
+              return !isEmptyObject(this.$route.params)
           },
           defaultMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
@@ -88,15 +99,15 @@
               return 0
           }
       },
-      methods: {
-          updateTabs: function(){
-              this.tabs = []
-
-              let children = searchChildren(this.parent)
-              for(let child of children)
-                  if(child.path !== '') this.tabs.push(child)
-          },
-      }
+      // methods: {
+      //     updateTabs: function(){
+      //         this.tabs = []
+      //
+      //         let children = searchChildren(this.parent)
+      //         for(let child of children)
+      //             if(child.path !== '') this.tabs.push(child)
+      //     },
+      // }
   }
 </script>
 

@@ -20,3 +20,7 @@ export function cloneObject(obj) {
     // return { ...obj }
     return JSON.parse(JSON.stringify(obj))
 }
+
+export function isEmptyObject(params) {
+    return Object.keys(params).length === 0
+}

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from "../pages/Home";
-import Tabs from "../pages/commercial/Tabs";
+import Tabs from "../pages/Tabs";
 import SettingsTabs from "../pages/settings/SettingsTabs";
 import GeneralTab from "../pages/settings/GeneralTab";
 import NoticeTab from "../pages/settings/NoticeTab";
@@ -17,6 +17,7 @@ import AgreementDetail from "../pages/commercial/agreements/AgreementDetail";
 import {publicPath} from "../../vue.config";
 import TemplatesTab from "../pages/commercial/templates/TemplatesTab";
 import TemplateDetail from "../pages/commercial/templates/TemplateDetail";
+import CommercialTabs from "../pages/commercial/CommercialTabs";
 
 
 Vue.use(Router);
@@ -87,7 +88,7 @@ export default new Router({
             name: "commercial",
             path: '/commercial',
             icon: 'mdi-bulletin-board',
-            component: Tabs,
+            component: CommercialTabs,
             children: [
                 {
                     path: '',
@@ -96,6 +97,11 @@ export default new Router({
                 {
                     name: 'products',
                     path: 'products',
+                    component: ProductsTab,
+                },
+                {
+                    name: 'products',
+                    path: 'products/:sku',
                     components: {
                         default: ProductsTab,
                         detail: ProductsDetail
@@ -143,90 +149,90 @@ export default new Router({
                 // }
             ]
         },
-        {
-            name: "contents",
-            path: '/contents',
-            icon: 'mdi-animation-play',
-            component: Tabs,
-            children: [
-                {
-                    path: '',
-                    redirect: 'packages'
-                },
-                {
-                    name: 'packages',
-                    path: 'packages',
-                },
-                {
-                    name: 'scenes',
-                    path: 'scenes',
-                },
-                {
-                    name: 'pages',
-                    path: 'pages',
-                },
-            ]
-        },
-        {
-            name: "works",
-            path: '/works',
-            icon: 'mdi-briefcase',
-            component: Tabs,
-            children: [
-                {
-                    path: '',
-                    redirect: 'history'
-                },
-                {
-                    name: 'workHistory',
-                    path: 'history',
-                },
-                {
-                    name: 'messages',
-                    path: 'messages',
-                },
-                {
-                    name: 'approvals',
-                    path: 'approvals',
-                },
-                {
-                    name: 'reports',
-                    path: 'reports',
-                }
-            ]
-        },
-        {
-            name: "boards",
-            path: '/boards',
-            icon: 'mdi-play-network',
-            component: Tabs,
-            children: [
-                {
-                    path: '',
-                    redirect: 'media'
-                },
-                {
-                    name: 'media',
-                    path: 'media',
-                },
-                {
-                    name: 'resourcePlans',
-                    path: 'resourcePlans',
-                },
-                {
-                    name: 'reservations',
-                    path: 'reservations',
-                },
-                {
-                    name: 'packages',
-                    path: 'packages',
-                },
-                {
-                    name: 'transactions',
-                    path: 'transactions',
-                }
-            ]
-        },
+        // {
+        //     name: "contents",
+        //     path: '/contents',
+        //     icon: 'mdi-animation-play',
+        //     component: Tabs,
+        //     children: [
+        //         {
+        //             path: '',
+        //             redirect: 'packages'
+        //         },
+        //         {
+        //             name: 'packages',
+        //             path: 'packages',
+        //         },
+        //         {
+        //             name: 'scenes',
+        //             path: 'scenes',
+        //         },
+        //         {
+        //             name: 'pages',
+        //             path: 'pages',
+        //         },
+        //     ]
+        // },
+        // {
+        //     name: "works",
+        //     path: '/works',
+        //     icon: 'mdi-briefcase',
+        //     component: Tabs,
+        //     children: [
+        //         {
+        //             path: '',
+        //             redirect: 'history'
+        //         },
+        //         {
+        //             name: 'workHistory',
+        //             path: 'history',
+        //         },
+        //         {
+        //             name: 'messages',
+        //             path: 'messages',
+        //         },
+        //         {
+        //             name: 'approvals',
+        //             path: 'approvals',
+        //         },
+        //         {
+        //             name: 'reports',
+        //             path: 'reports',
+        //         }
+        //     ]
+        // },
+        // {
+        //     name: "boards",
+        //     path: '/boards',
+        //     icon: 'mdi-play-network',
+        //     component: Tabs,
+        //     children: [
+        //         {
+        //             path: '',
+        //             redirect: 'media'
+        //         },
+        //         {
+        //             name: 'media',
+        //             path: 'media',
+        //         },
+        //         {
+        //             name: 'resourcePlans',
+        //             path: 'resourcePlans',
+        //         },
+        //         {
+        //             name: 'reservations',
+        //             path: 'reservations',
+        //         },
+        //         {
+        //             name: 'packages',
+        //             path: 'packages',
+        //         },
+        //         {
+        //             name: 'transactions',
+        //             path: 'transactions',
+        //         }
+        //     ]
+        // },
         { path: '*', component: NotFoundComponent },
     ]
 });

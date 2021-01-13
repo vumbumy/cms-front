@@ -2,10 +2,7 @@
     <div class="d-flex flex-column">
         <div class="d-flex align-center">
             <div>
-<!--                <v-icon class="mr-2" @click="check=!check" v-if="!check">mdi-checkbox-blank-outline</v-icon>-->
-<!--                <v-icon class="mr-2" @click="check=!check" v-else>mdi-check-box-outline</v-icon>-->
                 <v-icon class="mr-2" @click="onClickAdd">mdi-plus</v-icon>
-<!--                <v-icon class="mr-2" @click="dots=false" v-if="dots">mdi-dots-vertical</v-icon>-->
                 <v-icon class="mr-2" @click="onClickRefresh">mdi-refresh</v-icon>
                 <v-icon class="mr-2" v-if="isTableView">mdi-download</v-icon>
                 <v-icon v-if="isTableView">mdi-trash-can-outline</v-icon>
@@ -88,24 +85,21 @@
             },
             itemsNumber(){
                 return Math.min(this.itemsLength, (this.value + 1) * ITEMS_PER_PAGE)
-            }
+            },
+            parentPath(){
+                return this.$route.matched[0].path
+            },
         },
         methods: {
             onClickAdd: function () {
                 this.onClickItem(0)
             },
             onClickRefresh: function() {
-                // this.loading = true;
-
-                // let vm = this
-
-                // setTimeout(() => vm.loading = false, 1000)
-
                 this.$emit('refresh')
             },
             onClickItem: function (id) {
-                if(this.$route.query.id !== String(id))
-                    this.$router.push({query: {id: id}});
+                let path = `${this.parentPath}/${this.$route.name}/${id}`
+                this.$router.push(path).catch(() => {});
             },
             onMovePage(add){
                 this.page = Math.max(this.page + add, 0)
