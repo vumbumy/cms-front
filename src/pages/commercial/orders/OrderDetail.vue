@@ -14,14 +14,6 @@
                 :updated="Date.parse('2020-12-13')"
                 :created="Date.parse('2020-12-01')"
             >
-<!--                <div v-if="isReadOnly" class="text-h5 text-sm-h4">-->
-<!--                    <strong v-text="item.title"/>-->
-<!--                </div>-->
-<!--                <v-text-field v-else label="이름" v-model="item.title"/>-->
-<!--                <div v-if="isReadOnly" class="text-h7 text-sm-h6 grey&#45;&#45;text text&#45;&#45;darken-2 text-truncate">-->
-<!--                    <strong v-text="item.subtitle"/>-->
-<!--                </div>-->
-<!--                <v-text-field v-else label="카테고리" v-model="item.subtitle"/>-->
                 <div v-if="isReadOnly">
                     <div class="text-h4 font-weight-bold" v-text="item.title"/>
                     <div class="d-flex align-center" v-if="item.productId > 0">
@@ -124,8 +116,8 @@
                 </div>
             </expansion-panel>
 
-        <!-- CONTRACT -->
-        <expansion-panel label="계약서" :value="true">
+            <!-- CONTRACT -->
+            <expansion-panel label="계약서" :value="true">
                 <div class="d-flex flex-column col-4 py-0 pl-0">
                     <v-text-field
                         label="계약서"
@@ -146,74 +138,25 @@
                     />
                     <v-select label="견적서" v-else :readonly="isReadOnly" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
                 </div>
-        </expansion-panel>
-        <!--        -->
+            </expansion-panel>
+            <!--        -->
 
-        <!-- CONTENT PACKAGE -->
-        <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green" :value="true">
-            <div class="d-flex">
-                <v-text-field class="col-8 px-0" :readonly="isReadOnly" label="컨텐츠형식" value="(DID스크린) w:1902, h:1080, l:15 (포스터) w:1902, h:1080, format:’pdf,png’"/>
-                <v-select class="col-3 px-0 ml-auto" :readonly="isReadOnly" :items="['정상', '비정상']" value="정상" />
-            </div>
-            <actions-table/>
-        </expansion-panel>
-        <!--        -->
+            <!-- CONTENT PACKAGE -->
+            <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green" :value="true">
+                <div class="d-flex">
+                    <v-text-field class="col-8 px-0" :readonly="isReadOnly" label="컨텐츠형식" value="(DID스크린) w:1902, h:1080, l:15 (포스터) w:1902, h:1080, format:’pdf,png’"/>
+                    <v-select class="col-3 px-0 ml-auto" :readonly="isReadOnly" :items="['정상', '비정상']" value="정상" />
+                </div>
+                <actions-table/>
+            </expansion-panel>
+            <!--        -->
 
-        <!-- HISTORY -->
-        <expansion-panel label="수정이력" :value="true">
-            <actions-table more/>
-        </expansion-panel>
-        <!-- HISTORY & REVIEWS -->
+            <!-- HISTORY -->
+            <expansion-panel label="수정이력" :value="true">
+                <actions-table more/>
+            </expansion-panel>
+            <!--        -->
 
-<!--        &lt;!&ndash; REVIEWS &ndash;&gt;-->
-<!--        <expansion-panel label="고객리뷰" :value="true">-->
-<!--                <div class="d-flex flex-column mb-3">-->
-<!--                    <div class="d-flex mb-5">-->
-<!--                        <v-icon>mdi-tag-outline</v-icon>-->
-<!--                        <v-chip-->
-<!--                            class="my-2 mx-1" close close-icon="mdi-close" color="primary"-->
-<!--                            v-for="(chip, index) in chips" :key="index">{{chip}}</v-chip>-->
-<!--                    </div>-->
-<!--                    <div class="d-flex flex-column" v-for="(review, index) in reviews" :key="index">-->
-<!--                        <div class="d-flex justify-space-between">-->
-<!--                            <p v-text="review.user1"/>-->
-<!--                            <p v-text="review.user2"/>-->
-<!--                        </div>-->
-<!--                        <div class="d-flex justify-space-between ">-->
-<!--                            <p class="text-caption grey&#45;&#45;text text&#45;&#45;darken-2" v-text="review.created"/>-->
-<!--                            <div-->
-<!--                                class="text-caption grey&#45;&#45;text text&#45;&#45;darken-2 ml-auto"-->
-<!--                                v-text="'#' + item.tags.join(' #')"/>-->
-<!--                        </div>-->
-<!--                        <div class="text-justify">-->
-<!--                            {{review.comment}}<v-divider/>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <v-btn outlined block>-->
-<!--                    더보기-->
-<!--                </v-btn>-->
-<!--        </expansion-panel>-->
-<!--        &lt;!&ndash;        &ndash;&gt;-->
-
-<!--        <v-sheet v-if="isReadOnly" class="footer d-flex flex-column elevation-0 py-3 pr-3 px-sm-3">-->
-<!--            <div class="d-flex pt-3">-->
-<!--                <v-select label="기간" class="col-3 pa-0 mr-1" placeholder="20.12.01 20.12.31"/>-->
-<!--                <v-select label="옵션" class="col-3 pa-0 ml-1" placeholder="기본"/>-->
-<!--                <v-select label="금액" class="col-3 pa-0 ml-auto" placeholder="100,000원"/>-->
-<!--            </div>-->
-<!--            <div class="d-flex justify-space-between">-->
-<!--                <v-btn-->
-<!--                    class="text-h5 font-weight-bold col-6 rounded-0"-->
-<!--                    style="color: blue;"-->
-<!--                    outlined>장바구니</v-btn>-->
-<!--                <v-btn-->
-<!--                    class="text-h5 font-weight-bold col-6 rounded-0"-->
-<!--                    style="background-color: blue"-->
-<!--                    text-->
-<!--                    dark>구매하기</v-btn>-->
-<!--            </div>-->
-<!--        </v-sheet>-->
         </div>
     </div>
 </template>

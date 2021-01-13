@@ -6,7 +6,6 @@ export function getTemplates() {
     return getItems(key)
 }
 
-
 export function deleteTemplate(id) {
     deleteItem(key, id)
 }
