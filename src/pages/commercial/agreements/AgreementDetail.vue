@@ -112,8 +112,6 @@
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
             },
             template(){
-                console.log(this.contract.values)
-
                 return this.templates.find(t => t.id === this.contract.templateId)
             },
             templateTitle(){

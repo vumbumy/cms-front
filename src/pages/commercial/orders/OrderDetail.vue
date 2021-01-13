@@ -133,11 +133,18 @@
                         readonly
                         :value="contractTitle"
                         append-icon="mdi-arrow-top-right"
-                        @click:append="onClickContract"
+                        @click:append="item.contractId > 0 ? onClickContract: null"
                     />
-                    <v-select label="계약서" v-else :items="contracts" item-value="id" item-text="title" v-model="item.contractId"/>
+                    <v-select label="계약서" v-else :items="contracts" item-value="id" item-text="title" v-model="item.contractId" placeholder="없음"/>
 
-                    <v-select label="견적서" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
+                    <v-text-field
+                        label="계약서"
+                        v-if="isReadOnly"
+                        readonly
+                        value="견적서-1"
+                        append-icon="mdi-arrow-top-right"
+                    />
+                    <v-select label="견적서" v-else :readonly="isReadOnly" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
 <!--                    <div class="d-flex flex-column col-12 col-sm-5 pa-0">-->
 <!--                        <div class="d-flex">-->
 <!--                            <v-text-field :readonly="isReadOnly" label="접수마감" value="04"/>-->
@@ -274,8 +281,8 @@
                 title: "디지털01-UJ-12",
                 tags: ["의정부", "디지털특가", "21년 신규"],
                 dates: ["2020-10-01", "2020-12-30"],
-                productId: 1,
-                contractId: 1,
+                productId: 0,
+                contractId: 0,
             },
             products: [
                 {
@@ -324,6 +331,9 @@
                 return this.contracts.find(c => c.id === this.item.contractId)
             },
             contractTitle(){
+                if(this.contract === undefined)
+                    return "없음"
+
                 return this.contract.title
             }
         },
