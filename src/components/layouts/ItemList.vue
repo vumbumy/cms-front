@@ -23,17 +23,9 @@
                 :active="loading"
                 indeterminate
             />
-            <v-card
-                outlined
-
-                class="my-1"
-                v-for="item in items" :key="item.id"
-                :class="{'selected': $route.query.id === String(item.id)}"
-
-                @click="onClickItem(item.id)"
-            >
+            <div class="my-1" v-for="(item, index) in items" :key="index">
                 <slot name="item" :item="item"/>
-            </v-card>
+            </div>
         </div>
         <div v-else-if="isTableView">
             <item-table :headers="headers" :items="items" :loading="loading"/>
@@ -43,7 +35,7 @@
 
 <script>
 
-    import {CARD_VIEW, ITEMS_PER_PAGE, TABLE_VIEW} from "../../scripts/const";
+    import {CARD_VIEW, ITEMS_PER_PAGE, NEW_ITEM_ID, TABLE_VIEW} from "../../scripts/const";
     import ItemTable from "../tables/ItemTable";
 
     export default {
@@ -86,21 +78,22 @@
             itemsNumber(){
                 return Math.min(this.itemsLength, (this.value + 1) * ITEMS_PER_PAGE)
             },
-            parentPath(){
-                return this.$route.matched[0].path
-            },
+            // parentPath(){
+            //     return this.$route.matched[0].path
+            // },
         },
         methods: {
             onClickAdd: function () {
-                this.onClickItem(0)
+                let path = `${this.$route.name}/${NEW_ITEM_ID}`
+                this.$router.push(path).catch(() => {});
             },
             onClickRefresh: function() {
                 this.$emit('refresh')
             },
-            onClickItem: function (id) {
-                let path = `${this.parentPath}/${this.$route.name}/${id}`
-                this.$router.push(path).catch(() => {});
-            },
+            // onClickItem: function (id) {
+            //     let path = `${this.parentPath}/${this.$route.name}/${id}`
+            //     this.$router.push(path).catch(() => {});
+            // },
             onMovePage(add){
                 this.page = Math.max(this.page + add, 0)
                 this.page = Math.min(this.page, this.maxPage)
@@ -110,13 +103,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .v-card {
-        border-left: 10px solid orange !important
-    }
-
-    .selected {
-        border-left: 10px solid blue !important
-    }
-</style>

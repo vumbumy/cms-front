@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
+    <v-sheet class="d-flex flex-column" :min-width="detailMinWidth">
         <close-edit-save
             class="header"
             v-model="mode"
@@ -257,7 +257,7 @@
                     dark>구매하기</v-btn>
             </div>
         </v-sheet>
-    </div>
+    </v-sheet>
 </template>
 
 <script>
@@ -335,7 +335,13 @@
             },
             dates1(){
                 return datesToString(this.item.dates1)
-            }
+            },
+            detailMinWidth(){
+                if(this.$vuetify.breakpoint.smAndUp)
+                    return 625
+
+                return 0
+            },
         },
         methods: {
             updateMode(){

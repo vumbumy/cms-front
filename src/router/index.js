@@ -100,7 +100,7 @@ export default new Router({
                     component: ProductsTab,
                 },
                 {
-                    name: 'products',
+                    name: 'products:detail',
                     path: 'products/:sku',
                     components: {
                         default: ProductsTab,

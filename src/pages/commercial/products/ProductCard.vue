@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column pa-2">
+    <v-card outlined class="d-flex flex-column pa-2" :to="{name: 'products:detail', params: {sku: item.id}}">
         <div class="d-flex">
             <div class="col-4 pa-0 d-flex flex-column">
                 <div class="text-h7 text-sm-h6 font-weight-bold" v-text="item.name"/>
@@ -25,7 +25,7 @@
             <div class="text-caption">SKU</div>
             <div class="text-caption">#CAMP #TAGS #HASH</div>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>
@@ -36,3 +36,13 @@
         data: () => ({})
     }
 </script>
+
+<style lang="scss" scoped>
+    .v-card {
+        border-left: 10px solid orange !important
+    }
+
+    .selected {
+        border-left: 10px solid blue !important
+    }
+</style>

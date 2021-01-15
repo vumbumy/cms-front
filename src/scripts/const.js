@@ -8,3 +8,5 @@ export const ITEMS_PER_PAGE = 15
 export const READ_MODE = 0
 export const Add_MODE = 1
 export const EDIT_MODE = 2
+
+export const NEW_ITEM_ID = "new"

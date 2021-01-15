@@ -47,14 +47,13 @@
             isAddMode(){
                 return this.mode === Add_MODE
             },
-            parentPath(){
-                return this.$route.matched[0].path
+            entity(){
+                return this.$route.name.split(':')[0]
             },
         },
         methods: {
             onClickReturn: function () {
-                let path = `${this.parentPath}/${this.$route.name}`
-                this.$router.push(path).catch(() => {});
+                this.$router.push({name: this.entity}).catch(() => {});
             },
             onClickClose: function () {
                 if(this.isAddMode){
