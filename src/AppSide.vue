@@ -13,11 +13,11 @@
             <v-list dense>
                 <v-list-item-group color="#00f">
                     <div v-for="menu in menus" :key="menu.name" :to="menu.path">
-                        <v-list-item v-if="menu.name" :to="menu.path" class="py-1">
+                        <v-list-item v-if="menu.path" :to="menu.path" class="py-1">
                             <v-list-item-icon class="mr-2">
                                 <v-icon size="20" v-text="menu.icon"/>
                             </v-list-item-icon>
-                            <v-list-item-subtitle class="text-left" v-text="$t(menu.name)"/>
+                            <v-list-item-subtitle class="text-left" v-text="$t(menuName(menu))"/>
                         </v-list-item>
                         <v-divider v-else class="py-0 my-0"/>
                     </div>
@@ -60,12 +60,22 @@
       created() {
           this.drawer = this.value
       },
+      mounted() {
+          console.log(this.menus)
+      },
       watch: {
           value(){
             this.drawer = this.value
           },
           drawer(){
               this.$emit('input', this.drawer)
+          }
+      },
+      methods: {
+          menuName: function (menu) {
+              if(menu.name) return menu.name
+
+              return menu.path.slice(1)
           }
       }
   }

@@ -66,9 +66,9 @@
             loading: false
         }),
         created() {
-            EventBus.$on("refresh", this.updateList)
+            EventBus.$on("refresh", this.loadItemList)
 
-            this.updateList()
+            this.loadItemList()
         },
         methods: {
             onClickAll(){
@@ -94,7 +94,7 @@
             onUpdateOrder: function (param) {
                 console.log('onUpdateOrder', param)
             },
-            updateList(){
+            loadItemList(){
                 this.loading = true
 
                 this.items = getContracts()

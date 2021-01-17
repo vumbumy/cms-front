@@ -10,3 +10,5 @@ export const Add_MODE = 1
 export const EDIT_MODE = 2
 
 export const NEW_ITEM_ID = "new"
+
+export const PRODUCT_SKU_PREFIX = 'https://naim.ai/products/'

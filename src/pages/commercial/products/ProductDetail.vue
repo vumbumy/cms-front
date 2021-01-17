@@ -7,36 +7,33 @@
             v-on:delete="onClickDelete"
         />
 
+        <v-form ref="form">
             <!-- TOP CONTENTS -->
             <top-contents
                 :readonly="isReadOnly"
                 :updated="Date.parse('2020-12-13')"
                 :created="Date.parse('2020-12-01')"
             >
-<!--                <div v-if="isReadOnly" class="text-h5 text-sm-h4">-->
-<!--                    <strong v-text="item.name"/>-->
-<!--                </div>-->
-<!--                <v-text-field v-else label="이름" v-model="item.name"/>-->
-<!--                <div v-if="isReadOnly" class="text-h6 text-sm-h5 grey&#45;&#45;text text&#45;&#45;darken-2">-->
-<!--                    <strong v-text="item.category"/>-->
-<!--                </div>-->
-<!--                <v-text-field v-else label="카테고리" v-model="item.category"/>-->
                 <div v-if="isReadOnly">
-                    <div class="text-h5 text-sm-h4 font-weight-bold" v-text="item.name"/>
-                    <div class="text-h6 text-sm-h5 font-weight-bold" v-text="item.category"/>
+                    <div class="text-h5 text-sm-h4 font-weight-bold" v-text="product.name"/>
+                    <div class="text-h6 text-sm-h5 font-weight-bold" v-text="categoryName"/>
                 </div>
                 <div v-else>
                     <v-text-field
                         label="이름"
                         class="text-h5 text-sm-h4 font-weight-bold"
 
-                        v-model="item.name"
+                        v-model="product.name"
                     />
-                    <v-text-field
-                        label="카테고리"
-                        class="text-h6 text-sm-h5 font-weight-bold"
+                    <addable-select
+                        text-label="카테고리"
+                        text-class="text-h6 text-sm-h5 font-weight-bold"
 
-                        v-model="item.category"
+                        :items="categories"
+                        item-value="no"
+                        item-text="name"
+                        v-model="product.categoryNo"
+                        @append="onClickCategoryAppend"
                     />
                 </div>
             </top-contents>
@@ -44,17 +41,16 @@
 
             <!-- TOP UNDER CONTENTS -->
             <div class="d-flex" v-if="isReadOnly">
-                <div class="caption grey--text text--darken-2 text-truncate">
-                    https://naim.ai/products/{{item.sku}}
-                </div>
+                <div class="caption grey--text text--darken-2 text-truncate" v-text="productUrl"/>
                 <div
+                    v-if="product.tags.length > 0"
                     class="d-flex text-caption grey--text text--darken-2 ml-auto text-truncate"
-                    v-text="'#' + item.tags.join(' #')"/>
+                    v-text="'#' + product.tags.join(' #')"/>
             </div>
             <div v-else class="d-flex justify-space-between">
-                <v-text-field class="flex-grow-0" label="SKU" v-model="item.sku"/>
+                <v-text-field class="flex-grow-0" label="SKU" :prefix="PRODUCT_SKU_PREFIX" v-model="product.sku" :rules="[rules.required]"/>
                 <v-spacer/>
-                <v-text-field class="flex-grow-1" label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
+                <v-text-field class="flex-grow-1" label="Hashtags" v-model="product.tags" @change="onChangeTags"/>
             </div>
             <v-divider class="grey"/>
             <!--        -->
@@ -62,31 +58,16 @@
             <!-- HEAD CONTENTS -->
             <div class="d-flex justify-space-between">
                 <div class="d-flex col-3 pb-0 px-0">
-<!--                    <div class="d-flex flex-column">-->
-<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">재고</div>-->
-<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.stock}}</div>-->
-                        <v-text-field label="재고" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.stock"/>
-<!--                    </div>-->
+                        <v-text-field label="재고" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="product.stock"/>
                     <div class="text-h5 text-sm-h3 mt-auto mb-7 mb-sm-8 mx-1">/</div>
-<!--                    <div class="d-flex flex-column">-->
-<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">수량</div>-->
-<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 mt-auto font-weight-bold">{{item.amount}}</div>-->
-                        <v-text-field label="수량" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.amount"/>
-<!--                    </div>-->
+                        <v-text-field label="수량" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="product.amount"/>
                 </div>
                 <div class="d-flex col-4 pb-0 px-0">
-<!--                    <div class="d-flex flex-column">-->
-<!--                        <div class="text-subtitle-1 text-sm-h7 font-weight-bold">가격</div>-->
-<!--                        <div v-if="isReadOnly" class="text-h5 text-sm-h4 font-weight-bold mt-auto">{{item.price}}</div>-->
-<!--                        <v-text-field v-else v-model="item.price" suffix="만원/월"/>-->
-                    <v-text-field label="가격" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="item.price"/>
-<!--                    </div>-->
+                    <v-text-field label="가격" :readonly="isReadOnly" class="text-h5 text-sm-h3 font-weight-bold" v-model="product.price"/>
                     <div class="mt-auto ml-1 mb-7 mb-sm-9 text-no-wrap">만원/월</div>
                 </div>
                 <div class="d-flex flex-column col-4 pb-0 px-0 text-right">
-<!--                    <div class="text-subtitle-1 text-sm-h7 font-weight-bold tex">기간</div>-->
-<!--                    <div v-if="isReadOnly" class="text-caption" v-text="dates1"/>-->
-                    <date-field bold :readonly="isReadOnly" label="기간" v-model="item.dates1"/>
+                    <date-field bold :readonly="isReadOnly" label="기간" v-model="product.dates1"/>
                 </div>
             </div>
             <!--        -->
@@ -120,7 +101,7 @@
                         </multi-field-list>
                         <multi-field-list
                             label="옵션"
-                            class="caption"
+                            class="text-caption"
 
                             :items="options"
                             :readonly="isReadOnly"
@@ -226,7 +207,7 @@
                             <p class="text-caption grey--text text--darken-2" v-text="review.created"/>
                             <div
                                 class="text-caption grey--text text--darken-2 ml-auto"
-                                v-text="'#' + item.tags.join(' #')"/>
+                                v-text="'#' + review.tags.join(' #')"/>
                         </div>
                         <div class="text-justify">
                             {{review.comment}}<v-divider/>
@@ -238,6 +219,7 @@
                 </v-btn>
             </expansion-panel>
             <!--        -->
+        </v-form>
 
         <v-sheet v-if="isReadOnly" class="footer d-flex flex-column">
             <div class="d-flex pt-3">
@@ -264,7 +246,7 @@
     import Photo from "../../../components/Photo";
     import CloseEditSave from "../../../components/CloseEditSave";
     import {datesToString, dateToDateTime} from "../../../scripts/util";
-    import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
+    import {Add_MODE, EDIT_MODE, NEW_ITEM_ID, PRODUCT_SKU_PREFIX, READ_MODE} from "../../../scripts/const";
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/layouts/TopContents";
     import DateField from "../../../components/menus/DateField";
@@ -272,9 +254,13 @@
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
     import MultiFieldList from "../../../components/layouts/MultiFieldList";
+    import {deleteProduct, getProduct, newProduct, setProduct} from "../../../api/products";
+    import EventBus from "../../../plugins/eventBus";
+    import AddableSelect from "../../../components/menus/AddableSelect";
 
     export default {
         components: {
+            AddableSelect,
             MultiFieldList,
             ExpansionPanel,
             ActionsTable,
@@ -287,20 +273,23 @@
             value: Object
         },
         data: () => ({
-            dialog: true,
-            tabs: ['ses x', 'ses y' ,'ses z'],
             mode: READ_MODE,
+            categories: [
+                {
+                    no: 1,
+                    name: "나임 의정부",
+                },
+                {
+                    no: 2,
+                    name: "Overlay",
+                },
+                {
+                    no: 3,
+                    name: "서울"
+                }
+            ],
 
-            item: {
-                name: "디지털01-의정부",
-                category: "나임의 정부",
-                sku: 'uj10-21',
-                stock: 2,
-                amount: 10,
-                price: 100,
-                dates1: ["2020-10-01", "2020-12-30"],
-                tags: ["의정부", "디지털특가", "21년 신규"]
-            },
+            product: newProduct(),
             sections: [
                 {name: "설명", value: null},
                 {name: "항목", value: null}
@@ -319,22 +308,31 @@
                     tags: ["의정부 디지털"],
                     comment: SAMPLE_TEXT
                 }
-            ]
+            ],
+            rules: {
+                required: value => !!value || 'Required.'
+            },
+            PRODUCT_SKU_PREFIX: PRODUCT_SKU_PREFIX,
         }),
         created() {
-            this.updateMode()
+            this.initialize()
         },
         watch: {
             $route(){
-                this.updateMode()
+                this.initialize()
+
+                console.log(this.$route.params)
             }
         },
         computed: {
             isReadOnly(){
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
             },
+            isEditMode(){
+                return this.mode === EDIT_MODE
+            },
             dates1(){
-                return datesToString(this.item.dates1)
+                return datesToString(this.product.dates1)
             },
             detailMinWidth(){
                 if(this.$vuetify.breakpoint.smAndUp)
@@ -342,22 +340,53 @@
 
                 return 0
             },
+            categoryName() {
+                let category = this.categories.find(c => c.no === this.product.categoryNo)
+                if(category === undefined)
+                    return ""
+
+                return category.name
+            },
+            productUrl() {
+                return PRODUCT_SKU_PREFIX + this.product.sku
+            }
         },
         methods: {
-            updateMode(){
-                if(this.$route.params.sku === '0')
+            initialize(){
+                let sku = this.$route.params.sku
+                if(sku === NEW_ITEM_ID) {
                     this.mode = Add_MODE
-                else
+
+                    this.product = newProduct()
+                } else {
                     this.mode = READ_MODE
+
+                    this.product = getProduct(sku)
+                }
             },
             onChangeTags(tags) {
-                this.item.tags = tags.split(',')
+                console.log(tags)
+
+                this.product.tags = tags.split(',')
             },
             onClickSave() {
-                console.log('SAVE')
+                console.log(this.product)
+
+                let sku = setProduct(this.product)
+                this.$router.push({name: this.$route.name, params: {sku: sku}})
+                    .catch(() => ({}))
+
+                EventBus.$emit('refresh')
             },
             onClickDelete: function(){
                 console.log('DELETE')
+
+                deleteProduct(this.product.sku)
+
+                EventBus.$emit('refresh')
+            },
+            onClickCategoryAppend: function(){
+                console.log('onClickCategoryAppend')
             },
             dateToDateTime: dateToDateTime,
         }

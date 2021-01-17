@@ -21,7 +21,7 @@
             :items-length="items.length"
             :loading="loading"
 
-            v-on:refresh="updateList"
+            v-on:refresh="loadItemList"
         >
             <template v-slot:item="{item}">
                 <template-card :item="item"/>
@@ -68,9 +68,9 @@
             loading: true
         }),
         created() {
-            EventBus.$on("refresh", this.updateList)
+            EventBus.$on("refresh", this.loadItemList)
 
-            this.updateList()
+            this.loadItemList()
         },
         methods: {
             onClickAll(){
@@ -96,7 +96,7 @@
             onUpdateOrder: function (param) {
                 console.log('onUpdateOrder', param)
             },
-            updateList(){
+            loadItemList(){
                 this.loading = true
 
                 this.items = getTemplates()

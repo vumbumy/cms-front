@@ -1,4 +1,4 @@
-function setItems(key, items) {
+export function setItems(key, items) {
     let jsonStr = JSON.stringify(items)
 
     localStorage.setItem(key, jsonStr)
@@ -6,8 +6,6 @@ function setItems(key, items) {
 
  function getAllItems(key) {
     let jsonStr = localStorage.getItem(key)
-     console.log(jsonStr)
-
     if(jsonStr == null)
         return []
 
@@ -20,44 +18,43 @@ export function getItems(key) {
     return items.filter(item => !item.delete)
 }
 
-function newItemId(key) {
-    let lastId = 0
+function newItemNo(key) {
+    let lastNo = 0
 
     let items = getAllItems(key)
 
-    items.forEach((e) => lastId = Math.max(lastId, e.id))
+    items.forEach((e) => lastNo = Math.max(lastNo, e.no))
 
-    return lastId + 1
+    return lastNo + 1
 }
 
 function postItem(key, item) {
     let items = getItems(key)
 
-    // TODO: 임시 ID 발급
-    item.id = newItemId(key)
+    // TODO: 임시 번호 발급
+    item.no = newItemNo(key)
 
     items.push(item)
 
     setItems(key, items)
 
-    return item.id
+    return item.no
 }
 
 function putItem(key, item) {
     let items = getItems(key)
 
-    let updated = items.map(t => t.id === item.id ? item : t)
+    let updated = items.map(t => t.no === item.no ? item : t)
 
     setItems(key, updated)
 
-    return item.id
+    return item.no
 }
 
-export function deleteItem(key, id) {
+export function deleteItem(key, no) {
     let items = getItems(key)
 
-    let index = items.findIndex(t => t.id === id)
-    // if (index !== -1) items.splice(index, 1);
+    let index = items.findIndex(t => t.no === no)
 
     items[index].delete = true
 
@@ -65,14 +62,14 @@ export function deleteItem(key, id) {
 }
 
 export function setItem(key, item) {
-    if(!item.id || item.id === 0)
+    if(!item.no || item.no === 0)
         return postItem(key, item)
     else
         return putItem(key, item)
 }
 
-export function getItem(key, id) {
+export function getItem(key, no) {
     let items = getItems(key)
 
-    return items.find((item) => item.id === id)
+    return items.find((item) => item.no === no)
 }

@@ -18,10 +18,11 @@
             :headers="headers"
             :items="items"
             :view="view"
-            :items-length="itemsLength"
+            :items-length="items.length"
+            :loading="loading"
         >
             <template v-slot:item="{item}">
-                <product-card :item="item"/>
+                <product-card :product="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -31,11 +32,12 @@
 
     // import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
-    import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
+    import {CARD_VIEW} from "../../../scripts/const";
     import ProductCard from "./ProductCard";
-    import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
+    import EventBus from "../../../plugins/eventBus";
+    import {getProducts} from "../../../api/products";
 
 
     export default {
@@ -54,38 +56,51 @@
             headers: [
                 { text: '#', value: 'id' },
                 { text: 'Name', value: 'name' },
-                { text: 'Type', value: 'type' },
+                { text: 'Category', value: 'categoryNo' },
                 { text: 'Description', value: 'description' },
                 { text: 'Stock', value: 'stock' },
             ],
-            page: 0
-            // items: [],
+            page: 0,
+            items: [],
+            loading: false
         }),
         computed: {
-            items() {
-                let items = []
-                let textList = sampleTextList(this.page)
+            // items() {
+            //     let items = []
+            //     let textList = sampleTextList(this.page)
+            //
+            //     for(let i=0; i<textList.length; i++){
+            //         let id = this.page * ITEMS_PER_PAGE + i + 1
+            //         items.push(
+            //             {
+            //                 id: id,
+            //                 name: textList[i],
+            //                 type: textList[i],
+            //                 description: textList[i],
+            //                 stock: i % 10 * 10,
+            //             }
+            //         )
+            //     }
+            //
+            //     return items
+            // },
+            // itemsLength() {
+            //     return sampleTextListLength()
+            // }
+        },
+        created() {
+            EventBus.$on("refresh", this.loadItemList)
 
-                for(let i=0; i<textList.length; i++){
-                    let id = this.page * ITEMS_PER_PAGE + i + 1
-                    items.push(
-                        {
-                            id: id,
-                            name: textList[i],
-                            type: textList[i],
-                            description: textList[i],
-                            stock: i % 10 * 10,
-                        }
-                    )
-                }
-
-                return items
-            },
-            itemsLength() {
-                return sampleTextListLength()
-            }
+            this.loadItemList()
         },
         methods: {
+            loadItemList(){
+                this.loading = true
+
+                this.items = getProducts()
+
+                this.loading = false
+            },
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)
                 if (index === -1) {

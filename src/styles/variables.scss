@@ -1,2 +1,5 @@
 $input-max-height: 100px !important;
 @import "~vuetify/src/components/VInput/VInput.sass";
+
+$btn-text-transform: none !important;
+@import "~vuetify/src/components/VBtn/VBtn.sass";

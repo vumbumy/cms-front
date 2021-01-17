@@ -78,13 +78,24 @@
             itemsNumber(){
                 return Math.min(this.itemsLength, (this.value + 1) * ITEMS_PER_PAGE)
             },
-            // parentPath(){
-            //     return this.$route.matched[0].path
-            // },
+            isAddMode(){
+                return Object.values(this.$route.params).indexOf(NEW_ITEM_ID) !== -1
+            },
+            parentPath(){
+                return this.$route.matched[1].path.split(':')[0]
+            },
+            fullPath(){
+                if(this.$route.name.indexOf('detail') !== -1)
+                    return this.parentPath
+
+                return this.$route.path + '/'
+            }
         },
         methods: {
             onClickAdd: function () {
-                let path = `${this.$route.name}/${NEW_ITEM_ID}`
+                if(this.isAddMode) return
+
+                let path = `${this.fullPath}${NEW_ITEM_ID}`
                 this.$router.push(path).catch(() => {});
             },
             onClickRefresh: function() {

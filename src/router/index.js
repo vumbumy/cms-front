@@ -34,12 +34,12 @@ export default new Router({
             component: Home,
         },
         {
-            name: "settings",
             path: '/settings',
             icon: 'mdi-cog',
             component: SettingsTabs,
             children: [
                 {
+                    name: "settings",
                     path: '',
                     redirect: 'general'
                 },
@@ -61,12 +61,12 @@ export default new Router({
             ]
         },
         {
-            name: "logs",
             path: '/logs',
             icon: 'mdi-card-text',
             component: Tabs,
             children: [
                 {
+                    name: "logs",
                     path: '',
                     redirect: 'alert'
                 },
@@ -85,12 +85,12 @@ export default new Router({
             ]
         },
         {
-            name: "commercial",
             path: '/commercial',
             icon: 'mdi-bulletin-board',
             component: CommercialTabs,
             children: [
                 {
+                    name: "commercial",
                     path: '',
                     redirect: 'products'
                 },
@@ -110,6 +110,13 @@ export default new Router({
                 {
                     name: 'orders',
                     path: 'orders',
+                    components: {
+                        default: OrdersTab,
+                    },
+                },
+                {
+                    name: 'orders:detail',
+                    path: 'orders/:no',
                     components: {
                         default: OrdersTab,
                         detail: OrderDetail
@@ -149,90 +156,90 @@ export default new Router({
                 // }
             ]
         },
-        // {
-        //     name: "contents",
-        //     path: '/contents',
-        //     icon: 'mdi-animation-play',
-        //     component: Tabs,
-        //     children: [
-        //         {
-        //             path: '',
-        //             redirect: 'packages'
-        //         },
-        //         {
-        //             name: 'packages',
-        //             path: 'packages',
-        //         },
-        //         {
-        //             name: 'scenes',
-        //             path: 'scenes',
-        //         },
-        //         {
-        //             name: 'pages',
-        //             path: 'pages',
-        //         },
-        //     ]
-        // },
-        // {
-        //     name: "works",
-        //     path: '/works',
-        //     icon: 'mdi-briefcase',
-        //     component: Tabs,
-        //     children: [
-        //         {
-        //             path: '',
-        //             redirect: 'history'
-        //         },
-        //         {
-        //             name: 'workHistory',
-        //             path: 'history',
-        //         },
-        //         {
-        //             name: 'messages',
-        //             path: 'messages',
-        //         },
-        //         {
-        //             name: 'approvals',
-        //             path: 'approvals',
-        //         },
-        //         {
-        //             name: 'reports',
-        //             path: 'reports',
-        //         }
-        //     ]
-        // },
-        // {
-        //     name: "boards",
-        //     path: '/boards',
-        //     icon: 'mdi-play-network',
-        //     component: Tabs,
-        //     children: [
-        //         {
-        //             path: '',
-        //             redirect: 'media'
-        //         },
-        //         {
-        //             name: 'media',
-        //             path: 'media',
-        //         },
-        //         {
-        //             name: 'resourcePlans',
-        //             path: 'resourcePlans',
-        //         },
-        //         {
-        //             name: 'reservations',
-        //             path: 'reservations',
-        //         },
-        //         {
-        //             name: 'packages',
-        //             path: 'packages',
-        //         },
-        //         {
-        //             name: 'transactions',
-        //             path: 'transactions',
-        //         }
-        //     ]
-        // },
+        {
+            path: '/contents',
+            icon: 'mdi-animation-play',
+            component: Tabs,
+            children: [
+                {
+                    name: "contents",
+                    path: '',
+                    redirect: 'packages'
+                },
+                {
+                    name: 'contentPackages',
+                    path: 'packages',
+                },
+                {
+                    name: 'scenes',
+                    path: 'scenes',
+                },
+                {
+                    name: 'pages',
+                    path: 'pages',
+                },
+            ]
+        },
+        {
+            path: '/works',
+            icon: 'mdi-briefcase',
+            component: Tabs,
+            children: [
+                {
+                    name: "works",
+                    path: '',
+                    redirect: 'history'
+                },
+                {
+                    name: 'workHistory',
+                    path: 'history',
+                },
+                {
+                    name: 'messages',
+                    path: 'messages',
+                },
+                {
+                    name: 'approvals',
+                    path: 'approvals',
+                },
+                {
+                    name: 'reports',
+                    path: 'reports',
+                }
+            ]
+        },
+        {
+            path: '/boards',
+            icon: 'mdi-play-network',
+            component: Tabs,
+            children: [
+                {
+                    name: "boards",
+                    path: '',
+                    redirect: 'media'
+                },
+                {
+                    name: 'media',
+                    path: 'media',
+                },
+                {
+                    name: 'resourcePlans',
+                    path: 'resourcePlans',
+                },
+                {
+                    name: 'reservations',
+                    path: 'reservations',
+                },
+                {
+                    name: 'boardPackages',
+                    path: 'packages',
+                },
+                {
+                    name: 'transactions',
+                    path: 'transactions',
+                }
+            ]
+        },
         { path: '*', component: NotFoundComponent },
     ]
 });
