@@ -1,5 +1,6 @@
 export function setItems(key, items) {
     let jsonStr = JSON.stringify(items)
+    console.log(jsonStr)
 
     localStorage.setItem(key, jsonStr)
 }
@@ -70,6 +71,8 @@ export function setItem(key, item) {
 
 export function getItem(key, no) {
     let items = getItems(key)
+
+    no = parseInt(no)
 
     return items.find((item) => item.no === no)
 }

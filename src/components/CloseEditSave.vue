@@ -3,7 +3,7 @@
         <v-btn @click="onClickReturn" text icon>
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
-        <v-btn text icon class="ml-auto" v-if="!isAddMode && !isEditMode"  @click="onClickEdit">
+        <v-btn text icon class="ml-auto" v-if="!isAddMode && !isEditMode"  @click="toEditMode">
             <v-icon>mdi-pencil</v-icon>
         </v-btn>
         <div v-else class="ml-auto">
@@ -24,6 +24,7 @@
 
 <script>
     import {Add_MODE, EDIT_MODE, READ_MODE} from "../scripts/const";
+    import EventBus from "../plugins/eventBus";
 
     export default {
         props: {
@@ -34,6 +35,8 @@
         }),
         created() {
             this.mode = this.value
+
+            EventBus.$on('saved', this.toReadMode)
         },
         watch: {
             value(){
@@ -61,21 +64,23 @@
 
                     return
                 }
-                this.mode = READ_MODE
-                this.$emit('input', READ_MODE)
+
+                this.toReadMode()
             },
-            onClickEdit: function(){
+            toEditMode: function(){
                 this.mode = EDIT_MODE
                 this.$emit('input', EDIT_MODE)
             },
             onClickSave: function(){
-                this.mode = READ_MODE
-                this.$emit('input', READ_MODE)
                 this.$emit('save')
             },
             onClickDelete: function(){
                 this.$router.push({query: null});
                 this.$emit('delete')
+            },
+            toReadMode(){
+                this.mode = READ_MODE
+                this.$emit('input', READ_MODE)
             }
         },
     }

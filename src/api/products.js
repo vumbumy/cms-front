@@ -57,14 +57,16 @@ export function getProducts() {
 
 export function newProduct() {
     return {
-        name: "",
-        categoryNo: -1,
-        sku: '',
+        name: null,
+        categoryNo: 0,
+        contractNo: 0,
+        sku: null,
         stock: 0,
         amount: 0,
         price: 0,
         dates1: [],
-        html: "",
+        page: false,
+        pageHtml: null,
         tags: []
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
+    <v-sheet class="d-flex flex-column" :min-width="detailMinWidth">
         <close-edit-save
             class="header"
             v-model="mode"
@@ -15,12 +15,10 @@
                 :created="Date.parse('2020-12-01')"
             >
                 <div v-if="isReadOnly">
-                    <div class="text-h4 font-weight-bold" v-text="item.title"/>
-                    <div class="d-flex align-center" v-if="item.productId > 0">
+                    <div class="text-h4 font-weight-bold" v-text="order.name"/>
+                    <div class="d-flex align-center" v-if="order.productSKU">
                         <div class="text-h6 font-weight-bold">{{productTitle}}</div>
-                        <v-btn icon @click="onClickProduct" color="indigo">
-                            <v-icon size="20px">mdi-arrow-top-right</v-icon>
-                        </v-btn>
+                        <v-href :to="{name:'products:detail' ,params: {sku: order.productSKU}}" size="20px"/>
                     </div>
                 </div>
                 <div v-else>
@@ -28,7 +26,7 @@
                         label="주문명"
                         class="text-h4 font-weight-bold"
 
-                        v-model="item.title"
+                        v-model="order.name"
                     />
                     <v-select
                         label="상품명"
@@ -36,19 +34,19 @@
                         clearable
 
                         :items="products"
-                        item-text="title"
-                        item-value="id"
+                        item-text="name"
+                        item-value="sku"
 
-                        v-model="item.productId"
+                        v-model="order.productSKU"
                     />
                 </div>
             </top-contents>
             <!--        -->
 
             <!-- TOP UNDER CONTENTS -->
-            <div v-if="isReadOnly" class="text-caption grey--text text--darken-2 align-self-end text-truncate" v-text="'#' + item.tags.join(' #')"/>
+            <div v-if="isReadOnly" class="text-caption grey--text text--darken-2 align-self-end text-truncate" v-text="'#' + order.tags.join(' #')"/>
             <div v-else class="d-flex align-end">
-                <v-text-field class="flex-grow-1" label="Hashtags" v-model="item.tags" @change="onChangeTags"/>
+                <v-text-field class="flex-grow-1" label="Hashtags" v-model="order.tags" @change="onChangeTags"/>
             </div>
             <v-divider class="grey"/>
             <!--        -->
@@ -96,7 +94,6 @@
             <expansion-panel label="Advanced" :value="true">
                 <div class="d-flex justify-space-between flex-wrap">
                     <div class="d-flex flex-column col-12 col-sm-4 pa-0 mb-auto">
-                        <v-text-field :readonly="isReadOnly" label="광고 상품명" value="DIGI-01001(D01클래스)"/>
                         <v-text-field :readonly="isReadOnly" label="광고주 담당자 연락처" value="일반"/>
                         <v-text-field :readonly="isReadOnly" label="매체사 담당자 연락처" value="일반"/>
                     </div>
@@ -124,25 +121,25 @@
                         v-if="isReadOnly"
                         readonly
                         :value="contractTitle"
-                        append-icon="mdi-arrow-top-right"
+                        :append-icon="order.contractNo > 0 ? 'mdi-arrow-top-right' : null"
                         @click:append="onClickContract"
                     />
-                    <v-select label="계약서" v-else :items="contracts" item-value="id" item-text="title" v-model="item.contractId" placeholder="없음"/>
+                    <v-select label="계약서" v-else :items="contracts" item-value="no" item-text="title" v-model="order.contractNo" placeholder="없음"/>
 
-                    <v-text-field
-                        label="계약서"
-                        v-if="isReadOnly"
-                        readonly
-                        value="견적서-1"
-                        append-icon="mdi-arrow-top-right"
-                    />
-                    <v-select label="견적서" v-else :readonly="isReadOnly" :items="['견적서-1', '견적서-2']" value="견적서-1"/>
+<!--                    <v-text-field-->
+<!--                        label="계약서"-->
+<!--                        v-if="isReadOnly"-->
+<!--                        readonly-->
+<!--                        value="견적서-1"-->
+<!--                        append-icon="mdi-arrow-top-right"-->
+<!--                    />-->
+<!--                    <v-select label="견적서" v-else :readonly="isReadOnly" :items="['견적서-1', '견적서-2']" value="견적서-1"/>-->
                 </div>
             </expansion-panel>
             <!--        -->
 
             <!-- CONTENT PACKAGE -->
-            <expansion-panel label="Content Package" :readonly="isReadOnly" circle="green" :value="true">
+            <expansion-panel label="Content Package" circle="green" :value="true">
                 <div class="d-flex">
                     <v-text-field class="col-8 px-0" :readonly="isReadOnly" label="컨텐츠형식" value="(DID스크린) w:1902, h:1080, l:15 (포스터) w:1902, h:1080, format:’pdf,png’"/>
                     <v-select class="col-3 px-0 ml-auto" :readonly="isReadOnly" :items="['정상', '비정상']" value="정상" />
@@ -158,14 +155,14 @@
             <!--        -->
 
         </div>
-    </div>
+    </v-sheet>
 </template>
 
 <script>
     import Photo from "../../../components/Photo";
     import CloseEditSave from "../../../components/CloseEditSave";
     import {datesToString, dateToDateTime} from "../../../scripts/util";
-    import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
+    import {Add_MODE, EDIT_MODE, NEW_ITEM_ID, READ_MODE} from "../../../scripts/const";
     import Stepper from "../../../components/Stepper";
     import TopContents from "../../../components/layouts/TopContents";
     import DateField from "../../../components/menus/DateField";
@@ -173,10 +170,15 @@
     import {SAMPLE_TEXT} from "../../../scripts/mock";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
     import {getContracts} from "../../../api/contracts";
+    import {getProducts} from "../../../api/products";
+    import {deleteOrder, getOrder, newOrder, setOrder} from "../../../api/orders";
+    import {refresh, saved} from "../../../plugins/eventBus";
+    import VHref from "../../../components/VHref";
     // import MultiFieldList from "../../../components/layouts/MultiFieldList";
 
     export default {
         components: {
+            VHref,
             // MultiFieldList,
             ExpansionPanel,
             ActionsTable,
@@ -191,19 +193,8 @@
         },
         data: () => ({
             mode: READ_MODE,
-            item: {
-                title: "디지털01-UJ-12",
-                tags: ["의정부", "디지털특가", "21년 신규"],
-                dates: ["2020-10-01", "2020-12-30"],
-                productId: 0,
-                contractId: 0,
-            },
-            products: [
-                {
-                    id: 1,
-                    title: "디지털01-의정부(상품명)-123"
-                }
-            ],
+            order: {},
+            products: [],
             contracts: [],
 
 
@@ -230,65 +221,91 @@
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
             },
             datesString(){
-                return datesToString(this.item.dates)
+                return datesToString(this.order.dates)
             },
             product(){
-                return this.products.find(p => p.id === this.item.productId)
+                return this.products.find(product => product.sku === this.order.productSKU)
             },
             productTitle(){
-                return this.product.title
+                if(this.product === undefined) return ""
+
+                return this.product.name
             },
             productPath(){
-                return `#/${this.$route.matched[0].name}/products?id=${this.product.id}`
+                return `#/commercial/products?id=${this.product.id}`
             },
             contract(){
-                return this.contracts.find(c => c.id === this.item.contractId)
+                return this.contracts.find(c => c.id === this.order.contractNo)
             },
             contractTitle(){
                 if(this.contract === undefined)
                     return "없음"
 
                 return this.contract.title
-            }
+            },
+            detailMinWidth(){
+                if(this.$vuetify.breakpoint.smAndUp)
+                    return 700
+
+                return 0
+            },
         },
         methods: {
             initialize(){
                 this.contracts = getContracts()
+                this.products = getProducts()
 
-                if(this.$route.query.id === '0')
+                let no = this.$route.params.no
+                if(no === NEW_ITEM_ID){
                     this.mode = Add_MODE
-                else
+
+                    this.order = newOrder()
+                }
+                else{
                     this.mode = READ_MODE
+
+                    this.order = getOrder(no)
+                }
             },
             onChangeTags(tags) {
                 this.tags = tags.split(',')
             },
             onClickSave() {
-                console.log('SAVE')
+                let no = setOrder(this.order)
+
+                this.$router.push({name: this.$route.name, params: {no: no}})
+                    .catch(() => ({}))
+
+                saved()
             },
             onClickDelete: function(){
-                console.log('DELETE')
-            },
-            onClickProduct(){
-                if(this.item.productId <= 0) return
+                deleteOrder(this.order.no)
 
-                let productPath = {
-                    path: "/commercial/agreements",
-                    query: {id: this.item.productId}
-                }
-                this.$router.push(productPath)
+                this.$router.push({name: 'orders'})
                     .catch(() => ({}))
+
+                refresh()
             },
+            // onClickProduct(){
+            //     if(this.order.productSKU <= 0) return
+            //
+            //     let productPath = {
+            //         path: "/commercial/agreements",
+            //         query: {id: this.order.productNo}
+            //     }
+            //     this.$router.push(productPath)
+            //         .catch(() => ({}))
+            // },
             onClickContract() {
-                if(this.item.contractId <= 0) return
+                if(this.order.contractNo <= 0) return
 
-                let contractPath = {
-                    path: "/commercial/agreements",
-                    query: {id: this.item.contractId}
-                }
-
-                this.$router.push(contractPath)
-                    .catch(() => ({}))
+                // let contractPath = {
+                //     path: "/commercial/agreements",
+                //     query: {id: this.order.contractId}
+                // }
+                //
+                // this.$router.push(contractPath)
+                //     .catch(() => ({}))
             },
             dateToDateTime: dateToDateTime,
         }

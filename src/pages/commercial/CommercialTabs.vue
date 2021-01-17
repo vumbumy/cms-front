@@ -7,11 +7,11 @@
             style="overflow-y: auto"
         >
             <div class="headline font-weight-bold" v-text="$t('commercial')"/>
-            <div class="subtitle-1 mb-4" v-text="$t(tabs[tab])"/>
+            <div class="subtitle-1 mb-4" v-text="$t(tabs[tabIndex])"/>
 
             <error :message="error"/>
             <kpi-box/>
-            <v-tabs show-arrows v-model="tab">
+            <v-tabs show-arrows v-model="tabIndex">
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab"
@@ -23,85 +23,53 @@
             </v-tabs>
             <router-view/>
         </v-sheet>
-<!--        <v-sheet-->
-<!--            v-if="isParams"-->
-<!--            class="col-12 col-sm-6 fill-height py-0"-->
-<!--            style="position: absolute; top:0; right: 0; overflow-y: scroll"-->
-<!---->
-<!--            :min-width="detailMinWidth"-->
-<!--            :elevation="detailElevation"-->
-<!--        >-->
-            <router-view name="detail" class="detail col-12 col-sm-6 fill-height py-0" :class="{'elevation-5' : $vuetify.breakpoint.mdAndDown}"/>
-<!--        </v-sheet>-->
+        <router-view name="detail" class="detail col-12 col-sm-6 fill-height py-0" :class="{'elevation-5' : $vuetify.breakpoint.mdAndDown}"/>
     </div>
 </template>
 
 <script>
   import KpiBox from "../../components/KpiBox";
-  // import {searchChildren} from "../../menu";
   import Error from "../../components/alerts/Error";
-  // import {isEmptyObject} from "../../scripts/util";
-  // import ProductsTab from "./products/ProductsTab";
 
   export default {
       components: {
-          // ProductsTab,
           Error,
           KpiBox
       },
       data() {
           return {
               error: '',
-              active_tab: 0,
+
               tabs: [
                   'products',
                   'orders',
                   'agreements',
                   'templates'
               ],
-              tab: 'products'
+              tabIndex: 0
           };
       },
-      // created() {
-      //     console.log(this.$route)
-      //     let children = searchChildren(this.parent)
-      //     for(let child of children)
-      //         if(child.path !== '') this.tabs.push(child)
-      // },
-      // mounted() {
-      //     console.log(this.$route.params)
-      // },
-      // updated() {
-      //     console.log(this.$route.params)
-      // },
-      // watch: {
-      //     parent() {this.updateTabs()}
-      // },
+      created() {
+          this.tabIndex = this.defaultIndex
+      },
       computed: {
-          // isParams(){
-          //     return !isEmptyObject(this.$route.params)
-          // },
+          defaultTab(){
+              return this.$route.name.split(':')[0]
+          },
+          defaultIndex(){
+              let index = this.tabs.indexOf(this.defaultTab)
+              console.log("defaultIndex", index)
+
+              return index
+          },
           defaultMinWidth(){
               if(this.$vuetify.breakpoint.smAndUp)
                   return 600
 
               return 0
           },
-          // detailElevation(){
-          //     if(this.$vuetify.breakpoint.mdAndDown)
-          //         return 5
-          //
-          //     return 0
-          // }
       },
       methods: {
-      //     updateTabs: function(){
-      //         this.tabs = []
-      //
-      //         let children = searchChildren(this.parent)
-      //         for(let child of children)
-      //             if(child.path !== '') this.tabs.push(child)
-      //     },
           onClickTab(tab) {
               this.$router.push({name: tab}).catch(() => {})
           }

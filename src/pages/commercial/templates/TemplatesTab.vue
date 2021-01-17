@@ -39,7 +39,7 @@
     import Warning from "../../../components/alerts/Warning";
     import TemplateCard from "./TemplateCard";
     import {getTemplates} from "../../../api/templates";
-    import EventBus from "../../../plugins/eventBus";
+    import {registerRefresh} from "../../../plugins/eventBus";
 
 
     export default {
@@ -68,7 +68,7 @@
             loading: true
         }),
         created() {
-            EventBus.$on("refresh", this.loadItemList)
+            registerRefresh(this.loadItemList)
 
             this.loadItemList()
         },

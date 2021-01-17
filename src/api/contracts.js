@@ -6,15 +6,14 @@ export function getContracts() {
     return getItems(key)
 }
 
-
-export function deleteContract(id) {
-    deleteItem(key, id)
+export function deleteContract(no) {
+    deleteItem(key, no)
 }
 
 export function setContract(contract) {
     return setItem(key, contract)
 }
 
-export function getContract(id) {
-    return getItem(key, id)
+export function getContract(no) {
+    return getItem(key, no)
 }

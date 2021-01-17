@@ -36,7 +36,7 @@
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
     import AgreementCard from "./AgreementCard";
-    import EventBus from "../../../plugins/eventBus";
+    import {registerRefresh} from "../../../plugins/eventBus";
     import {getContracts} from "../../../api/contracts";
 
 
@@ -66,7 +66,7 @@
             loading: false
         }),
         created() {
-            EventBus.$on("refresh", this.loadItemList)
+            registerRefresh(this.loadItemList)
 
             this.loadItemList()
         },

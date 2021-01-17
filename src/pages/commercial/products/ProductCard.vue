@@ -22,10 +22,11 @@
             </div>
         </div>
         <div class="d-flex">
-            <v-btn text plain :href="productUrl" class="d-flex text-caption align-center pa-0">
-                <div v-text="productUrl"/>
-                <v-icon size="15px">mdi-arrow-top-right</v-icon>
-            </v-btn>
+<!--            <v-btn text :href="productUrl" class="d-flex text-caption pa-0">-->
+<!--                <div v-text="productUrl"/>-->
+<!--                <href-btn size="15px"/>-->
+<!--            </v-btn>-->
+            <v-href label :href="productUrl" size="15px" text-class="text-caption"/>
             <div class="text-caption ml-auto" v-if="product.tags.length > 0" v-text="'#' + product.tags.join(' #')"/>
         </div>
     </v-card>
@@ -33,8 +34,10 @@
 
 <script>
     import {PRODUCT_SKU_PREFIX} from "../../../scripts/const";
+    import VHref from "../../../components/VHref";
 
     export default {
+        components: {VHref},
         props: {
             product: Object
         },
@@ -52,9 +55,5 @@
 <style lang="scss" scoped>
     .v-card {
         border-left: 10px solid orange !important
-    }
-
-    .selected {
-        border-left: 10px solid blue !important
     }
 </style>

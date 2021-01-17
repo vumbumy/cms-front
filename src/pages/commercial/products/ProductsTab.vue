@@ -36,7 +36,7 @@
     import ProductCard from "./ProductCard";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
-    import EventBus from "../../../plugins/eventBus";
+    import {registerRefresh} from "../../../plugins/eventBus";
     import {getProducts} from "../../../api/products";
 
 
@@ -64,32 +64,8 @@
             items: [],
             loading: false
         }),
-        computed: {
-            // items() {
-            //     let items = []
-            //     let textList = sampleTextList(this.page)
-            //
-            //     for(let i=0; i<textList.length; i++){
-            //         let id = this.page * ITEMS_PER_PAGE + i + 1
-            //         items.push(
-            //             {
-            //                 id: id,
-            //                 name: textList[i],
-            //                 type: textList[i],
-            //                 description: textList[i],
-            //                 stock: i % 10 * 10,
-            //             }
-            //         )
-            //     }
-            //
-            //     return items
-            // },
-            // itemsLength() {
-            //     return sampleTextListLength()
-            // }
-        },
         created() {
-            EventBus.$on("refresh", this.loadItemList)
+            registerRefresh(this.loadItemList)
 
             this.loadItemList()
         },

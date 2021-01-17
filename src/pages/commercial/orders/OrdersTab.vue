@@ -18,10 +18,11 @@
             :headers="headers"
             :items="items"
             :view="view"
-            :items-length="itemsLength"
+            :items-length="items.length"
+            :loading="loading"
         >
             <template v-slot:item="{item}">
-                <sub1-list-item :item="item"/>
+                <order-card :order="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -31,18 +32,19 @@
 
     // import BarChart from "../../../components/BarChart";
     import SortSearchView from "../../../components/SortSearchView";
-    import {CARD_VIEW, ITEMS_PER_PAGE} from "../../../scripts/const";
-    import Sub1ListItem from "./OrderCard";
-    import {sampleTextList, sampleTextListLength} from "../../../scripts/mock";
+    import {CARD_VIEW} from "../../../scripts/const";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
+    import OrderCard from "./OrderCard";
+    import {registerRefresh} from "../../../plugins/eventBus";
+    import {getOrders} from "../../../api/orders";
 
 
     export default {
         components: {
+            OrderCard,
             Warning,
             ItemList,
-            Sub1ListItem,
             SortSearchView,
             // BarChart
         },
@@ -58,34 +60,23 @@
                 { text: 'Description', value: 'description' },
                 { text: 'Stock', value: 'stock' },
             ],
-            page: 0
-            // items: [],
+            page: 0,
+            items: [],
+            loading: false
         }),
-        computed: {
-            items() {
-                let items = []
-                let textList = sampleTextList(this.page)
+        created() {
+            registerRefresh(this.loadItemList)
 
-                for(let i=0; i<textList.length; i++){
-                    let id = this.page * ITEMS_PER_PAGE + i + 1
-                    items.push(
-                        {
-                            id: id,
-                            name: textList[i],
-                            type: textList[i],
-                            description: textList[i],
-                            stock: i % 10 * 10,
-                        }
-                    )
-                }
-
-                return items
-            },
-            itemsLength() {
-                return sampleTextListLength()
-            }
+            this.loadItemList()
         },
         methods: {
+            loadItemList(){
+                this.loading = true
+
+                this.items = getOrders()
+
+                this.loading = false
+            },
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)
                 if (index === -1) {

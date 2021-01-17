@@ -164,22 +164,30 @@
             <!--        -->
 
             <!-- WEB PAGE -->
-            <expansion-panel label="웹페이지 보기" v-model="webPage" :readonly="isReadOnly" type="checkbox">
-                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>
-                <multi-field-list
-                    label="섹션 추가(html)"
-                    class="caption indigo--text accent-3"
-                    :items="sections"
-                    :readonly="isReadOnly"
+            <expansion-panel
+                v-if="(isReadOnly && product.page) || !isReadOnly"
+                label="웹페이지 보기"
+                v-model="product.page"
+                :readonly="isReadOnly"
+                type="checkbox"
+            >
+<!--                <v-select class="col-12 col-sm-4 px-0" label="테마" placeholder="일반광고상품1"/>-->
+<!--                <multi-field-list-->
+<!--                    label="섹션 추가(html)"-->
+<!--                    class="caption indigo&#45;&#45;text accent-3"-->
+<!--                    :items="sections"-->
+<!--                    :readonly="isReadOnly"-->
 
-                    v-on:append="sections.push({name: '', value: ''})"
-                    v-on:delete="index => sections.splice(index, 1)"
-                >
-                    <template v-slot:item={item}>
-                        <v-text-field class="col-2 py-0 pl-0" dense v-model="item.name"/>
-                        <v-textarea outlined dense v-model="item.value" :rows="2"/>
-                    </template>
-                </multi-field-list>
+<!--                    v-on:append="sections.push({name: '', value: ''})"-->
+<!--                    v-on:delete="index => sections.splice(index, 1)"-->
+<!--                >-->
+<!--                    <template v-slot:item={item}>-->
+<!--                        <v-text-field class="col-2 py-0 pl-0" dense v-model="item.name"/>-->
+<!--                        <v-textarea outlined dense v-model="item.value" :rows="2"/>-->
+<!--                    </template>-->
+<!--                </multi-field-list>-->
+                <div v-if="isReadOnly" v-html="product.pageHtml"/>
+                <v-textarea v-else label="HTML" v-model="product.pageHtml"/>
             </expansion-panel>
             <!--        -->
 
@@ -255,8 +263,9 @@
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
     import MultiFieldList from "../../../components/layouts/MultiFieldList";
     import {deleteProduct, getProduct, newProduct, setProduct} from "../../../api/products";
-    import EventBus from "../../../plugins/eventBus";
+    import {refresh, saved} from "../../../plugins/eventBus";
     import AddableSelect from "../../../components/menus/AddableSelect";
+    import {getCategories} from "../../../api/categories";
 
     export default {
         components: {
@@ -274,20 +283,7 @@
         },
         data: () => ({
             mode: READ_MODE,
-            categories: [
-                {
-                    no: 1,
-                    name: "나임 의정부",
-                },
-                {
-                    no: 2,
-                    name: "Overlay",
-                },
-                {
-                    no: 3,
-                    name: "서울"
-                }
-            ],
+            categories: [],
 
             product: newProduct(),
             sections: [
@@ -298,7 +294,6 @@
                 {name: '회룡역만', value: '+100000'},
             ],
             discounts: [{name: '15%', value: '200'}],
-            webPage: true,
             chips: ["의정부", "디지털", "2020년 처음"],
             reviews: [
                 {
@@ -353,6 +348,8 @@
         },
         methods: {
             initialize(){
+                this.categories = getCategories()
+
                 let sku = this.$route.params.sku
                 if(sku === NEW_ITEM_ID) {
                     this.mode = Add_MODE
@@ -365,25 +362,30 @@
                 }
             },
             onChangeTags(tags) {
-                console.log(tags)
-
                 this.product.tags = tags.split(',')
             },
             onClickSave() {
+                if(this.product.sku == null || this.product.sku === "") {
+                    // TODO: Validation (https://vuetifyjs.com/en/components/text-fields/#custom-colors)
+                    alert("SKU IS EMPTY")
+
+                    return
+                }
                 console.log(this.product)
 
                 let sku = setProduct(this.product)
                 this.$router.push({name: this.$route.name, params: {sku: sku}})
                     .catch(() => ({}))
 
-                EventBus.$emit('refresh')
+                saved()
             },
             onClickDelete: function(){
-                console.log('DELETE')
-
                 deleteProduct(this.product.sku)
 
-                EventBus.$emit('refresh')
+                this.$router.push({name: 'products'})
+                    .catch(() => ({}))
+
+                refresh()
             },
             onClickCategoryAppend: function(){
                 console.log('onClickCategoryAppend')

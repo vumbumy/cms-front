@@ -6,14 +6,14 @@ export function getTemplates() {
     return getItems(key)
 }
 
-export function deleteTemplate(id) {
-    deleteItem(key, id)
+export function deleteTemplate(no) {
+    deleteItem(key, no)
 }
 
 export function setTemplate(template) {
     return setItem(key, template)
 }
 
-export function getTemplate(id) {
-    return getItem(key, id)
+export function getTemplate(no) {
+    return getItem(key, no)
 }
