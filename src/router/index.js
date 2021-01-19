@@ -134,6 +134,13 @@ export default new Router({
                     name: 'agreements',
                     path: 'agreements',
                     components: {
+                        default: AgreementsTab
+                    },
+                },
+                {
+                    name: 'agreements:detail',
+                    path: 'agreements/:no',
+                    components: {
                         default: AgreementsTab,
                         detail: AgreementDetail
                     },
@@ -141,6 +148,13 @@ export default new Router({
                 {
                     name: 'templates',
                     path: 'templates',
+                    components: {
+                        default: TemplatesTab,
+                    },
+                },
+                {
+                    name: 'templates:detail',
+                    path: 'templates/:no',
                     components: {
                         default: TemplatesTab,
                         detail: TemplateDetail

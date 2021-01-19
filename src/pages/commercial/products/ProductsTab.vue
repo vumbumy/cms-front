@@ -38,6 +38,7 @@
     import Warning from "../../../components/alerts/Warning";
     import {registerRefresh} from "../../../plugins/eventBus";
     import {getProducts} from "../../../api/products";
+    import {getCategories} from "../../../api/categories";
 
 
     export default {
@@ -54,15 +55,18 @@
             tags: ['의정부', '최근 1주'],
             warnings: [],
             headers: [
-                { text: '#', value: 'id' },
-                { text: 'Name', value: 'name' },
-                { text: 'Category', value: 'categoryNo' },
-                { text: 'Description', value: 'description' },
-                { text: 'Stock', value: 'stock' },
+                { text: '상품명', value: 'name' },
+                { text: '카테고리', value: 'categoryName' },
+                { text: '상태', value: 'status' },
+                { text: '업데이트', value: 'updated' },
+                { text: '재고', value: 'stock' },
+                { text: '수량', value: 'amount' },
+                { text: '가격(만원/월)', value: 'price' },
             ],
             page: 0,
             items: [],
-            loading: false
+            loading: false,
+            categories: getCategories(),
         }),
         created() {
             registerRefresh(this.loadItemList)
@@ -74,6 +78,9 @@
                 this.loading = true
 
                 this.items = getProducts()
+                for(let item of this.items){
+                    item.categoryName = this.categories.find(c => c.no === item.categoryNo).name
+                }
 
                 this.loading = false
             },
@@ -93,8 +100,6 @@
                 console.log('onSearch', param)
             },
             onUpdateView: function (param) {
-                console.log('onUpdateView', param)
-
                 this.view = param
             },
             onUpdateOrder: function (param) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
+    <v-sheet class="d-flex flex-column" :min-width="detailMinWidth">
         <close-edit-save
             class="header"
             v-model="mode"
@@ -31,7 +31,8 @@
 <!--            <div v-if="isReadOnly" class="text-caption grey&#45;&#45;text text&#45;&#45;darken-2" v-text="'#' + template.tags.join(' #')"/>-->
 <!--            <v-text-field v-else label="Hashtags" v-model="template.tags" @change="onChangeTags"/>-->
 <!--        </div>-->
-<!--        <v-divider class="grey"/>-->
+        <v-tag-field :readonly="isReadOnly" v-model="template.tags"/>
+        <v-divider class="grey"/>
         <!--        -->
 
         <!-- Field -->
@@ -129,32 +130,31 @@
             <actions-table more/>
         </expansion-panel>
         <!--        -->
-    </div>
+    </v-sheet>
 </template>
 
 <script>
     import CloseEditSave from "../../../components/CloseEditSave";
-    import {cloneObject, dateToDateTime} from "../../../scripts/util";
-    import {Add_MODE, EDIT_MODE, READ_MODE} from "../../../scripts/const";
+    import {dateToDateTime} from "../../../scripts/util";
+    import {Add_MODE, EDIT_MODE, NEW_ITEM_ID, READ_MODE} from "../../../scripts/const";
     import TopContents from "../../../components/layouts/TopContents";
     import ExpansionPanel from "../../../components/layouts/ExpansionPanel";
     import MultiFieldList from "../../../components/layouts/MultiFieldList";
     import {deleteTemplate, getTemplate, setTemplate} from "../../../api/templates";
-    import EventBus from "../../../plugins/eventBus";
+    import {refresh, saved} from "../../../plugins/eventBus";
     import ActionsTable from "../../../components/tables/ActionsTable";
+    import VTagField from "../../../components/VTagField";
     import {templateSample} from "../../../scripts/mock";
 
     export default {
         components: {
+            VTagField,
             ActionsTable,
             MultiFieldList,
             ExpansionPanel,
             TopContents,
             CloseEditSave,
         },
-        // props: {
-        //     value: Object
-        // },
         data: () => ({
             mode: READ_MODE,
 
@@ -164,10 +164,7 @@
                 ],
             types: ["String", "Number", "Date", "Boolean"],
 
-            template: {
-                sections: [],
-                fields: []
-            },
+            template: {},
             rules: {
                 required: value => !!value || 'Required.',
                 counter: value => value.length <= 20 || 'Max 20 characters',
@@ -200,50 +197,49 @@
             },
             rootSections(){
                 return this.template.sections.filter(section => section.parent == null && section.title !== '')
-            }
+            },
+            detailMinWidth(){
+                if(this.$vuetify.breakpoint.smAndUp)
+                    return 625
+
+                return 0
+            },
         },
         methods: {
             initialize() {
-                let id = parseInt(this.$route.query.id)
-
-                if(id === 0 ) {
+                let no = this.$route.params.no
+                if(no === NEW_ITEM_ID) {
                     this.mode = Add_MODE
 
-                    this.template = cloneObject(templateSample)
-
-                    // this.template = {
-                    //     sections: [],
-                    //     fields: []
-                    // }
+                    this.template = templateSample
                 }
                 else {
                     this.mode = READ_MODE
 
-                    this.template = getTemplate(id)
+                    this.template = getTemplate(no)
                 }
             },
             onChangeTags(tags) {
                 this.template.tags = tags.split(',')
             },
             onClickSave() {
-                console.log('SAVE')
+                console.log('SAVE', this.template)
 
-                let id = setTemplate(this.template)
-
-                this.$router.push({query: {id: id}})
+                let no = setTemplate(this.template)
+                this.$router.push({name: this.$route.name, params: {no: no}})
                     .catch(() => ({}))
 
-                EventBus.$emit('refresh')
+                saved()
             },
             onClickDelete: function(){
-                console.log('DELETE', this.template.id)
+                console.log('DELETE', this.template.no)
 
-                deleteTemplate(this.template.id)
+                deleteTemplate(this.template.no)
 
                 this.$router.push({query: null})
                     .catch(() => ({}))
 
-                EventBus.$emit('refresh')
+                refresh()
             },
             newSection: (lastOrder) => ({
                 title: "",

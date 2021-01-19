@@ -82,7 +82,6 @@
         width: 100%;
         position: sticky;
         top: 0;
-        height: 50px;
         z-index: 3;
     }
     .footer {

@@ -15,6 +15,7 @@ export function sampleTextListLength(offset) {
 
 export const templateSample = {
     title: "일반광고계약양식-1",
+    tags: [],
     sections: [
         {title: "공통기본", order: 1},
         {title: "Advanced", order: 2},

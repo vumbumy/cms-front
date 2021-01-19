@@ -1,23 +1,21 @@
 <template>
-    <v-sheet class="d-flex align-center fill-height">
-        <v-btn @click="onClickReturn" text icon>
+    <v-sheet class="d-flex my-10">
+        <v-btn icon @click="onClickReturn">
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
-        <v-btn text icon class="ml-auto" v-if="!isAddMode && !isEditMode"  @click="toEditMode">
+        <v-btn icon class="ml-auto" v-if="!isAddMode && !isEditMode"  @click="toEditMode">
             <v-icon>mdi-pencil</v-icon>
         </v-btn>
         <div v-else class="ml-auto">
-            <v-btn text icon @click="onClickClose">
+            <v-btn icon @click="onClickClose">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-btn text icon @click="onClickSave">
+            <v-btn icon @click="onClickSave">
                 <v-icon>mdi-content-save</v-icon>
             </v-btn>
         </div>
-        <v-btn text icon v-if="!isAddMode">
-            <v-btn text icon @click="onClickDelete">
-                <v-icon>mdi-delete</v-icon>
-            </v-btn>
+        <v-btn icon v-if="!isAddMode" @click="onClickDelete">
+            <v-icon>mdi-delete</v-icon>
         </v-btn>
     </v-sheet>
 </template>

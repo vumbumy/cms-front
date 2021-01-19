@@ -3,3 +3,8 @@ $input-max-height: 100px !important;
 
 $btn-text-transform: none !important;
 @import "~vuetify/src/components/VBtn/VBtn.sass";
+
+.item-card {
+    padding: 1%;
+    border-left: 10px solid orange !important
+}

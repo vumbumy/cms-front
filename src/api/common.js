@@ -29,7 +29,7 @@ function newItemNo(key) {
     return lastNo + 1
 }
 
-function postItem(key, item) {
+export function postItem(key, item) {
     let items = getItems(key)
 
     // TODO: 임시 번호 발급
@@ -42,7 +42,7 @@ function postItem(key, item) {
     return item.no
 }
 
-function putItem(key, item) {
+export function putItem(key, item) {
     let items = getItems(key)
 
     let updated = items.map(t => t.no === item.no ? item : t)

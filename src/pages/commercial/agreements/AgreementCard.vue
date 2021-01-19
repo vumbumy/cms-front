@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column pa-2">
+    <v-card class="item-card d-flex flex-column" :to="{name: 'agreements:detail', params: {sku: item.sku}}">
         <div class="d-flex">
             <div class="col-4 pa-0 d-flex flex-column">
                 <div class="text-h7 text-sm-h6 font-weight-bold" v-text="item.title"/>
@@ -23,7 +23,7 @@
             <div class="text-caption">SKU</div>
             <div class="text-caption">#CAMP #TAGS #HASH</div>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>

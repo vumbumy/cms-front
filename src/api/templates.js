@@ -17,3 +17,12 @@ export function setTemplate(template) {
 export function getTemplate(no) {
     return getItem(key, no)
 }
+
+export function newTemplate() {
+    return {
+        title: null,
+        sections: [],
+        fields: [],
+        tags: [],
+    }
+}

@@ -40,17 +40,11 @@
             <!--        -->
 
             <!-- TOP UNDER CONTENTS -->
-            <div class="d-flex" v-if="isReadOnly">
-                <div class="caption grey--text text--darken-2 text-truncate" v-text="productUrl"/>
-                <div
-                    v-if="product.tags.length > 0"
-                    class="d-flex text-caption grey--text text--darken-2 ml-auto text-truncate"
-                    v-text="'#' + product.tags.join(' #')"/>
-            </div>
-            <div v-else class="d-flex justify-space-between">
-                <v-text-field class="flex-grow-0" label="SKU" :prefix="PRODUCT_SKU_PREFIX" v-model="product.sku" :rules="[rules.required]"/>
-                <v-spacer/>
-                <v-text-field class="flex-grow-1" label="Hashtags" v-model="product.tags" @change="onChangeTags"/>
+            <div class="d-flex justify-space-between align-center">
+<!--                <div v-if="isReadOnly" class="caption grey&#45;&#45;text text&#45;&#45;darken-2 text-truncate" v-text="productUrl"/>-->
+                <v-href v-if="isReadOnly" label text-class="text-caption" :href="productUrl" size="15px"/>
+                <v-text-field v-else class="flex-grow-0" label="SKU" :prefix="PRODUCT_SKU_PREFIX" v-model="product.sku" :rules="[rules.required]"/>
+                <v-hashtag-field :readonly="isReadOnly" v-model="product.tags"/>
             </div>
             <v-divider class="grey"/>
             <!--        -->
@@ -266,9 +260,13 @@
     import {refresh, saved} from "../../../plugins/eventBus";
     import AddableSelect from "../../../components/menus/AddableSelect";
     import {getCategories} from "../../../api/categories";
+    import VHashtagField from "../../../components/VTagField";
+    import VHref from "../../../components/VHref";
 
     export default {
         components: {
+            VHref,
+            VHashtagField,
             AddableSelect,
             MultiFieldList,
             ExpansionPanel,
@@ -315,8 +313,6 @@
         watch: {
             $route(){
                 this.initialize()
-
-                console.log(this.$route.params)
             }
         },
         computed: {

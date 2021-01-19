@@ -24,3 +24,11 @@ export function cloneObject(obj) {
 export function isEmptyObject(params) {
     return Object.keys(params).length === 0
 }
+
+export function removeWhiteSpace(array) {
+    return array.filter(str => /\S/.test(str));
+}
+
+export function removeDuplicates(array) {
+    return array.filter((a, b) => array.indexOf(a) === b)
+}

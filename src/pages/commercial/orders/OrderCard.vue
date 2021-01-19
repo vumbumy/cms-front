@@ -1,5 +1,5 @@
 <template>
-    <v-card class="d-flex flex-column pa-2" :to="{name: 'orders:detail', params: {no: order.no}}">
+    <v-card class="item-card d-flex flex-column" :to="{name: 'orders:detail', params: {no: order.no}}">
         <div class="d-flex">
             <div class="col-4 pa-0 d-flex flex-column">
                 <div class="text-h7 text-sm-h6 font-weight-bold" v-text="order.name"/>
@@ -46,9 +46,3 @@
         },
     }
 </script>
-
-<style lang="scss" scoped>
-    .v-card {
-        border-left: 10px solid orange !important
-    }
-</style>
