@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex my-3" @click="index = (index + 1) % steps.length">
+    <div class="d-flex my-3" @click="readonly ? null : index = (index + 1) % steps.length">
         <v-sheet :class="steps[index].classes" class="font-weight-bold" v-text="steps[index].name"/>
         <v-sheet class="flex-grow-1 grey lighten-2"/>
     </div>
@@ -7,6 +7,9 @@
 
 <script>
     export default {
+        props: {
+            readonly: Boolean
+        },
         data: () => ({
             index: 0,
             steps: [

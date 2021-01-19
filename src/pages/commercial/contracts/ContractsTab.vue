@@ -22,7 +22,7 @@
             :loading="loading"
         >
             <template v-slot:item="{item}">
-                <agreement-card :item="item"/>
+                <contract-card :item="item"/>
             </template>
         </item-list>
     </v-sheet>
@@ -35,14 +35,15 @@
     import {CARD_VIEW} from "../../../scripts/const";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
-    import AgreementCard from "./ContractCard";
+    import ContractCard from "./ContractCard";
     import {registerRefresh} from "../../../plugins/eventBus";
     import {getContracts} from "../../../api/contracts";
+    import {getTemplates} from "../../../api/templates";
 
 
     export default {
         components: {
-            AgreementCard,
+            ContractCard,
             Warning,
             ItemList,
             SortSearchView,
@@ -99,7 +100,16 @@
 
                 this.items = getContracts()
 
+                this.setTemplateTitles()
+
                 this.loading = false
+            },
+            setTemplateTitles(){
+                let templates = getTemplates()
+
+                for(let item of this.items.filter(i => i.templateNo > 0)){
+                    item.templateTitle = templates.find(t => t.no === item.templateNo).title
+                }
             }
         }
     }

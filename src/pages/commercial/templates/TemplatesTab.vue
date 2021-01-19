@@ -40,6 +40,7 @@
     import TemplateCard from "./TemplateCard";
     import {getTemplates} from "../../../api/templates";
     import {registerRefresh} from "../../../plugins/eventBus";
+    import {getContracts} from "../../../api/contracts";
 
 
     export default {
@@ -101,7 +102,16 @@
 
                 this.items = getTemplates()
 
-                setTimeout(() => this.loading = false, 1000)
+                this.setContractsNum()
+
+                this.loading = false
+            },
+            setContractsNum(){
+                let contracts = getContracts()
+
+                for(let item of this.items){
+                    item.contractsNum = contracts.filter(c => c.templateNo === item.no).length
+                }
             }
         }
     }

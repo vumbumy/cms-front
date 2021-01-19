@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column">
+    <v-sheet class="d-flex flex-column">
         <close-edit-save
             class="header"
             v-model="mode"
@@ -68,7 +68,7 @@
             <actions-table more/>
         </expansion-panel>
         <!--        -->
-    </div>
+    </v-sheet>
 </template>
 
 <script>
@@ -119,16 +119,12 @@
             template(){
                 return this.templates.find(t => t.no === this.contract.templateNo)
             },
-            // templateTitle(){
-            //     if(this.template === undefined) return ""
-            //
-            //     return this.template.title
-            // },
-            // parentSections() {
-            //     let sections = this.template.sections.filter(section => section.parent == null)
-            //
-            //     return sections.sort((a, b) => a.order - b.order)
-            // }
+            detailMinWidth(){
+                if(this.$vuetify.breakpoint.smAndUp)
+                    return 625
+
+                return 0
+            },
         },
         watch: {
             $route(){

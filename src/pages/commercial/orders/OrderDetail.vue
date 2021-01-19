@@ -44,10 +44,7 @@
             <!--        -->
 
             <!-- TOP UNDER CONTENTS -->
-            <div v-if="isReadOnly" class="text-caption grey--text text--darken-2 align-self-end text-truncate" v-text="'#' + order.tags.join(' #')"/>
-            <div v-else class="d-flex align-end">
-                <v-text-field class="flex-grow-1" label="Hashtags" v-model="order.tags" @change="onChangeTags"/>
-            </div>
+            <v-tag-field class="ml-auto" :readonly="isReadOnly" v-model="order.tags"/>
             <v-divider class="grey"/>
             <!--        -->
 
@@ -87,7 +84,7 @@
                 </div>
             </div>
             <!--        -->
-            <stepper/>
+            <stepper :readonly="isReadOnly"/>
             <photo class="mb-2"/>
 
             <!-- ADVANCED -->
@@ -98,7 +95,7 @@
                         <v-text-field :readonly="isReadOnly" label="매체사 담당자 연락처" value="일반"/>
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 py-0 px-2 mb-auto">
-                        <v-text-field :readonly="isReadOnly" label="계약금액" value="3,000,000"/>
+                        <v-text-field :readonly="isReadOnly" label="계약금액" v-model="order.price"/>
                         <v-text-field :readonly="isReadOnly" label="주문자" value="이름(user_id)"/>
                     </div>
                     <div class="d-flex flex-column col-12 col-sm-4 pa-0 mb-auto">
@@ -174,10 +171,12 @@
     import {deleteOrder, getOrder, newOrder, setOrder} from "../../../api/orders";
     import {refresh, saved} from "../../../plugins/eventBus";
     import VHref from "../../../components/VHref";
+    import VTagField from "../../../components/VTagField";
     // import MultiFieldList from "../../../components/layouts/MultiFieldList";
 
     export default {
         components: {
+            VTagField,
             VHref,
             // MultiFieldList,
             ExpansionPanel,

@@ -66,7 +66,6 @@
             page: 0,
             items: [],
             loading: false,
-            categories: getCategories(),
         }),
         created() {
             registerRefresh(this.loadItemList)
@@ -78,12 +77,17 @@
                 this.loading = true
 
                 this.items = getProducts()
-                for(let item of this.items){
-                    if(item.categoryNo > 0)
-                        item.categoryName = this.categories.find(c => c.no === item.categoryNo).name
-                }
+
+                this.setCategoryNames()
 
                 this.loading = false
+            },
+            setCategoryNames(){
+                let categories = getCategories()
+
+                for(let item of this.items.filter(i => i.categoryNo > 0)){
+                    item.categoryName = categories.find(c => c.no === item.categoryNo).name
+                }
             },
             onClickAll(){
                 let index = Object.values(this.active_tags).indexOf(0)
