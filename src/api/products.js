@@ -1,9 +1,13 @@
+const moment = require('moment')
 import {getItems, setItems} from "./common";
 
 const key = 'product'
 
 function postProduct(item) {
     let items = getItems(key)
+
+    item.created = moment().unix()
+    item.updated = moment().unix()
 
     items.push(item)
 
@@ -14,6 +18,8 @@ function postProduct(item) {
 
 function putProduct(item) {
     let items = getItems(key)
+
+    item.updated = moment().unix()
 
     let updated = items.map(t => t.sku === item.sku ? item : t)
 

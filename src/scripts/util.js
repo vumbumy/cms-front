@@ -16,6 +16,10 @@ export function datesToString(dates) {
     return strArray.join(' ')
 }
 
+export function timestampToString(value) {
+    return moment.unix(value).format("YY.MM.DD HH:mm");
+}
+
 export function cloneObject(obj) {
     // return { ...obj }
     return JSON.parse(JSON.stringify(obj))

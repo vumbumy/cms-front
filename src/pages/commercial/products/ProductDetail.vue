@@ -11,8 +11,8 @@
             <!-- TOP CONTENTS -->
             <top-contents
                 :readonly="isReadOnly"
-                :updated="Date.parse('2020-12-13')"
-                :created="Date.parse('2020-12-01')"
+                :updated="product.updated"
+                :created="product.created"
             >
                 <div v-if="isReadOnly">
                     <div class="text-h5 text-sm-h4 font-weight-bold" v-text="product.name"/>

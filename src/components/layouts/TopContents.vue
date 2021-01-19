@@ -7,8 +7,8 @@
             </div>
             <v-spacer/>
             <div class="d-flex flex-column text-right">
-                <div class="caption" v-text="dateToDateTime(updated)"/>
-                <div class="caption grey--text text--darken-2" v-text="dateToDateTime(created)"/>
+                <div v-if="updated" class="text-caption" v-text="timestampToString(updated)"/>
+                <div v-if="created" class="text-caption grey--text text--darken-2" v-text="timestampToString(created)"/>
                 <permissions/>
             </div>
         </v-sheet>
@@ -17,7 +17,7 @@
 
 <script>
     import Permissions from "../Permissions";
-    import {dateToDateTime} from "../../scripts/util";
+    import {timestampToString} from "../../scripts/util";
 
     export default {
         components: {
@@ -25,14 +25,8 @@
         },
         props: {
             readonly: Boolean,
-            updated: {
-                type: Number,
-                default: new Date()
-            },
-            created: {
-                type: Number,
-                default: new Date()
-            },
+            updated: Number,
+            created: Number,
         },
         data: () => ({
             index: 0,
@@ -47,7 +41,7 @@
         //     console.log(this.borders.length)
         // },
         methods: {
-            dateToDateTime: dateToDateTime
+            timestampToString: timestampToString
         }
     }
 </script>

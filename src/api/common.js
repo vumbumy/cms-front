@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 export function setItems(key, items) {
     let jsonStr = JSON.stringify(items)
     console.log(jsonStr)
@@ -34,6 +36,8 @@ export function postItem(key, item) {
 
     // TODO: 임시 번호 발급
     item.no = newItemNo(key)
+    item.created = moment().unix()
+    item.updated = moment().unix()
 
     items.push(item)
 
@@ -44,6 +48,8 @@ export function postItem(key, item) {
 
 export function putItem(key, item) {
     let items = getItems(key)
+
+    item.updated = moment().unix()
 
     let updated = items.map(t => t.no === item.no ? item : t)
 

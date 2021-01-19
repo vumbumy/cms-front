@@ -7,7 +7,6 @@
         />
         <v-text-field
             v-else-if="!readonly"
-            class="flex-grow-1"
             label="Hashtags"
             v-model="tagArr"
             @change="onChangeTags"

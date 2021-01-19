@@ -9,8 +9,8 @@
         <top-contents
             :readonly="isReadOnly"
 
-            :updated="Date.parse('2020-12-13')"
-            :created="Date.parse('2020-12-01')"
+            :updated="contract.updated"
+            :created="contract.created"
         >
             <div v-if="isReadOnly">
                 <div class="text-h4 font-weight-bold" v-text="contract.title"/>
@@ -36,6 +36,12 @@
                 />
             </div>
         </top-contents>
+
+        <!-- TOP UNDER CONTENTS -->
+        <v-tag-field class="ml-auto" :readonly="isReadOnly" v-model="contract.tags"/>
+        <v-divider class="grey"/>
+        <!--        -->
+
         <v-slide-y-reverse-transition>
             <v-slide-y-reverse-transition group v-if="contract.templateNo > 0">
                 <div v-for="(field, fIndex) in fields(undefined)" :key="fIndex + parentSections.length" class="col-4 pa-0">
@@ -67,7 +73,6 @@
 
 <script>
     import CloseEditSave from "../../../components/CloseEditSave";
-    import {dateToDateTime} from "../../../scripts/util";
     import {Add_MODE, EDIT_MODE, NEW_ITEM_ID, READ_MODE} from "../../../scripts/const";
     import TopContents from "../../../components/layouts/TopContents";
     import {getTemplates} from "../../../api/templates";
@@ -76,11 +81,13 @@
     import ActionsTable from "../../../components/tables/ActionsTable";
     import {deleteContract, getContract, newContract, setContract} from "../../../api/contracts";
     import {refresh, saved} from "../../../plugins/eventBus";
+    import VTagField from "../../../components/VTagField";
 
     const hash = require('object-hash');
 
     export default {
         components: {
+            VTagField,
             ActionsTable,
             AutoField,
             ExpansionPanel,
@@ -165,7 +172,7 @@
 
                 deleteContract(this.contract.no)
 
-                this.$router.push({name: 'agreements'})
+                this.$router.push({name: 'contracts'})
                     .catch(() => ({}))
 
                 refresh()
@@ -179,7 +186,6 @@
                 return this.template.fields.filter(f => f.section === section)
             },
             hash: hash,
-            dateToDateTime: dateToDateTime,
         }
     }
 </script>

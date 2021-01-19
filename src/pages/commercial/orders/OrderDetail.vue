@@ -11,8 +11,8 @@
             <top-contents
                 :readonly="isReadOnly"
 
-                :updated="Date.parse('2020-12-13')"
-                :created="Date.parse('2020-12-01')"
+                :updated="order.updated"
+                :created="order.created"
             >
                 <div v-if="isReadOnly">
                     <div class="text-h4 font-weight-bold" v-text="order.name"/>
@@ -211,11 +211,6 @@
         created() {
             this.initialize()
         },
-        watch: {
-            $route(){
-                this.initialize()
-            }
-        },
         computed: {
             isReadOnly(){
                 return this.mode !== EDIT_MODE && this.mode !== Add_MODE
@@ -231,11 +226,8 @@
 
                 return this.product.name
             },
-            productPath(){
-                return `#/commercial/products?id=${this.product.id}`
-            },
             contract(){
-                return this.contracts.find(c => c.id === this.order.contractNo)
+                return this.contracts.find(c => c.no === this.order.contractNo)
             },
             contractTitle(){
                 if(this.contract === undefined)
@@ -249,6 +241,11 @@
 
                 return 0
             },
+        },
+        watch: {
+            $route(){
+                this.initialize()
+            }
         },
         methods: {
             initialize(){
@@ -290,7 +287,7 @@
             //     if(this.order.productSKU <= 0) return
             //
             //     let productPath = {
-            //         path: "/commercial/agreements",
+            //         path: "/commercial/contracts",
             //         query: {id: this.order.productNo}
             //     }
             //     this.$router.push(productPath)
@@ -299,13 +296,13 @@
             onClickContract() {
                 if(this.order.contractNo <= 0) return
 
-                // let contractPath = {
-                //     path: "/commercial/agreements",
-                //     query: {id: this.order.contractId}
-                // }
-                //
-                // this.$router.push(contractPath)
-                //     .catch(() => ({}))
+                let contractPath = {
+                    name: "contracts",
+                    params: {no: this.order.contractNo}
+                }
+
+                this.$router.push(contractPath)
+                    .catch(() => ({}))
             },
             dateToDateTime: dateToDateTime,
         }

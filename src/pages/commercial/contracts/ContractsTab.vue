@@ -35,7 +35,7 @@
     import {CARD_VIEW} from "../../../scripts/const";
     import ItemList from "../../../components/layouts/ItemList";
     import Warning from "../../../components/alerts/Warning";
-    import AgreementCard from "./AgreementCard";
+    import AgreementCard from "./ContractCard";
     import {registerRefresh} from "../../../plugins/eventBus";
     import {getContracts} from "../../../api/contracts";
 

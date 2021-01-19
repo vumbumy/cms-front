@@ -11,8 +11,8 @@ import ProductsDetail from "../pages/commercial/products/ProductDetail";
 import OrdersTab from "../pages/commercial/orders/OrdersTab";
 import OrderDetail from "../pages/commercial/orders/OrderDetail";
 import NotFoundComponent from "../components/NotFoundComponent";
-import AgreementsTab from "../pages/commercial/agreements/AgreementsTab";
-import AgreementDetail from "../pages/commercial/agreements/AgreementDetail";
+import ContractsTab from "../pages/commercial/contracts/ContractsTab";
+import ContractDetail from "../pages/commercial/contracts/ContractDetail";
 
 import {publicPath} from "../../vue.config";
 import TemplatesTab from "../pages/commercial/templates/TemplatesTab";
@@ -131,18 +131,18 @@ export default new Router({
                 //     path: 'orderList',
                 // },
                 {
-                    name: 'agreements',
-                    path: 'agreements',
+                    name: 'contracts',
+                    path: 'contracts',
                     components: {
-                        default: AgreementsTab
+                        default: ContractsTab
                     },
                 },
                 {
-                    name: 'agreements:detail',
-                    path: 'agreements/:no',
+                    name: 'contracts:detail',
+                    path: 'contracts/:no',
                     components: {
-                        default: AgreementsTab,
-                        detail: AgreementDetail
+                        default: ContractsTab,
+                        detail: ContractDetail
                     },
                 },
                 {

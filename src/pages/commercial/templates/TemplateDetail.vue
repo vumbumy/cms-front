@@ -9,8 +9,8 @@
         <top-contents
             :readonly="isReadOnly"
 
-            :updated="Date.parse('2020-12-13')"
-            :created="Date.parse('2020-12-01')"
+            :updated="template.updated"
+            :created="template.created"
         >
             <v-text-field
                 label="계약양식명"

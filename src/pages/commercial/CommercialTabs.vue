@@ -43,7 +43,7 @@
               tabs: [
                   'products',
                   'orders',
-                  'agreements',
+                  'contracts',
                   'templates'
               ],
               tabIndex: 0
