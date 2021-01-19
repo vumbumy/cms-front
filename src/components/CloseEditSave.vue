@@ -1,5 +1,5 @@
 <template>
-    <v-sheet class="d-flex my-10">
+    <v-sheet class="d-flex">
         <v-btn icon @click="onClickReturn">
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>

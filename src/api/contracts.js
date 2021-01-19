@@ -17,3 +17,12 @@ export function setContract(contract) {
 export function getContract(no) {
     return getItem(key, no)
 }
+
+export function newContract() {
+    return {
+        title: null,
+        tags: [],
+        templateNo: 0,
+        values: {}
+    }
+}

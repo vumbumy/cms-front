@@ -24,14 +24,7 @@
         </top-contents>
 
         <!-- TOP UNDER CONTENTS -->
-<!--        <div class="d-flex">-->
-<!--            <div v-if="isReadOnly" class="text-caption grey&#45;&#45;text text&#45;&#45;darken-2" v-text="template.url"/>-->
-<!--            <v-text-field v-else label="문서 URL" class="text-caption align-self-end" v-model="template.url"/>-->
-<!--            <v-spacer/>-->
-<!--            <div v-if="isReadOnly" class="text-caption grey&#45;&#45;text text&#45;&#45;darken-2" v-text="'#' + template.tags.join(' #')"/>-->
-<!--            <v-text-field v-else label="Hashtags" v-model="template.tags" @change="onChangeTags"/>-->
-<!--        </div>-->
-        <v-tag-field :readonly="isReadOnly" v-model="template.tags"/>
+        <v-tag-field class="ml-auto" :readonly="isReadOnly" v-model="template.tags"/>
         <v-divider class="grey"/>
         <!--        -->
 
@@ -117,8 +110,8 @@
                         :items="template.sections"
                         item-text="title"
                         item-value="title"
-                        placeholder="없음"
-                        :rules="[rules.required]"
+                        placeholder="HEAD"
+                        clearable
                     />
                 </template>
             </multi-field-list>
@@ -236,7 +229,7 @@
 
                 deleteTemplate(this.template.no)
 
-                this.$router.push({query: null})
+                this.$router.push({name: 'templates'})
                     .catch(() => ({}))
 
                 refresh()

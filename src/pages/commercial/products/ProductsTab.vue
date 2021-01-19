@@ -79,7 +79,8 @@
 
                 this.items = getProducts()
                 for(let item of this.items){
-                    item.categoryName = this.categories.find(c => c.no === item.categoryNo).name
+                    if(item.categoryNo > 0)
+                        item.categoryName = this.categories.find(c => c.no === item.categoryNo).name
                 }
 
                 this.loading = false

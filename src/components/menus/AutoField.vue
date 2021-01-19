@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pr-2">
         <date-field
             v-if="header.type === 'Date'"
             :label="header.title"
