@@ -1,6 +1,6 @@
-# CMS Web UI
+# CMS (Front)
 
-[Demo](http://1.241.17.100/#/)
+---
 
 ## Project setup
 ```
