@@ -1,7 +1,5 @@
 # CMS (Front)
 
----
-
 ## Project setup
 ```
 npm install
